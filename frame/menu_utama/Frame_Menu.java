@@ -44,7 +44,7 @@ public class Frame_Menu extends JFrame implements ActionListener {
         // this.setTitle("Database Warung " + new Akun().getNama_Pemilik());
         this.setTitle("Database Warung ");
         this.setResizable(false);
-        this.setLocationRelativeTo(null);
+        // this.setLocationRelativeTo(null);
         this.setIconImage(new ImageIcon(getClass().getResource("/assets/icons8-database-50.png")).getImage());
         this.setSize(1200, 700);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,8 +62,15 @@ public class Frame_Menu extends JFrame implements ActionListener {
         jPanel_Header.setLayout(null);
         this.getContentPane().add(jPanel_Header);
 
-        // Jam dan tanggal
-        // jLabel_Date.setText(text);
+        // Jam 
+        jLabel_Time.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        jLabel_Time.setBounds(20, 33, 220, 30);
+        jLabel_Time.setForeground(Color.WHITE);
+
+        // Tanggal
+        jLabel_Date.setFont(new Font("Segoe UI", 1, 14));
+        jLabel_Date.setBounds(20, 10, 230, 20);
+        jLabel_Date.setForeground(Color.WHITE);
 
         dateAndTime();
 
@@ -143,6 +150,8 @@ public class Frame_Menu extends JFrame implements ActionListener {
 
         // Add button ke panel atas
         jPanel_Header.add(jButton_Logout);
+        jPanel_Header.add(jLabel_Time);
+        jPanel_Header.add(jLabel_Date);
 
         // Add button ke panel kiri
         jPanel_Side.add(jButton_Akun);
@@ -179,13 +188,20 @@ public class Frame_Menu extends JFrame implements ActionListener {
                         int day = cal.get(Calendar.DAY_OF_MONTH);
                         int month = cal.get(Calendar.MONTH);
                         int year = cal.get(Calendar.YEAR);
+
+                        String Am_Pm;
+                        if(cal.get(Calendar.AM_PM) == Calendar.PM) {
+                            Am_Pm = "PM";
+                        } else {
+                            Am_Pm = "AM";
+                        }
                 
                         int second = cal.get(Calendar.SECOND);
                         int minute = cal.get(Calendar.MINUTE);
                         int hour = cal.get(Calendar.HOUR);
                 
-                        jLabel_Date.setText(year + "/" + month + "/" + day);
-                        jLabel_Time.setText(hour + ":" + minute + ":" + second);
+                        jLabel_Date.setText("Tanggal " + year + "/" + month + "/" + day);
+                        jLabel_Time.setText(hour + ":" + minute + ":" + second + " " + Am_Pm);
     
                         sleep(1000);
                     }
