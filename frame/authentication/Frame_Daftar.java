@@ -6,17 +6,12 @@
  */
 package frame.authentication;
 import javax.swing.*;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.event.*;
-import javax.swing.plaf.ColorUIResource;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.List;
 
 import koneksi.Con_Admin;
-import saved_authentication.Akun;
 
 public class Frame_Daftar extends JFrame implements ActionListener{
     
