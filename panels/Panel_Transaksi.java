@@ -18,6 +18,7 @@ public class Panel_Transaksi extends JPanel implements ActionListener{
         this.setBackground(new Color(80, 40, 44));
         // this.setBackground(new Color(24, 40, 44));
         System.out.println("TRANSAKSI LAPORAN");
+        Panel_Akun_Info.exitPanelAkun = true;
 
     }
 

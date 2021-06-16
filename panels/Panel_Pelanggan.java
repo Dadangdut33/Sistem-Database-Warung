@@ -59,6 +59,7 @@ public class Panel_Pelanggan extends JPanel implements ActionListener {
         this.setBounds(80, 70, 1120, 630);
         this.setBackground(new Color(24, 40, 44));
         
+        Panel_Akun_Info.exitPanelAkun = true;
         tModelTbAtas = new DefaultTableModel(null, kolomTbAtas) {
             @Override
             public boolean isCellEditable(int row, int column) { // Disable cell editing agar tidak bisa diedit2 datanya

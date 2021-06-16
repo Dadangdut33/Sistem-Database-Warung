@@ -8,6 +8,7 @@ package frame.menu_utama;
 
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -44,7 +45,7 @@ public class Frame_Menu extends JFrame implements ActionListener {
     public Frame_Menu(){        
         // Frame menu settingnya
         this.setLayout(null);
-        this.setTitle("Database Warung " + Akun.Nama_Pemilik);
+        this.setTitle("Database " + Akun.Nama_Toko);
         this.setResizable(false);
         this.setIconImage(new ImageIcon(getClass().getResource("/assets/icons8-database-50.png")).getImage());
         this.setSize(1200, 700);
