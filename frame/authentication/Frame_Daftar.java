@@ -12,6 +12,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 import koneksi.Con_Admin;
+import tools.OnlyDigit;
 
 public class Frame_Daftar extends JFrame implements ActionListener{
     
@@ -203,6 +204,7 @@ public class Frame_Daftar extends JFrame implements ActionListener{
         textField_NomorTelepon.setBounds(100, 277, 210, 25);
         textField_NomorTelepon.setText("");
         textField_NomorTelepon.setCaretColor(Color.WHITE);
+        textField_NomorTelepon.setDocument(new OnlyDigit().getOnlyDigit());
         jPanel_Content.add(textField_NomorTelepon);
 
         // Button Add

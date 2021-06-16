@@ -43,13 +43,13 @@ public class Frame_Menu extends JFrame implements ActionListener {
     public Frame_Menu(){        
         // Frame menu settingnya
         this.setLayout(null);
-        this.setTitle("Database Warung " + Akun.ID_Admin);
+        this.setTitle("Database Warung " + Akun.Nama_Pemilik);
         this.setResizable(false);
-        this.setLocationRelativeTo(null);
         this.setIconImage(new ImageIcon(getClass().getResource("/assets/icons8-database-50.png")).getImage());
         this.setSize(1200, 700);
         this.getContentPane().setBackground(new Color(24, 40, 44));
-
+        this.setLocationRelativeTo(null);
+        
         // Untuk clock
         exit = false;
 

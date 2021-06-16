@@ -134,8 +134,8 @@ public class Con_Laporan {
                 int tahun = rs.getInt("tahun");
                 int bulan = rs.getInt("bulan");
                 int tgl = rs.getInt("tgl");
-                int Total = rs.getInt("Total_Harga_Pesanan");
-                int banyak_pesanan = rs.getInt("banyak");
+                int Total = rs.getInt("Total");
+                int banyak_pesanan = rs.getInt("banyak_pesanan");
 
                 Object[] dataArr = { tahun, bulan, tgl, Total, banyak_pesanan };
                 Collections.addAll(dataList, dataArr);
@@ -162,8 +162,8 @@ public class Con_Laporan {
             while (rs.next()) {
                 int tahun = rs.getInt("tahun");
                 int bulan = rs.getInt("bulan");
-                int Total = rs.getInt("Total_Harga_Pesanan");
-                int banyak_pesanan = rs.getInt("banyak");
+                int Total = rs.getInt("Total");
+                int banyak_pesanan = rs.getInt("banyak_pesanan");
 
                 Object[] dataArr = { tahun, bulan, Total, banyak_pesanan };
                 Collections.addAll(dataList, dataArr);
@@ -189,8 +189,8 @@ public class Con_Laporan {
             ResultSet rs = pr.executeQuery();
             while (rs.next()) {
                 int tahun = rs.getInt("tahun");
-                int Total = rs.getInt("Total_Harga_Pesanan");
-                int banyak_pesanan = rs.getInt("banyak");
+                int Total = rs.getInt("Total");
+                int banyak_pesanan = rs.getInt("banyak_pesanan");
 
                 Object[] dataArr = { tahun, Total, banyak_pesanan };
                 Collections.addAll(dataList, dataArr);

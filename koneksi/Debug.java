@@ -10,15 +10,15 @@ package koneksi;
 // import javax.swing.*;
 // import java.util.ArrayList;
 // import java.util.Collections;
-// import java.util.List;
+import java.util.List;
 
 public class Debug {
     // Testing zone
     public static void main(String[] args) {
-        // String username = "Kelompok5-1";
-        // String passWord = "12345678";
+        String username = "Kelompok5";
+        String passWord = "12345678";
         
-        // Boolean login = new Con_Admin().login(username, passWord);
+        Boolean login = new Con_Admin().login(username, passWord);
         // System.out.println(login);
 
         // if(login){
@@ -32,7 +32,7 @@ public class Debug {
         // }
 
         // if (login){
-        //     List<Object> data = new Con_Laporan().get_LaporanPendapatan(username);
+        //     List<Object> data = new Con_Laporan().get_LaporanPendapatan_ByDate(username);
         //     System.out.println(data);
 
         //     Object[] parsedData = (Object[]) data.toArray(new Object[0]);
@@ -40,8 +40,6 @@ public class Debug {
         //         System.out.println(parsedData[i]);
         //     }
 
-        //     System.out.println(parsedData[1].toString());
-        //     System.out.println(parsedData[2].toString());
         // }
 
         // Hapus
@@ -50,5 +48,21 @@ public class Debug {
 
         //     System.out.println(res);
         // }
+
+        if(login){
+            List<Object> data = new Con_Laporan().get_LaporanPesanan(username);
+            Object[] parsedData = (Object[]) data.toArray(new Object[0]);
+            
+            // Diisi dengan semua data di convert jadi string
+            for (int i = 0; i < parsedData.length; i = i + 7) {
+                String[] isi = { parsedData[i].toString(), parsedData[i+1].toString(), parsedData[i+2].toString(), parsedData[i+3].toString(), 
+                                 parsedData[i+4].toString(), parsedData[i+5].toString(), parsedData[i+6].toString() };
+
+                for (int j = 0; j < isi.length; j++) {
+                    System.out.println(isi[j]);
+                }
+                // tModelTbAtas.addRow(isi);
+            }
+        }
     }
 }

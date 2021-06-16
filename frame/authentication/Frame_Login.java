@@ -18,7 +18,6 @@ import saved_authentication.Akun;
 import frame.menu_utama.Frame_Menu;
 
 public class Frame_Login extends JFrame implements ActionListener{
-    
     JPanel jPanel_Header = new JPanel();
     JPanel jPanel_Content = new JPanel();
     
@@ -203,6 +202,13 @@ public class Frame_Login extends JFrame implements ActionListener{
                     Akun.Nama_Toko = parsedData[3].toString();
                     Akun.Alamat_Toko = parsedData[4].toString();
                     Akun.Nomor_Telepon = parsedData[5].toString();
+
+                    // Muncul dialog login berhasil
+                    JOptionPane.showMessageDialog( 
+                        null, 
+                        "Login Sukses! Selamat Datang " + Akun.Nama_Pemilik, 
+                        "Login Berhasil",                
+                        JOptionPane.INFORMATION_MESSAGE);
 
                     // Dispose frame login
                     this.dispose();
