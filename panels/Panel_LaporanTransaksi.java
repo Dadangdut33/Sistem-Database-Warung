@@ -125,7 +125,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         tbAtas.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         tbAtas.getTableHeader().setReorderingAllowed(false);
         tbAtas.setBackground(new Color(69, 73, 74));
-        tbAtas.setForeground(new Color(187, 187, 187));
+        tbAtas.setForeground(new Color(210, 210, 210));
         tbAtas.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         tbAtas.setGridColor(new Color(76, 81, 82));
         tbAtas.setShowHorizontalLines(false);
@@ -221,7 +221,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         tbBawah.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         tbBawah.getTableHeader().setReorderingAllowed(false);
         tbBawah.setBackground(new Color(69, 73, 74));
-        tbBawah.setForeground(new Color(187, 187, 187));
+        tbBawah.setForeground(new Color(210, 210, 210));
         tbBawah.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         tbBawah.setGridColor(new Color(76, 81, 82));
         tbBawah.setShowHorizontalLines(false);
