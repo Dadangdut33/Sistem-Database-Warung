@@ -7,16 +7,11 @@
 package panels;
 
 import javax.swing.*;
-import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.table.*;
 
-import frame.kategori.*;
-import koneksi.Con_Kategori;
-
-import java.util.List;
-
+import frame.akun.*;
+import frame.menu_utama.Frame_Menu;
 import saved_authentication.Akun;
 
 public class Panel_Akun_Info extends JPanel implements ActionListener {
@@ -38,11 +33,10 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
     JButton jButton_UbahBiodata = new JButton();
     JButton jButton_DeleteAkun = new JButton();
 
-    // Get currentWindow
-    Object currentWindow = this;
-
     // Static for rgb
     public static boolean exitPanelAkun;
+
+    Object currentWindow = this;
 
     public Panel_Akun_Info(){
         this.setLayout(null);
@@ -131,10 +125,15 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
         jButton_UbahPass.addActionListener(this);
         jButton_UbahBiodata.addActionListener(this);
         jButton_DeleteAkun.addActionListener(this);
+
+        this.setEnabled(false);
     }
 
     void refreshAll(){
-        
+        jLabel_NamaToko.setText("Database " + Akun.Nama_Toko);
+        jLabel_AlamatToko.setText(Akun.Alamat_Toko);
+        jLabel_NomorTelepon.setText(Akun.Nomor_Telepon);
+        jLabel_PemilikToko.setText(Akun.Nama_Pemilik);
     }
 
     void rgb_PanelBelakang(){
@@ -160,34 +159,28 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae){
         if(ae.getSource().equals(jButton_UbahPass)){
-            // new Frame_Add_Kategori().addWindowListener(new WindowAdapter(){
-            //     @Override
-            //     public void windowClosing(WindowEvent e) {
-            //         refreshAll();
-            //         ((Component) currentWindow).setEnabled(true);
-            //     }
-            // });
-            ((Component) currentWindow).setEnabled(false);
+            new Ganti_Password().addWindowListener(new WindowAdapter(){
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    refreshAll();
+                    Frame_Menu.anotherFrameIsOpen = 0;
+                }
+            });
+            Frame_Menu.anotherFrameIsOpen = 1;
         } else 
         if(ae.getSource().equals(jButton_UbahBiodata)){
-            // new Frame_Edit_Kategori().addWindowListener(new WindowAdapter(){
-            //     @Override
-            //     public void windowClosing(WindowEvent e) {
-            //         refreshAll();
-            //         ((Component) currentWindow).setEnabled(true);
-            //     }
-            // });
-            // ((Component) currentWindow).setEnabled(false);
+            new Ubah_Biodata().addWindowListener(new WindowAdapter(){
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    refreshAll();
+                    Frame_Menu.anotherFrameIsOpen = 0;
+                }
+            });
+            Frame_Menu.anotherFrameIsOpen = 1;
         } else 
         if(ae.getSource().equals(jButton_DeleteAkun)){
-            // new Frame_Delete_Kategori().addWindowListener(new WindowAdapter(){
-            //     @Override
-            //     public void windowClosing(WindowEvent e) { 
-            //         refreshAll();
-            //         ((Component) currentWindow).setEnabled(true);
-            //     }
-            // });
-            // ((Component) currentWindow).setEnabled(false);
+            String confirmation = JOptionPane.showInputDialog(null, "Test", "TTTT", JOptionPane.WARNING_MESSAGE);
+            System.out.println(confirmation);
         }
     }
 }

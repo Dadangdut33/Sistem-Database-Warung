@@ -110,14 +110,14 @@ public class Con_Admin {
 
     // UPDATE
     /* Edit akun, untuk ganti password ntar minta konfirmasi diakhir dengan showmessagedialog */
-    public String ganti_Password(String PasswordBaru, String ID_Admin, String Password){
+    public String ganti_Password(String PasswordBaru, String ID_Admin, String PasswordLama){
         String status;
         try {
             con = new SQLConnect().getConSQL();
             PreparedStatement pr = con.prepareStatement("UPDATE User_Admin SET Password=? WHERE ID_Admin=? and Password=?");
             pr.setString(1, PasswordBaru);
             pr.setString(2, ID_Admin);
-            pr.setString(3, Password);
+            pr.setString(3, PasswordLama);
 
             int res = pr.executeUpdate();
             if(res == 0){

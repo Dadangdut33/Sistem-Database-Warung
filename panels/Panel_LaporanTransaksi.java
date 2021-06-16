@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.table.*;
 
+import frame.menu_utama.Frame_Menu;
 import frame.transaksi.*;
 import koneksi.Con_Laporan;
 
@@ -393,10 +394,10 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
                 @Override
                 public void windowClosing(WindowEvent e) { // Agar auto refresh dan main form dapat dipencet lagi saat ditutup
                     refreshAll();
-                    ((Component) currentWindow).setEnabled(true);
+                    Frame_Menu.anotherFrameIsOpen = 0;
                 }
             });
-            ((Component) currentWindow).setEnabled(false);
+            Frame_Menu.anotherFrameIsOpen = 1;
         }
     }
 }

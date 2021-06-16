@@ -8,7 +8,6 @@ package frame.menu_utama;
 
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -41,6 +40,9 @@ public class Frame_Menu extends JFrame implements ActionListener {
     JPanel jPanel_Curr_Panel = new JPanel();
 
     Boolean exit;
+    Object menuWindow = this;
+
+    public static int anotherFrameIsOpen = 0;
 
     public Frame_Menu(){        
         // Frame menu settingnya
@@ -51,7 +53,7 @@ public class Frame_Menu extends JFrame implements ActionListener {
         this.setSize(1200, 700);
         this.getContentPane().setBackground(new Color(24, 40, 44));
         this.setLocationRelativeTo(null);
-        
+    
         // Untuk clock
         exit = false;
 
@@ -77,8 +79,13 @@ public class Frame_Menu extends JFrame implements ActionListener {
         jLabel_Date.setBounds(20, 10, 230, 20);
         jLabel_Date.setForeground(Color.WHITE);
         
-        // Panggil function untuk waktunya
+        // Panggil function untuk start thread waktunya
         dateAndTime();
+
+        // Panggil function untuk start thread cek window
+        checkOpen();
+
+        
 
         // ID
         jLabel_ID.setFont(new Font("Segoe UI", Font.PLAIN, 11));
@@ -254,6 +261,39 @@ public class Frame_Menu extends JFrame implements ActionListener {
 
         // Start threadnya
         clock.start();
+    }
+
+    void checkOpen(){
+        // Buat thread check apakah ada frame yg diopen setiap 0.5 detik
+        Thread check = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while(!exit){
+                        switch (anotherFrameIsOpen) {
+                            case 1:
+                                ((Component) menuWindow).setEnabled(false);
+                                break;
+                            case 0:
+                                // Agar hanya di enable apabila memang dia di disable
+                                if(!((Component) menuWindow).isEnabled()){
+                                    ((Component) menuWindow).setEnabled(true);
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+
+                        sleep(500);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        // Start threadnya
+        check.start();
     }
 
     // Untuk ubah-ubah panel kontennya

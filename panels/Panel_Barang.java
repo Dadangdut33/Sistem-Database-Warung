@@ -13,6 +13,7 @@ import java.awt.event.*;
 import javax.swing.table.*;
 
 import frame.barang.*;
+import frame.menu_utama.Frame_Menu;
 import koneksi.Con_Barang;
 
 import java.util.List;
@@ -231,30 +232,30 @@ public class Panel_Barang extends JPanel implements ActionListener {
                 @Override
                 public void windowClosing(WindowEvent e) {
                     refreshAll();
-                    ((Component) currentWindow).setEnabled(true);
+                    Frame_Menu.anotherFrameIsOpen = 0;
                 }
             });
-            ((Component) currentWindow).setEnabled(false);
+            Frame_Menu.anotherFrameIsOpen = 1;
         } else 
         if(ae.getSource().equals(jButton_Edit)){
             new Frame_Edit_Barang().addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent e) {
                     refreshAll();
-                    ((Component) currentWindow).setEnabled(true);
+                    Frame_Menu.anotherFrameIsOpen = 0;
                 }
             });
-            ((Component) currentWindow).setEnabled(false);
+            Frame_Menu.anotherFrameIsOpen = 1;
         } else 
         if(ae.getSource().equals(jButton_Delete)){
             new Frame_Delete_Barang().addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent e) { 
                     refreshAll();
-                    ((Component) currentWindow).setEnabled(true);
+                    Frame_Menu.anotherFrameIsOpen = 0;
                 }
             });
-            ((Component) currentWindow).setEnabled(false);
+            Frame_Menu.anotherFrameIsOpen = 1;
         }
     }
 }
