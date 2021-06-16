@@ -85,8 +85,6 @@ public class Frame_Menu extends JFrame implements ActionListener {
         // Panggil function untuk start thread cek window
         checkOpen();
 
-        
-
         // ID
         jLabel_ID.setFont(new Font("Segoe UI", Font.PLAIN, 11));
         jLabel_ID.setBounds(5, 70, 80, 20);
@@ -236,6 +234,9 @@ public class Frame_Menu extends JFrame implements ActionListener {
                         int day = cal.get(Calendar.DAY_OF_MONTH);
                         int month = cal.get(Calendar.MONTH);
                         int year = cal.get(Calendar.YEAR);
+
+                        // Month dimulai dari 0 oleh karena itu
+                        month += 1;
 
                         String Am_Pm;
                         if(cal.get(Calendar.AM_PM) == Calendar.PM) {
