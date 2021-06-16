@@ -4,19 +4,221 @@
  * Author2: Alfanisa Safvira
  * Author3: Daffa Fawwaz Syadad
  */
+
 package frame.authentication;
+
 import javax.swing.*;
-import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import koneksi.Con_Admin;
+import saved_authentication.Akun;
+import frame.menu_utama.Frame_Menu;
 
 public class Frame_Login extends JFrame implements ActionListener{
+    
+    JPanel jPanel_Header = new JPanel();
+    JPanel jPanel_Content = new JPanel();
+    
+    JLabel jLabel_Judul = new JLabel();
+    JLabel icon_User = new JLabel();
+    JLabel icon_Password = new JLabel();
+
+    JTextField textField_User = new JTextField();
+    JPasswordField passwordField = new JPasswordField();
+
+    JButton button_Login = new JButton();
+
+    JLabel jLabel_Tanya = new JLabel();
+    JLabel jLabel_Daftar = new JLabel();
+
+    ArrayList<String> data_Yang_Kosong = new ArrayList<>();
+
     public Frame_Login(){
-        // this.setSize();
+        // Setting frame
+        this.setSize(320, 470);
+        this.setTitle("Login");
+        this.getContentPane().setBackground(new Color(60, 63, 65));
+        this.setLayout(null);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setIconImage(new ImageIcon(getClass().getResource("/assets/icons8-database-50.png")).getImage());
+
+        // Panel Header
+        jPanel_Header.setLayout(null);
+        jPanel_Header.setBackground(new Color(18, 18, 18));
+        jPanel_Header.setBounds(10, 10, 280, 50);
+        jPanel_Header.setVisible(true);
+        this.getContentPane().add(jPanel_Header);
+        
+        // Panel Content
+        jPanel_Content.setLayout(null);
+        jPanel_Content.setBackground(new Color(24, 40, 44));
+        jPanel_Content.setBounds(10, 70, 280, 340);
+        this.getContentPane().add(jPanel_Content);
+
+        // Label Judul
+        jLabel_Judul.setForeground(new Color(187, 187, 187));
+        jLabel_Judul.setFont((new Font("Segoe UI", Font.BOLD, 18)));
+        jLabel_Judul.setText("LOGIN");
+        jLabel_Judul.setBounds(105, 10, 80, 30);
+        jPanel_Header.add(jLabel_Judul);
+
+        // Icon user
+        icon_User.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-account-2-30.png")));
+        icon_User.setBounds(10, 20, 40, 30);
+        jPanel_Content.add(icon_User);
+
+        // Icon Password
+        icon_Password.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-lock-30.png")));
+        icon_Password.setBounds(10, 70, 40, 30);
+        jPanel_Content.add(icon_Password);
+
+        // Textfield user
+        textField_User.setFont((new Font("Segoe UI", Font.PLAIN, 12)));
+        textField_User.setBackground(new Color(60, 63, 65));
+        textField_User.setForeground(new Color(187, 187, 187));
+        textField_User.setBounds(50, 22, 215, 25);
+        textField_User.setText("");
+        textField_User.setCaretColor(Color.WHITE);
+        jPanel_Content.add(textField_User);
+
+        // Passwordfield password
+        passwordField.setBackground(new Color(60, 63, 65));
+        passwordField.setForeground(new Color(187, 187, 187));
+        passwordField.setBounds(50, 72, 215, 25);
+        passwordField.setText("");
+        passwordField.setCaretColor(Color.WHITE);
+        jPanel_Content.add(passwordField);
+
+        // Button login
+        button_Login.setBackground(new Color(60, 63, 65));
+        button_Login.setForeground(new Color(187, 187, 187));
+        button_Login.setBounds(50, 115, 215, 20);
+        button_Login.setFont((new Font("Segoe UI", Font.PLAIN, 12)));
+        button_Login.setText("Sign In");
+        jPanel_Content.add(button_Login);
+
+        // Label tanya yang dibawah
+        jLabel_Tanya.setForeground(new Color(187, 187, 187));
+        jLabel_Tanya.setFont((new Font("Segoe UI", Font.PLAIN, 12)));
+        jLabel_Tanya.setText("Belum punya akun?");
+        jLabel_Tanya.setBounds(90, 290, 110, 22);
+        jPanel_Content.add(jLabel_Tanya);
+
+        // Label daftar dibawhnya lagi
+        jLabel_Daftar.setForeground(new Color(187, 187, 187));
+        jLabel_Daftar.setFont((new Font("Segoe UI", Font.BOLD, 12)));
+        jLabel_Daftar.setText("Daftar sekarang");
+        jLabel_Daftar.setBounds(96, 310, 110, 22);
+        
+        // Listener untuk label daftar, agar saat dipencet akan membawa ke frame daftar
+        jLabel_Daftar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                daftar();
+            }
+        });
+        jPanel_Content.add(jLabel_Daftar);
+
+        // Listener untuk button login
+        button_Login.addActionListener(this);
+
+        // Set frame visible
+        this.setVisible(true);
+    }
+
+    // Function daftar
+    public void daftar() {
+        this.dispose();
+        new Frame_Daftar();
+    }
+
+    // Cek kosong
+    public boolean kosong(){
+        boolean kosong = false;
+        for (int i = data_Yang_Kosong.size() - 1; i >= 0; i--) {
+            data_Yang_Kosong.remove(i);
+        }
+
+        if(textField_User.getText().trim().equals("")){
+            kosong = true;
+            data_Yang_Kosong.add("User ID");
+        } 
+        if(passwordField.getPassword().length == 0){
+            kosong = true;
+            data_Yang_Kosong.add("Password");
+        }
+
+        return kosong;
+    }
+
+    // Popup untuk yang kosong
+    public void kosongPopup(){
+        int jumlahKosong = data_Yang_Kosong.size();
+        int last = data_Yang_Kosong.size() - 1;
+
+        if(jumlahKosong == 1) {
+            JOptionPane.showMessageDialog( 
+                null, 
+                String.join(", ", data_Yang_Kosong) + " harus diisi!", 
+                "Input Error",                
+                JOptionPane.ERROR_MESSAGE);
+        } else
+        if(jumlahKosong == 2) {
+            JOptionPane.showMessageDialog( 
+                null, 
+                String.join(" dan ", 
+                String.join(", ", data_Yang_Kosong.subList(0, last)),
+                data_Yang_Kosong.get(last)) + " harus diisi!", 
+                "Input Error",                
+                JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     @Override
     public void actionPerformed(ActionEvent ae){
+        if(ae.getSource().equals(button_Login)){
+            if(kosong()){
+                kosongPopup();
+            } else {
+                String id = textField_User.getText().trim();
+                String pass = new String(passwordField.getPassword());
+                
+                // Cek status login
+                Boolean loginSukses = new Con_Admin().login(id, pass);
+                // Kalau sukses
+                if(loginSukses) {
+                    List<Object> data = new Con_Admin().get_Akun(id, pass);
 
+                    Object[] parsedData = (Object[]) data.toArray(new Object[0]);
+                    
+                    // Isi data ke cache lokal
+                    Akun.ID_Admin = parsedData[0].toString();
+                    Akun.Password = parsedData[1].toString();
+                    Akun.Nama_Pemilik = parsedData[2].toString();
+                    Akun.Nama_Toko = parsedData[3].toString();
+                    Akun.Alamat_Toko = parsedData[4].toString();
+                    Akun.Nomor_Telepon = parsedData[5].toString();
+
+                    // Dispose frame login
+                    this.dispose();
+
+                    // Panggil frame menu
+                    new Frame_Menu();
+                
+                // Kalau gagal munculin dialog gagal
+                } else {
+                    JOptionPane.showMessageDialog( 
+                        null, 
+                        "Login gagal! ID atau Password salah!", 
+                        "Login Gagal",                
+                        JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        }
     }
 }

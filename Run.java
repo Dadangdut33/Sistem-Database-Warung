@@ -5,10 +5,12 @@
  * Author3: Daffa Fawwaz Syadad
  */
 
-import frame.menu_utama.*;
+import frame.authentication.Frame_Login;
+import frame.menu_utama.Frame_Menu;
 
 public class Run {
     public static void main(String[] args) {
-        new Frame_Menu();
+        // new Frame_Menu();
+        new Frame_Login();
     }
 }

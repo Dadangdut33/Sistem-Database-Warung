@@ -63,7 +63,11 @@ public class Con_Admin {
                 status = "Akun berhasil dibuat!";
             }
         } catch (SQLException e) {
-            status = e.getMessage();
+            if(e.getMessage().contains("duplicate")) {
+                status = "ID sudah diambil!";
+            } else {
+                status = e.getMessage();
+            }
         } finally {
             try { con.close(); } catch (SQLException e) { /* Ignored */ }
         }

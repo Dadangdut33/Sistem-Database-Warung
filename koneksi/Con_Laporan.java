@@ -119,21 +119,25 @@ public class Con_Laporan {
         return dataList;
     }
 
-    /* Untuk laporan pendapatan saja yaitu kode, total, dan tanggal */
-    public List<Object> get_LaporanPendapatan(String ID_Admin){
+    /* Untuk laporan pendapatan saja yaitu kode, jumlah, total, dan tanggal */
+    public List<Object> get_LaporanPendapatan_ByDate(String ID_Admin){
         List<Object> dataList = new ArrayList<>();
         try {
             con = new SQLConnect().getConSQL();
-            PreparedStatement pr = con.prepareStatement("SELECT * FROM Laporan_Pesanan WHERE ID_Admin = ?");
+            String str = "SELECT datepart(yyyy, Tanggal_Pesanan) as [tahun],  datepart(m, Tanggal_Pesanan) as [bulan], datepart(dd, Tanggal_Pesanan) as [tgl], SUM(Total_Harga_Pesanan) as Total, COUNT(*) as banyak_Pesanan";
+            String str2  = "FROM Laporan_Pesanan WHERE ID_Admin = ? GROUP BY datepart(dd, Tanggal_Pesanan), datepart(m, Tanggal_Pesanan), datepart(yyyy, Tanggal_Pesanan) ORDER BY [tgl]";
+            PreparedStatement pr = con.prepareStatement(str + " " + str2);
             pr.setString(1, ID_Admin);
 
             ResultSet rs = pr.executeQuery();
             while (rs.next()) {
-                String Kode_Pesanan = rs.getString("Kode_Pesanan").trim();
-                int Total_Harga = rs.getInt("Total_Harga_Pesanan");
-                Date Tanggal_Pesanan = rs.getDate("Tanggal_Pesanan");
+                int tahun = rs.getInt("tahun");
+                int bulan = rs.getInt("bulan");
+                int tgl = rs.getInt("tgl");
+                int Total = rs.getInt("Total_Harga_Pesanan");
+                int banyak_pesanan = rs.getInt("banyak");
 
-                Object[] dataArr = { Kode_Pesanan, Total_Harga, Tanggal_Pesanan };
+                Object[] dataArr = { tahun, bulan, tgl, Total, banyak_pesanan };
                 Collections.addAll(dataList, dataArr);
             }
         } catch (SQLException e) {
@@ -145,20 +149,50 @@ public class Con_Laporan {
         return dataList;
     }
 
-    /* Untuk laporan pendapatan saja yang digrup dengan tanggal, jadi hanya muncul tgl pesanan dan total harganya */
-    public List<Object> get_LaporanPendapatan_ByDate(String ID_Admin){
+    public List<Object> get_LaporanPendapatan_ByMonth(String ID_Admin){
         List<Object> dataList = new ArrayList<>();
         try {
             con = new SQLConnect().getConSQL();
-            PreparedStatement pr = con.prepareStatement("SELECT Tanggal_Pesanan, SUM(Total_Harga_Pesanan) Total FROM Laporan_Pesanan WHERE ID_Admin = ? GROUP BY Tanggal_Pesanan");
+            String str = "SELECT datepart(yyyy, Tanggal_Pesanan) as [tahun], datepart(m, Tanggal_Pesanan) as [bulan], SUM(Total_Harga_Pesanan) as Total, COUNT(*) as banyak_Pesanan";
+            String str2  = "FROM Laporan_Pesanan WHERE ID_Admin = ? GROUP BY datepart(mm, Tanggal_Pesanan), datepart(yyyy, Tanggal_Pesanan) ORDER BY [bulan];";
+            PreparedStatement pr = con.prepareStatement(str + " " + str2);
             pr.setString(1, ID_Admin);
 
             ResultSet rs = pr.executeQuery();
             while (rs.next()) {
-                int Total_Harga = rs.getInt("Total_Harga_Pesanan");
-                Date Tanggal_Pesanan = rs.getDate("Tanggal_Pesanan");
+                int tahun = rs.getInt("tahun");
+                int bulan = rs.getInt("bulan");
+                int Total = rs.getInt("Total_Harga_Pesanan");
+                int banyak_pesanan = rs.getInt("banyak");
 
-                Object[] dataArr = { Total_Harga, Tanggal_Pesanan };
+                Object[] dataArr = { tahun, bulan, Total, banyak_pesanan };
+                Collections.addAll(dataList, dataArr);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try { con.close(); } catch (SQLException e) { /* Ignored */ }
+        }
+
+        return dataList;
+    }
+
+    public List<Object> get_LaporanPendapatan_ByYear(String ID_Admin){
+        List<Object> dataList = new ArrayList<>();
+        try {
+            con = new SQLConnect().getConSQL();
+            String str = "SELECT datepart(yyyy, Tanggal_Pesanan) as [tahun], SUM(Total_Harga_Pesanan) as Total, count(*) as banyak_Pesanan";
+            String str2  = "FROM Laporan_Pesanan WHERE ID_Admin = ? GROUP BY datepart(yyyy, Tanggal_Pesanan) ORDER BY [tahun];";
+            PreparedStatement pr = con.prepareStatement(str + " " + str2);
+            pr.setString(1, ID_Admin);
+
+            ResultSet rs = pr.executeQuery();
+            while (rs.next()) {
+                int tahun = rs.getInt("tahun");
+                int Total = rs.getInt("Total_Harga_Pesanan");
+                int banyak_pesanan = rs.getInt("banyak");
+
+                Object[] dataArr = { tahun, Total, banyak_pesanan };
                 Collections.addAll(dataList, dataArr);
             }
         } catch (SQLException e) {

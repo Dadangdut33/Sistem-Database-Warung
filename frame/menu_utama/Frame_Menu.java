@@ -18,6 +18,8 @@ import java.util.GregorianCalendar;
 import panels.*;
 import saved_authentication.*;
 
+import frame.authentication.*;
+
 
 public class Frame_Menu extends JFrame implements ActionListener {
     JButton jButton_Akun = new JButton();
@@ -28,6 +30,7 @@ public class Frame_Menu extends JFrame implements ActionListener {
     JButton jButton_Transaksi = new JButton();
     JButton jButton_LaporanTransaksi = new JButton();
 
+    JLabel jLabel_ID = new JLabel();
     JLabel jLabel_Date = new JLabel();
     JLabel jLabel_Time = new JLabel();
 
@@ -35,24 +38,24 @@ public class Frame_Menu extends JFrame implements ActionListener {
     JPanel jPanel_Header = new JPanel();
     JPanel jPanel_Curr_Panel = new JPanel();
 
-    public Frame_Menu(){
-        // Pertama Panggil Frame login dulu
+    Boolean exit;
 
-        
+    public Frame_Menu(){        
         // Frame menu settingnya
-        this.getContentPane().setLayout(null);
-        // this.setTitle("Database Warung " + new Akun().getNama_Pemilik());
-        this.setTitle("Database Warung ");
+        this.setLayout(null);
+        this.setTitle("Database Warung " + Akun.ID_Admin);
         this.setResizable(false);
-        // this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
         this.setIconImage(new ImageIcon(getClass().getResource("/assets/icons8-database-50.png")).getImage());
         this.setSize(1200, 700);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setBackground(new Color(24, 40, 44));
+
+        // Untuk clock
+        exit = false;
 
         // PANEL KIRI
         jPanel_Side.setBackground(new Color(21, 25, 28));
-        jPanel_Side.setBounds(0, 0, 89, 700);
+        jPanel_Side.setBounds(0, 0, 90, 700);
         jPanel_Side.setLayout(null);
         this.getContentPane().add(jPanel_Side);
         
@@ -63,18 +66,27 @@ public class Frame_Menu extends JFrame implements ActionListener {
         this.getContentPane().add(jPanel_Header);
 
         // Jam 
-        jLabel_Time.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        jLabel_Time.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 30)); // NOI18N
         jLabel_Time.setBounds(20, 33, 220, 30);
         jLabel_Time.setForeground(Color.WHITE);
 
         // Tanggal
-        jLabel_Date.setFont(new Font("Segoe UI", 1, 14));
+        jLabel_Date.setFont(new Font("Segoe UI", Font.BOLD, 14));
         jLabel_Date.setBounds(20, 10, 230, 20);
         jLabel_Date.setForeground(Color.WHITE);
-
+        
+        // Panggil function untuk waktunya
         dateAndTime();
 
-        // PANEL KONTEN diawal adalah panel admin
+        // ID
+        jLabel_ID.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+        jLabel_ID.setBounds(5, 70, 80, 20);
+        jLabel_ID.setText(Akun.ID_Admin);
+        jLabel_ID.setHorizontalAlignment(SwingConstants.CENTER);
+        jLabel_ID.setVerticalAlignment(SwingConstants.CENTER);
+        jLabel_ID.setForeground(Color.WHITE);
+
+        // PANEL KONTEN, panel yg muncul diawal adalah panel admin
         jPanel_Curr_Panel = new Panel_Akun_Info();
         this.getContentPane().add(jPanel_Curr_Panel);
 
@@ -83,7 +95,7 @@ public class Frame_Menu extends JFrame implements ActionListener {
         jButton_Akun.setOpaque(false);
         jButton_Akun.setContentAreaFilled(false);
         jButton_Akun.setFocusPainted(false);
-        jButton_Akun.setBorderPainted(true);
+        jButton_Akun.setBorderPainted(false);
         jButton_Akun.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-account-35.png")));
         jButton_Akun.setToolTipText("Menu Akun");
         jButton_Akun.setBounds(20, 18, 50, 50);
@@ -93,7 +105,7 @@ public class Frame_Menu extends JFrame implements ActionListener {
         jButton_Logout.setOpaque(false);
         jButton_Logout.setContentAreaFilled(false);
         jButton_Logout.setFocusPainted(false);
-        jButton_Logout.setBorderPainted(true);
+        jButton_Logout.setBorderPainted(false);
         jButton_Logout.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-export-35.png")));
         jButton_Logout.setToolTipText("Logout");
         jButton_Logout.setBounds(1040, 18, 50, 50);
@@ -154,6 +166,7 @@ public class Frame_Menu extends JFrame implements ActionListener {
         jPanel_Header.add(jLabel_Date);
 
         // Add button ke panel kiri
+        jPanel_Side.add(jLabel_ID);
         jPanel_Side.add(jButton_Akun);
         jPanel_Side.add(jButton_Kategori);
         jPanel_Side.add(jButton_Barang);
@@ -170,20 +183,34 @@ public class Frame_Menu extends JFrame implements ActionListener {
         jButton_Transaksi.addActionListener(this);
         jButton_LaporanTransaksi.addActionListener(this);
 
+        // Konfirmasi close
+        this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                int confirmed = JOptionPane.showConfirmDialog(null, 
+                    "Apakah anda yakin ingin menutup program?", "Exit Confirmation",
+                    JOptionPane.YES_NO_OPTION);
+            
+                if (confirmed == JOptionPane.YES_OPTION) {
+                    exit = true;
+                    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                } else {
+                    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                }
+            }
+        });
+
         // Set Visible
         this.setVisible(true);
     }
 
-    public void login(){
-        // Frame_Login LOGIN = new Frame_Login();
-    }
-
-    public void dateAndTime(){
-        // Buat thread jadi dia jalan setiap 1 detik
+    // Untuk jam dan tanggal yang diletakkan di panel header
+    void dateAndTime(){
+        // Buat thread yang berjalan setiap 1 detik
         Thread clock = new Thread() {
+            @Override
             public void run() {
                 try {
-                    for(;;){
+                    while(!exit){
                         Calendar cal = new GregorianCalendar();
                         int day = cal.get(Calendar.DAY_OF_MONTH);
                         int month = cal.get(Calendar.MONTH);
@@ -215,57 +242,53 @@ public class Frame_Menu extends JFrame implements ActionListener {
         clock.start();
     }
 
+    // Untuk ubah-ubah panel kontennya
+    void change_Panel(JPanel newPanel){
+        this.getContentPane().remove(jPanel_Curr_Panel);
+        jPanel_Curr_Panel = newPanel;
+
+        this.getContentPane().add(jPanel_Curr_Panel);
+        repaint(); revalidate();
+    }
+
     @Override
     public void actionPerformed(ActionEvent ae){
         if(ae.getSource().equals(jButton_Logout)){
-            this.dispose();
-            login();
-            // FRAME DISPOSE
-            // OPEN LOGIN
-            // RESET STATUS SAVVVED AUTHENTICATION
-            // ULANG LG PROSES YG AWAL2 DARI FRAME LOGIN
+            int confirmed = JOptionPane.showConfirmDialog(null, 
+                    "Apakah anda yakin ingin logout dari akun?", "Logout Confirmation",
+                    JOptionPane.YES_NO_OPTION);
+            
+            if (confirmed == JOptionPane.YES_OPTION) {
+                // Exit true agar thread clock berhenti 
+                exit = true;
+
+                // Dispose frame menu
+                this.dispose();
+
+                // Reset cache akun
+                new Akun().reset();
+
+                // Panggil frame login
+                new Frame_Login();
+            }
         } else   
         if(ae.getSource().equals(jButton_Akun)){
-            this.getContentPane().remove(jPanel_Curr_Panel);
-            jPanel_Curr_Panel = new Panel_Akun_Info();
-
-            this.getContentPane().add(jPanel_Curr_Panel);
-            repaint(); revalidate();
+            change_Panel(new Panel_Akun_Info());
         } else
         if(ae.getSource().equals(jButton_Kategori)){
-            this.getContentPane().remove(jPanel_Curr_Panel);
-            jPanel_Curr_Panel = new Panel_Kategori();
-
-            this.getContentPane().add(jPanel_Curr_Panel);
-            repaint(); revalidate();
+            change_Panel(new Panel_Kategori());
         } else
         if(ae.getSource().equals(jButton_Barang)){
-            this.getContentPane().remove(jPanel_Curr_Panel);
-            jPanel_Curr_Panel = new Panel_Barang();
-
-            this.getContentPane().add(jPanel_Curr_Panel);
-            repaint(); revalidate();
+            change_Panel(new Panel_Barang());
         } else
         if(ae.getSource().equals(jButton_Pelanggan)){
-            this.getContentPane().remove(jPanel_Curr_Panel);
-            jPanel_Curr_Panel = new Panel_Pelanggan();
-
-            this.getContentPane().add(jPanel_Curr_Panel);
-            repaint(); revalidate();
+            change_Panel(new Panel_Pelanggan());
         } else
         if(ae.getSource().equals(jButton_Transaksi)){
-            this.getContentPane().remove(jPanel_Curr_Panel);
-            jPanel_Curr_Panel = new Panel_Transaksi();
-
-            this.getContentPane().add(jPanel_Curr_Panel);
-            repaint(); revalidate();
+            change_Panel(new Panel_Transaksi());
         } else
         if(ae.getSource().equals(jButton_LaporanTransaksi)){
-            this.getContentPane().remove(jPanel_Curr_Panel);
-            jPanel_Curr_Panel = new Panel_Transaksi_Laporan();
-
-            this.getContentPane().add(jPanel_Curr_Panel);
-            repaint(); revalidate();
+            change_Panel(new Panel_LaporanTransaksi());
         }
-    }    
+    }
 }

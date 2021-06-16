@@ -15,7 +15,7 @@ public class Panel_Pelanggan extends JPanel implements ActionListener {
     public Panel_Pelanggan(){
         this.setLayout(null);
         this.setBounds(80, 70, 1120, 630);
-        this.setBackground(new Color(170, 40, 44));
+        this.setBackground(new Color(136, 153, 166));
         // this.setBackground(new Color(24, 40, 44));
         System.out.println("PELANGGAN");
     }
