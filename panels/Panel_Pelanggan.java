@@ -12,9 +12,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.table.*;
 
-import frame.pelanggan.Frame_Add_Pelanggan;
-import frame.pelanggan.Frame_Delete_Pelanggan;
-import frame.pelanggan.Frame_Edit_Pelanggan;
+import frame.pelanggan.*;
 import koneksi.Con_Pelanggan;
 
 import java.util.List;
@@ -205,11 +203,10 @@ public class Panel_Pelanggan extends JPanel implements ActionListener {
 
     void clearTabelAtas(){
         int barisTbAtas = tModelTbAtas.getRowCount();
-        for(int i=0; i < barisTbAtas; i++){
+        for(int i = 0; i < barisTbAtas; i++){
             tModelTbAtas.removeRow(0);
         }
     }
-
 
     void isiTabelAtas(){
         List<Object> data = new Con_Pelanggan().get_PelangganTable(Akun.ID_Admin);

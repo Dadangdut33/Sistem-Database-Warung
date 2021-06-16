@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.table.*;
 
-import frame.transaksi.Frame_Delete_Transaksi;
+import frame.transaksi.*;
 import koneksi.Con_Laporan;
 
 import java.util.List;
@@ -271,7 +271,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         jButton_Delete.setFocusPainted(false);
         jButton_Delete.setBorderPainted(false);
         jButton_Delete.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-delete-row-30.png")));
-        jButton_Delete.setToolTipText("Hapus Data");
+        jButton_Delete.setToolTipText("Hapus Laporan");
         jButton_Delete.setBounds(1035, 40, 50, 50);
         this.add(jButton_Delete);
 
@@ -296,14 +296,14 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
 
     void clearTabelAtas(){
         int barisTbAtas = tModelTbAtas.getRowCount();
-        for(int i=0; i < barisTbAtas; i++){
+        for(int i = 0; i < barisTbAtas; i++){
             tModelTbAtas.removeRow(0);
         }
     }
 
     void clearTabelBawah(){
         int barisTbBawah = tModelTbBawah.getRowCount();
-        for(int i=0; i < barisTbBawah; i++){
+        for(int i = 0; i < barisTbBawah; i++){
             tModelTbBawah.removeRow(0);
         }
     }
