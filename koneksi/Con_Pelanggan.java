@@ -53,8 +53,8 @@ public class Con_Pelanggan {
             while (rs.next()) {
                 String Kode_Pelanggan = rs.getString("Kode_Pelanggan").trim();
                 String Nama_Pelanggan = rs.getString("Nama_Pelanggan").trim();
-                String Alamat_Pelanggan = rs.getString("Nama_Toko").trim();
-                String Telepon_Pelanggan = rs.getString("Alamat_Toko").trim();
+                String Alamat_Pelanggan = rs.getString("Alamat_Pelanggan").trim();
+                String Telepon_Pelanggan = rs.getString("Telepon_Pelanggan").trim();
     
                 String[] dataArr = { Kode_Pelanggan, Nama_Pelanggan, Alamat_Pelanggan, Telepon_Pelanggan };
                 Collections.addAll(dataList, dataArr);
@@ -103,8 +103,8 @@ public class Con_Pelanggan {
             rs.next();
 
             String Nama_Pelanggan = rs.getString("Nama_Pelanggan").trim();
-            String Alamat_Pelanggan = rs.getString("Nama_Toko").trim();
-            String Telepon_Pelanggan = rs.getString("Alamat_Toko").trim();
+            String Alamat_Pelanggan = rs.getString("Alamat_Pelanggan").trim();
+            String Telepon_Pelanggan = rs.getString("Telepon_Pelanggan").trim();
 
             String[] dataArr = { Nama_Pelanggan, Alamat_Pelanggan, Telepon_Pelanggan };
             Collections.addAll(dataList, dataArr);

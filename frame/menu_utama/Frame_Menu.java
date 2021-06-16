@@ -8,7 +8,6 @@ package frame.menu_utama;
 
 
 import javax.swing.*;
-import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -19,6 +18,7 @@ import panels.*;
 import saved_authentication.*;
 
 import frame.authentication.*;
+import frame.credits.Frame_Credit;
 
 
 public class Frame_Menu extends JFrame implements ActionListener {
@@ -29,6 +29,7 @@ public class Frame_Menu extends JFrame implements ActionListener {
     JButton jButton_Pelanggan = new JButton();
     JButton jButton_Transaksi = new JButton();
     JButton jButton_LaporanTransaksi = new JButton();
+    JButton jButton_Credit = new JButton();
 
     JLabel jLabel_ID = new JLabel();
     JLabel jLabel_Date = new JLabel();
@@ -160,6 +161,16 @@ public class Frame_Menu extends JFrame implements ActionListener {
         jButton_LaporanTransaksi.setToolTipText("Menu Laporan Transaksi");
         jButton_LaporanTransaksi.setBounds(20, 470, 50, 50);
 
+        // Button credit
+        jButton_Credit.setBackground(new Color(40, 40, 44));
+        jButton_Credit.setOpaque(false);
+        jButton_Credit.setContentAreaFilled(false);
+        jButton_Credit.setFocusPainted(false);
+        jButton_Credit.setBorderPainted(false);
+        jButton_Credit.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-copyright-35.png")));
+        jButton_Credit.setToolTipText("Copyright");
+        jButton_Credit.setBounds(20, 600, 50, 50);
+
         // Add button ke panel atas
         jPanel_Header.add(jButton_Logout);
         jPanel_Header.add(jLabel_Time);
@@ -173,6 +184,7 @@ public class Frame_Menu extends JFrame implements ActionListener {
         jPanel_Side.add(jButton_Pelanggan);
         jPanel_Side.add(jButton_Transaksi);
         jPanel_Side.add(jButton_LaporanTransaksi);
+        jPanel_Side.add(jButton_Credit);
 
         // Add action listener untuk tiap tombol
         jButton_Akun.addActionListener(this);
@@ -182,6 +194,7 @@ public class Frame_Menu extends JFrame implements ActionListener {
         jButton_Pelanggan.addActionListener(this);
         jButton_Transaksi.addActionListener(this);
         jButton_LaporanTransaksi.addActionListener(this);
+        jButton_Credit.addActionListener(this);
 
         // Konfirmasi close
         this.addWindowListener(new WindowAdapter() {
@@ -289,6 +302,9 @@ public class Frame_Menu extends JFrame implements ActionListener {
         } else
         if(ae.getSource().equals(jButton_LaporanTransaksi)){
             change_Panel(new Panel_LaporanTransaksi());
+        } else
+        if(ae.getSource().equals(jButton_Credit)){
+            new Frame_Credit();
         }
     }
 }

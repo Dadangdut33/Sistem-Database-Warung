@@ -6,14 +6,13 @@
  */
 package frame.credits;
 import javax.swing.*;
-import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 
 
-public class Frame_Creator extends JFrame implements ActionListener {
+public class Frame_Credit extends JFrame implements ActionListener {
     
-    public Frame_Creator(){
+    public Frame_Credit(){
 
     }
 

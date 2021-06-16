@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.table.*;
 
+import frame.transaksi.Frame_Delete_Transaksi;
 import koneksi.Con_Laporan;
 
 import java.util.List;
@@ -51,7 +52,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
     TableRowSorter<DefaultTableModel> sorterTbBawah;
 
     // Button Hapus
-    JButton jButton_Hapus = new JButton();
+    JButton jButton_Delete = new JButton();
 
     // Get currentWindow
     Object currentWindow = this;
@@ -85,7 +86,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         // Judul panel
         jLabel_judul.setFont(new Font("Segoe UI", Font.BOLD, 18));
         jLabel_judul.setForeground(Color.WHITE);
-        jLabel_judul.setBounds(20, 20, 220, 20);
+        jLabel_judul.setBounds(20, 20, 220, 25);
         jLabel_judul.setText("Tabel Laporan Transaksi");
         this.add(jLabel_judul);
 
@@ -264,18 +265,18 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         });
         
         // Button Hapus
-        jButton_Hapus.setBackground(new Color(40, 40, 44));
-        jButton_Hapus.setOpaque(false);
-        jButton_Hapus.setContentAreaFilled(false);
-        jButton_Hapus.setFocusPainted(false);
-        jButton_Hapus.setBorderPainted(false);
-        jButton_Hapus.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-delete-row-30.png")));
-        jButton_Hapus.setToolTipText("Hapus Data");
-        jButton_Hapus.setBounds(1035, 40, 50, 50);
-        this.add(jButton_Hapus);
+        jButton_Delete.setBackground(new Color(40, 40, 44));
+        jButton_Delete.setOpaque(false);
+        jButton_Delete.setContentAreaFilled(false);
+        jButton_Delete.setFocusPainted(false);
+        jButton_Delete.setBorderPainted(false);
+        jButton_Delete.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-delete-row-30.png")));
+        jButton_Delete.setToolTipText("Hapus Data");
+        jButton_Delete.setBounds(1035, 40, 50, 50);
+        this.add(jButton_Delete);
 
         // Add Action Listener
-        jButton_Hapus.addActionListener(this);
+        jButton_Delete.addActionListener(this);
         jBox_Kolom_TbAtas.addActionListener(this);
         jBox_Kolom_TbBawah.addActionListener(this);
         jBox_Mode_TbBawah.addActionListener(this);
@@ -386,8 +387,15 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         if(ae.getSource().equals(jBox_Mode_TbBawah)){
             changeModeTabelBawah();
         } else 
-        if(ae.getSource().equals(jButton_Hapus)){
-            // DO DELETE CALL THE FRAME
+        if(ae.getSource().equals(jButton_Delete)){
+            new Frame_Delete_Transaksi().addWindowListener(new WindowAdapter(){
+                @Override
+                public void windowClosing(WindowEvent e) { // Agar auto refresh dan main form dapat dipencet lagi saat ditutup
+                    refreshAll();
+                    ((Component) currentWindow).setEnabled(true);
+                }
+            });
+            ((Component) currentWindow).setEnabled(false);
         }
     }
 }
