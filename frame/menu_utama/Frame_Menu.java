@@ -28,7 +28,6 @@ public class Frame_Menu extends JFrame implements ActionListener {
     JButton jButton_Barang = new JButton();
     JButton jButton_Pelanggan = new JButton();
     JButton jButton_Transaksi = new JButton();
-    JButton jButton_LaporanTransaksi = new JButton();
     JButton jButton_Credit = new JButton();
 
     JLabel jLabel_ID = new JLabel();
@@ -129,7 +128,7 @@ public class Frame_Menu extends JFrame implements ActionListener {
         jButton_Kategori.setOpaque(false);
         jButton_Kategori.setContentAreaFilled(false);
         jButton_Kategori.setFocusPainted(false);
-        jButton_Kategori.setBorderPainted(true);
+        jButton_Kategori.setBorderPainted(false);
         jButton_Kategori.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-in-inventory-35.png")));
         jButton_Kategori.setToolTipText("Menu Kategori");
         jButton_Kategori.setBounds(20, 190, 50, 50);
@@ -139,7 +138,7 @@ public class Frame_Menu extends JFrame implements ActionListener {
         jButton_Barang.setOpaque(false);
         jButton_Barang.setContentAreaFilled(false);
         jButton_Barang.setFocusPainted(false);
-        jButton_Barang.setBorderPainted(true);
+        jButton_Barang.setBorderPainted(false);
         jButton_Barang.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-warehouse-35.png")));
         jButton_Barang.setToolTipText("Menu Barang");
         jButton_Barang.setBounds(20, 260, 50, 50);
@@ -149,7 +148,7 @@ public class Frame_Menu extends JFrame implements ActionListener {
         jButton_Pelanggan.setOpaque(false);
         jButton_Pelanggan.setContentAreaFilled(false);
         jButton_Pelanggan.setFocusPainted(false);
-        jButton_Pelanggan.setBorderPainted(true);
+        jButton_Pelanggan.setBorderPainted(false);
         jButton_Pelanggan.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-customer-insight-35.png")));
         jButton_Pelanggan.setToolTipText("Menu Pelanggan");
         jButton_Pelanggan.setBounds(20, 330, 50, 50);
@@ -159,20 +158,10 @@ public class Frame_Menu extends JFrame implements ActionListener {
         jButton_Transaksi.setOpaque(false);
         jButton_Transaksi.setContentAreaFilled(false);
         jButton_Transaksi.setFocusPainted(false);
-        jButton_Transaksi.setBorderPainted(true);
+        jButton_Transaksi.setBorderPainted(false);
         jButton_Transaksi.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-transaction-35.png")));
-        jButton_Transaksi.setToolTipText("Menu Transaksi");
+        jButton_Transaksi.setToolTipText("Menu Laporan Transaksi");
         jButton_Transaksi.setBounds(20, 400, 50, 50);
-
-        // Button Laporan_Transaksi
-        jButton_LaporanTransaksi.setBackground(new Color(40, 40, 44));
-        jButton_LaporanTransaksi.setOpaque(false);
-        jButton_LaporanTransaksi.setContentAreaFilled(false);
-        jButton_LaporanTransaksi.setFocusPainted(false);
-        jButton_LaporanTransaksi.setBorderPainted(true);
-        jButton_LaporanTransaksi.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-business-report-35.png")));
-        jButton_LaporanTransaksi.setToolTipText("Menu Laporan Transaksi");
-        jButton_LaporanTransaksi.setBounds(20, 470, 50, 50);
 
         // Button credit
         jButton_Credit.setBackground(new Color(40, 40, 44));
@@ -196,7 +185,6 @@ public class Frame_Menu extends JFrame implements ActionListener {
         jPanel_Side.add(jButton_Barang);
         jPanel_Side.add(jButton_Pelanggan);
         jPanel_Side.add(jButton_Transaksi);
-        jPanel_Side.add(jButton_LaporanTransaksi);
         jPanel_Side.add(jButton_Credit);
 
         // Add action listener untuk tiap tombol
@@ -206,7 +194,6 @@ public class Frame_Menu extends JFrame implements ActionListener {
         jButton_Barang.addActionListener(this);
         jButton_Pelanggan.addActionListener(this);
         jButton_Transaksi.addActionListener(this);
-        jButton_LaporanTransaksi.addActionListener(this);
         jButton_Credit.addActionListener(this);
 
         // Konfirmasi close
@@ -361,9 +348,6 @@ public class Frame_Menu extends JFrame implements ActionListener {
             change_Panel(new Panel_Pelanggan());
         } else
         if(ae.getSource().equals(jButton_Transaksi)){
-            change_Panel(new Panel_Transaksi());
-        } else
-        if(ae.getSource().equals(jButton_LaporanTransaksi)){
             change_Panel(new Panel_LaporanTransaksi());
         } else
         if(ae.getSource().equals(jButton_Credit)){ // button credit

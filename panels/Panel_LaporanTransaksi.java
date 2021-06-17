@@ -54,6 +54,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
 
     // Button Hapus
     JButton jButton_Delete = new JButton();
+    JButton jButton_Add = new JButton();
 
     // Get currentWindow
     Object currentWindow = this;
@@ -102,7 +103,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         // Textfield untuk search tabel atas
         jField_SearchTbAtas.setBackground(new Color(69, 73, 74));
         jField_SearchTbAtas.setForeground(Color.WHITE);
-        jField_SearchTbAtas.setBounds(70, 60, 157, 20);
+        jField_SearchTbAtas.setBounds(70, 60, 157, 22);
         jField_SearchTbAtas.setText("");
         jField_SearchTbAtas.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         jField_SearchTbAtas.setCaretColor(Color.WHITE);
@@ -119,7 +120,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         jBox_Kolom_TbAtas.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         jBox_Kolom_TbAtas.setBackground(new Color(69, 73, 74));
         jBox_Kolom_TbAtas.setForeground(Color.WHITE);
-        jBox_Kolom_TbAtas.setBounds(285, 60, 120, 20);
+        jBox_Kolom_TbAtas.setBounds(285, 60, 120, 22);
         jBox_Kolom_TbAtas.setModel(new DefaultComboBoxModel<String>(kolomTbAtas));
         this.add(jBox_Kolom_TbAtas);
         
@@ -134,8 +135,6 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         tbAtas.setShowHorizontalLines(false);
         tbAtas.setSelectionBackground(new Color(13, 41, 62));
         tbAtas.setSelectionForeground(new Color(187, 187, 187));
-        tbAtas.getTableHeader().setBackground(new Color(34, 36, 54));
-        tbAtas.getTableHeader().setForeground(Color.WHITE);
         sorterTbAtas = new TableRowSorter<DefaultTableModel>(tModelTbAtas);
         tbAtas.setRowSorter(sorterTbAtas);
 
@@ -181,7 +180,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         // Textfield search bawah
         jField_SearchTbBawah.setBackground(new Color(69, 73, 74));
         jField_SearchTbBawah.setForeground(Color.WHITE);
-        jField_SearchTbBawah.setBounds(70, 340, 157, 20);
+        jField_SearchTbBawah.setBounds(70, 340, 157, 22);
         jField_SearchTbBawah.setText("");
         jField_SearchTbBawah.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         jField_SearchTbBawah.setCaretColor(Color.WHITE);
@@ -198,7 +197,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         jBox_Kolom_TbBawah.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         jBox_Kolom_TbBawah.setBackground(new Color(69, 73, 74));
         jBox_Kolom_TbBawah.setForeground(Color.WHITE);
-        jBox_Kolom_TbBawah.setBounds(285, 340, 120, 20);
+        jBox_Kolom_TbBawah.setBounds(285, 340, 120, 22);
         jBox_Kolom_TbBawah.setModel(new DefaultComboBoxModel<String>(kolomTbBawah));
         this.add(jBox_Kolom_TbBawah);
 
@@ -213,7 +212,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         jBox_Mode_TbBawah.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         jBox_Mode_TbBawah.setBackground(new Color(69, 73, 74));
         jBox_Mode_TbBawah.setForeground(Color.WHITE);
-        jBox_Mode_TbBawah.setBounds(460, 340, 120, 20);
+        jBox_Mode_TbBawah.setBounds(460, 340, 120, 22);
         jBox_Mode_TbBawah.addItem("Group by Date");
         jBox_Mode_TbBawah.addItem("Group by Month");
         jBox_Mode_TbBawah.addItem("Group by Year");
@@ -230,8 +229,6 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         tbBawah.setShowHorizontalLines(false);
         tbBawah.setSelectionBackground(new Color(13, 41, 62));
         tbBawah.setSelectionForeground(new Color(187, 187, 187));
-        tbBawah.getTableHeader().setBackground(new Color(34, 36, 54));
-        tbBawah.getTableHeader().setForeground(Color.WHITE);
         sorterTbBawah = new TableRowSorter<DefaultTableModel>(tModelTbBawah);
         tbBawah.setRowSorter(sorterTbBawah);
 
@@ -265,6 +262,17 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
                 }
             }
         });
+
+        // Button Edit
+        jButton_Add.setBackground(new Color(40, 40, 44));
+        jButton_Add.setOpaque(false);
+        jButton_Add.setContentAreaFilled(false);
+        jButton_Add.setFocusPainted(false);
+        jButton_Add.setBorderPainted(false);
+        jButton_Add.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-add-row-30.png")));
+        jButton_Add.setToolTipText("Add Laporan");
+        jButton_Add.setBounds(975, 40, 50, 50);
+        this.add(jButton_Add);
         
         // Button Hapus
         jButton_Delete.setBackground(new Color(40, 40, 44));
@@ -388,6 +396,16 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         } else
         if(ae.getSource().equals(jBox_Mode_TbBawah)){
             changeModeTabelBawah();
+        } else 
+        if(ae.getSource().equals(jButton_Delete)){
+            new Frame_Add_Transaksi().addWindowListener(new WindowAdapter(){
+                @Override
+                public void windowClosing(WindowEvent e) { // Agar auto refresh dan main form dapat dipencet lagi saat ditutup
+                    refreshAll();
+                    Frame_Menu.anotherFrameIsOpen = 0;
+                }
+            });
+            Frame_Menu.anotherFrameIsOpen = 1;
         } else 
         if(ae.getSource().equals(jButton_Delete)){
             new Frame_Delete_Transaksi().addWindowListener(new WindowAdapter(){

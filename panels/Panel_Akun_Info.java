@@ -9,7 +9,6 @@ package panels;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Random;
 
 import frame.akun.*;
 import frame.authentication.Frame_Login;
@@ -150,7 +149,6 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
         jLabel_AlamatToko.setText(Akun.Alamat_Toko);
         jLabel_NomorTelepon.setText(Akun.Nomor_Telepon);
         jLabel_PemilikToko.setText(Akun.Nama_Pemilik);
-        repaint(); revalidate();
     }
 
     void rgb_PanelBelakang(){
@@ -179,8 +177,7 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
             refreshAll();
         } else
         if(ae.getSource().equals(jButton_UbahPass)){
-            Ganti_Password ganti_Password = new Ganti_Password();
-            ganti_Password.addWindowListener(new WindowAdapter(){
+            new Ganti_Password().addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent e) {
                     refreshAll();
@@ -190,8 +187,7 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
             Frame_Menu.anotherFrameIsOpen = 1;
         } else 
         if(ae.getSource().equals(jButton_UbahBiodata)){
-            Ubah_Biodata ubah_Biodata = new Ubah_Biodata();
-            ubah_Biodata.addWindowListener(new WindowAdapter(){
+            new Ubah_Biodata().addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent e) {
                     refreshAll();
@@ -199,7 +195,6 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
                 }
             });
             Frame_Menu.anotherFrameIsOpen = 1;
-            ubah_Biodata.setVisible(true);
         } else 
         if(ae.getSource().equals(jButton_DeleteAkun)){
             int confirmed = JOptionPane.showConfirmDialog(null, 

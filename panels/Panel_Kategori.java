@@ -87,7 +87,7 @@ public class Panel_Kategori extends JPanel implements ActionListener {
         // Textfield untuk search tabel atas
         jField_SearchTbAtas.setBackground(new Color(69, 73, 74));
         jField_SearchTbAtas.setForeground(Color.WHITE);
-        jField_SearchTbAtas.setBounds(70, 60, 157, 20);
+        jField_SearchTbAtas.setBounds(70, 60, 157, 22);
         jField_SearchTbAtas.setText("");
         jField_SearchTbAtas.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         jField_SearchTbAtas.setCaretColor(Color.WHITE);
@@ -104,7 +104,7 @@ public class Panel_Kategori extends JPanel implements ActionListener {
         jBox_Kolom_TbAtas.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         jBox_Kolom_TbAtas.setBackground(new Color(69, 73, 74));
         jBox_Kolom_TbAtas.setForeground(Color.WHITE);
-        jBox_Kolom_TbAtas.setBounds(285, 60, 120, 20);
+        jBox_Kolom_TbAtas.setBounds(285, 60, 120, 22);
         jBox_Kolom_TbAtas.setModel(new DefaultComboBoxModel<String>(kolomTbAtas));
         this.add(jBox_Kolom_TbAtas);
         
@@ -119,8 +119,6 @@ public class Panel_Kategori extends JPanel implements ActionListener {
         tbAtas.setShowHorizontalLines(false);
         tbAtas.setSelectionBackground(new Color(13, 41, 62));
         tbAtas.setSelectionForeground(new Color(187, 187, 187));
-        tbAtas.getTableHeader().setBackground(new Color(34, 36, 54));
-        tbAtas.getTableHeader().setForeground(Color.WHITE);
         sorterTbAtas = new TableRowSorter<DefaultTableModel>(tModelTbAtas);
         tbAtas.setRowSorter(sorterTbAtas);
 
