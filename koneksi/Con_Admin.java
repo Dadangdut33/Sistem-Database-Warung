@@ -187,15 +187,20 @@ public class Con_Admin {
             pr_Del_Admin.setString(2, Password);
             int statusCode_4 = pr_Del_Admin.executeUpdate();
 
+            // Returns 0 berarti dah dihapus semua
             if(statusCode_1 == 0 || statusCode_2 == 0 || statusCode_3 == 0 || statusCode_4 == 0){
-                status = "Akun gagal dihapus!";
-            } else {
                 status = "Akun Berhasil Dihapus!";
+            } else {
+                status = "Akun Gagal Dihapus!";
             }
 
         } catch (SQLException e) {
             // Jika error berarti gagal
             status = e.getMessage();
+            if(status.contains("truncated")){
+                status = "Data Yang Dimasukkan Terlalu Panjang!";
+            }
+
         } finally {
             try { con.close(); } catch (SQLException e) { /* Ignored */ }
         }

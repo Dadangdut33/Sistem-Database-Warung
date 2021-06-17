@@ -252,7 +252,7 @@ public class Ganti_Password extends JFrame implements ActionListener{
                     JOptionPane.showMessageDialog( 
                         null, 
                         "Password Lama Yang Dimasukkan Salah!", 
-                        "Ganti Password Gagal!",                
+                        "Ganti Password Gagal",                
                         JOptionPane.WARNING_MESSAGE);
                 }
             }

@@ -10,7 +10,6 @@ package frame.menu_utama;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.UIManager.*;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -40,22 +39,29 @@ public class Frame_Menu extends JFrame implements ActionListener {
     JPanel jPanel_Header = new JPanel();
     JPanel jPanel_Curr_Panel = new JPanel();
 
-    Boolean exit;
+    // Get current window
     Object menuWindow = this;
+    JFrame frameWindow = this;
 
-    public static int anotherFrameIsOpen = 0;
+    // To check exit and frame open
+    Boolean exit;
+    public static int anotherFrameIsOpen;
+    public static int closeTheMainFrame;
 
-    public Frame_Menu(){        
+    public Frame_Menu(){
         // Frame menu settingnya
         this.setLayout(null);
         this.setTitle("Database " + Akun.Nama_Toko);
         this.setResizable(false);
         this.setIconImage(new ImageIcon(getClass().getResource("/assets/icons8-database-50.png")).getImage());
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1200, 700);
         this.getContentPane().setBackground(new Color(24, 40, 44));
         this.setLocationRelativeTo(null);
     
         // Untuk clock
+        anotherFrameIsOpen = 0;
+        closeTheMainFrame = 0;
         exit = false;
 
         // PANEL KIRI
@@ -84,7 +90,7 @@ public class Frame_Menu extends JFrame implements ActionListener {
         dateAndTime();
 
         // Panggil function untuk start thread cek window
-        checkOpen();
+        checkOpenAndExit();
 
         // ID
         jLabel_ID.setFont(new Font("Segoe UI", Font.PLAIN, 11));
@@ -265,13 +271,24 @@ public class Frame_Menu extends JFrame implements ActionListener {
         clock.start();
     }
 
-    void checkOpen(){
+    void checkOpenAndExit(){
         // Buat thread check apakah ada frame yg diopen setiap 0.5 detik
         Thread check = new Thread() {
             @Override
             public void run() {
                 try {
                     while(!exit){
+                        // Ini untuk cek apakah ada class lain yg trigger dispose main frame
+                        switch (closeTheMainFrame) {
+                            case 1:
+                                exit = true;
+                                ((JFrame) frameWindow).dispose();
+                                break;
+                            default:
+                                break;
+                        }
+                        
+                        // Ini untuk cek apakah ada class lain yg trigger frame terbuka, jd nanti main frame di disable
                         switch (anotherFrameIsOpen) {
                             case 1:
                                 ((Component) menuWindow).setEnabled(false);
@@ -310,10 +327,12 @@ public class Frame_Menu extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae){
         if(ae.getSource().equals(jButton_Logout)){
+            // Konfirmasi logout
             int confirmed = JOptionPane.showConfirmDialog(null, 
                     "Apakah anda yakin ingin logout dari akun?", "Logout Confirmation",
                     JOptionPane.YES_NO_OPTION);
             
+                    // Jika pilih ya
             if (confirmed == JOptionPane.YES_OPTION) {
                 // Exit true agar thread clock berhenti 
                 exit = true;
@@ -327,7 +346,8 @@ public class Frame_Menu extends JFrame implements ActionListener {
                 // Panggil frame login
                 new Frame_Login();
             }
-        } else   
+        // Mengubah panel ke setiap bentuknya
+        } else
         if(ae.getSource().equals(jButton_Akun)){
             change_Panel(new Panel_Akun_Info());
         } else
@@ -346,7 +366,7 @@ public class Frame_Menu extends JFrame implements ActionListener {
         if(ae.getSource().equals(jButton_LaporanTransaksi)){
             change_Panel(new Panel_LaporanTransaksi());
         } else
-        if(ae.getSource().equals(jButton_Credit)){
+        if(ae.getSource().equals(jButton_Credit)){ // button credit
             new Frame_Credit();
         }
     }

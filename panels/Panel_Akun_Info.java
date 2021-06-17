@@ -11,7 +11,9 @@ import java.awt.*;
 import java.awt.event.*;
 
 import frame.akun.*;
+import frame.authentication.Frame_Login;
 import frame.menu_utama.Frame_Menu;
+import koneksi.Con_Admin;
 import saved_authentication.Akun;
 
 public class Panel_Akun_Info extends JPanel implements ActionListener {
@@ -179,8 +181,71 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
             Frame_Menu.anotherFrameIsOpen = 1;
         } else 
         if(ae.getSource().equals(jButton_DeleteAkun)){
-            String confirmation = JOptionPane.showInputDialog(null, "Test", "TTTT", JOptionPane.WARNING_MESSAGE);
-            System.out.println(confirmation);
+            int confirmed = JOptionPane.showConfirmDialog(null, 
+                    "Apakah anda yakin ingin menghapus akun anda?\nWARNING: SEMUA DATA YANG DISIMPAN DI DATABASE JUGA AKAN DIHAPUS APABILA ANDA MENGHAPUS AKUN!", "Delete Confirmation",
+                    JOptionPane.YES_NO_OPTION);
+            
+            if (confirmed == JOptionPane.YES_OPTION) {
+                JPanel panelDel = new JPanel();
+                panelDel.setLayout(new BoxLayout(panelDel, BoxLayout.PAGE_AXIS));
+                JLabel label = new JLabel("Masukkan Password Akun Anda Untuk Konfirmasi");
+                JPasswordField passKonfirmasi = new JPasswordField(20);
+                panelDel.add(label);
+                panelDel.add(passKonfirmasi);
+                
+                String[] options = new String[]{"HAPUS", "CANCEL"};
+
+                int option;
+                String passGet;
+                String currPaswordCache = Akun.Password;
+
+                do {
+                    option = JOptionPane.showOptionDialog(null, panelDel, "Konfirmasi Hapus",
+                    JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+                    null, options, options[1]);
+
+                    passGet = new String(passKonfirmasi.getPassword());
+
+                    // JIka yg dipilih tombol Hapus
+                    if(option != 1) {
+                        if(passGet.equals(Akun.Password)){
+
+                            // Hapus akun dari database
+                            String deleteStatus = new Con_Admin().delete_Akun(Akun.ID_Admin, Akun.Password);
+
+                            if(deleteStatus.equals("Akun Berhasil Dihapus!")){
+                                JOptionPane.showMessageDialog( 
+                                    null, 
+                                    "Akun Berhasil Dihapus! Program akan keluar!",
+                                    "Hapus Akun Berhasil",
+                                    JOptionPane.INFORMATION_MESSAGE);
+                                // Reset Akun
+                                new Akun().reset();
+                                
+                                // Dispose Main Frame
+                                Frame_Menu.closeTheMainFrame = 1;
+
+                                // Call frame login
+                                new Frame_Login();
+                            } else {
+                                option = 1;
+                                JOptionPane.showMessageDialog( 
+                                    null, 
+                                    deleteStatus, 
+                                    "ERROR",                
+                                    JOptionPane.ERROR_MESSAGE);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog( 
+                                null, 
+                                "Password Yang Dimasukkan Salah!", 
+                                "Hapus Akun Gagal",                
+                                JOptionPane.WARNING_MESSAGE);
+                        }
+                    }
+                } while (option != 1 && !passGet.equals(currPaswordCache));
+                // Di loop apabila password salah, keluar apabila user pencet CANCEL
+            } 
         }
     }
 }
