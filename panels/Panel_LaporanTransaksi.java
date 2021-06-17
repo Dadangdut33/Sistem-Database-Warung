@@ -286,6 +286,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         this.add(jButton_Delete);
 
         // Add Action Listener
+        jButton_Add.addActionListener(this);
         jButton_Delete.addActionListener(this);
         jBox_Kolom_TbAtas.addActionListener(this);
         jBox_Kolom_TbBawah.addActionListener(this);
@@ -397,7 +398,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         if(ae.getSource().equals(jBox_Mode_TbBawah)){
             changeModeTabelBawah();
         } else 
-        if(ae.getSource().equals(jButton_Delete)){
+        if(ae.getSource().equals(jButton_Add)){
             new Frame_Add_Transaksi().addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent e) { // Agar auto refresh dan main form dapat dipencet lagi saat ditutup

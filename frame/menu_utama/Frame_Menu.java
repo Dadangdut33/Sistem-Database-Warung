@@ -287,6 +287,9 @@ public class Frame_Menu extends JFrame implements ActionListener {
                                 if(!((Component) menuWindow).isEnabled()){
                                     ((Component) menuWindow).setEnabled(true);
                                     ((JFrame) frameWindow).toFront();
+
+                                    // Set -1 agar tidak perlu ke cek kemana2 lagi
+                                    Frame_Menu.anotherFrameIsOpen = -1;
                                 }
                                 break;
                             default:

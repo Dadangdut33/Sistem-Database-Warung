@@ -235,12 +235,12 @@ public class Frame_Daftar extends JFrame implements ActionListener{
         this.setVisible(true);
     }
 
-    public void backToLogin() {
+    void backToLogin() {
         this.dispose();
         new Frame_Login();
     }
 
-    public void refresh(){
+    void refresh(){
         textField_User.setText("");
         passwordField_Pass.setText("");
         passwordField_Konfirmasi.setText("");
@@ -250,7 +250,7 @@ public class Frame_Daftar extends JFrame implements ActionListener{
         textField_NomorTelepon.setText("");
     }
 
-    public boolean pass_Sama(){
+    boolean pass_Sama(){
         boolean pass_Sama;
 
         if(new String(passwordField_Pass.getPassword())
@@ -264,7 +264,7 @@ public class Frame_Daftar extends JFrame implements ActionListener{
         return pass_Sama;
     }
 
-    public boolean kosong(){
+    boolean kosong(){
         boolean kosong = false;
         for (int i = data_Yang_Kosong.size() - 1; i >= 0; i--) {
             data_Yang_Kosong.remove(i);
@@ -303,7 +303,7 @@ public class Frame_Daftar extends JFrame implements ActionListener{
     }
 
     // Popup untuk yang kosong
-    public void kosongPopup(){
+    void kosongPopup(){
         int jumlahKosong = data_Yang_Kosong.size();
         int last = data_Yang_Kosong.size() - 1;
 

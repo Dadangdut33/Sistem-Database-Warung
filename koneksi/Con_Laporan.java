@@ -17,7 +17,7 @@ public class Con_Laporan {
 
     // CREATE
     /* Disini dicari dulu harganya abis itu diproses langsung didalam totalnya */
-    public String add_Laporan(String Kode_Pelanggan, String Kode_Barang, int Jumlah_Pesanan, Date Tanggal_Pesanan, String ID_Admin){
+    public String add_Laporan(String Kode_Pelanggan, String Kode_Barang, int Jumlah_Pesanan, java.sql.Date date, String ID_Admin){
         String status;
         try {
             con = new SQLConnect().getConSQL();
@@ -40,7 +40,7 @@ public class Con_Laporan {
             pr_LaporanPesanan.setInt(3, harga_Barang);
             pr_LaporanPesanan.setInt(4, Jumlah_Pesanan);
             pr_LaporanPesanan.setInt(5, hargaTotal);
-            pr_LaporanPesanan.setDate(6, Tanggal_Pesanan);
+            pr_LaporanPesanan.setDate(6, date);
             pr_LaporanPesanan.setString(7, ID_Admin);
 
             int statusCode = pr_LaporanPesanan.executeUpdate();

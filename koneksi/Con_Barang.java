@@ -170,9 +170,9 @@ public class Con_Barang {
 
             int res = pr_UpdateStok.executeUpdate();
             if(res == 0){
-                status = "Data gagal diubah!";
+                status = "Data gagal diubah/dikurangi!";
             } else {
-                status = "Data berhasil diubah!";
+                status = "Data berhasil diubah/dikurangi!";
             }
         } catch (SQLException e) {
             status = e.getMessage();

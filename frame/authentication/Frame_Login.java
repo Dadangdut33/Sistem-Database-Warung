@@ -131,13 +131,13 @@ public class Frame_Login extends JFrame implements ActionListener{
     }
 
     // Function daftar
-    public void daftar() {
+    void daftar() {
         this.dispose();
         new Frame_Daftar();
     }
 
     // Cek kosong
-    public boolean kosong(){
+    boolean kosong(){
         boolean kosong = false;
         for (int i = data_Yang_Kosong.size() - 1; i >= 0; i--) {
             data_Yang_Kosong.remove(i);
@@ -156,7 +156,7 @@ public class Frame_Login extends JFrame implements ActionListener{
     }
 
     // Popup untuk yang kosong
-    public void kosongPopup(){
+    void kosongPopup(){
         int jumlahKosong = data_Yang_Kosong.size();
         int last = data_Yang_Kosong.size() - 1;
 

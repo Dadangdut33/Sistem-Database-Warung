@@ -34,7 +34,6 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
     JButton jButton_UbahPass = new JButton();
     JButton jButton_UbahBiodata = new JButton();
     JButton jButton_DeleteAkun = new JButton();
-    JButton jButton_Refresh = new JButton();
 
     // Static for rgb
     public static boolean exitPanelAkun;
@@ -113,17 +112,6 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
         jButton_UbahBiodata.setBounds(500, 500, 50, 50);
         this.add(jButton_UbahBiodata);
 
-        // Button refresh
-        jButton_Refresh.setBackground(new Color(40, 40, 44));
-        jButton_Refresh.setOpaque(false);
-        jButton_Refresh.setContentAreaFilled(false);
-        jButton_Refresh.setFocusPainted(false);
-        jButton_Refresh.setBorderPainted(false);
-        jButton_Refresh.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-refresh-40.png")));
-        jButton_Refresh.setToolTipText("Refresh");
-        jButton_Refresh.setBounds(500, 250, 50, 50);
-        this.add(jButton_Refresh);
-
         // Button Hapus
         jButton_DeleteAkun.setBackground(new Color(40, 40, 44));
         jButton_DeleteAkun.setOpaque(false);
@@ -139,7 +127,6 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
         jButton_UbahPass.addActionListener(this);
         jButton_UbahBiodata.addActionListener(this);
         jButton_DeleteAkun.addActionListener(this);
-        jButton_Refresh.addActionListener(this);
 
         this.setEnabled(false);
     }
@@ -173,9 +160,6 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ae){
-        if(ae.getSource().equals(jButton_Refresh)){
-            refreshAll();
-        } else
         if(ae.getSource().equals(jButton_UbahPass)){
             new Ganti_Password().addWindowListener(new WindowAdapter(){
                 @Override
