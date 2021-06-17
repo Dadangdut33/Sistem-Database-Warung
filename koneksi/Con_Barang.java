@@ -196,9 +196,9 @@ public class Con_Barang {
 
             int res = pr.executeUpdate();
             if(res == 0){
-                status = "Data gagal diubah!";
+                status = "Barang gagal diubah!";
             } else {
-                status = "Data berhasil diubah!";
+                status = "Barang berhasil diubah!";
             }
         } catch (SQLException e) {
             status = e.getMessage();
@@ -213,6 +213,7 @@ public class Con_Barang {
     public String delete_Barang(String Kode_Barang, String ID_Admin){
         String status;
         try {
+            con = new SQLConnect().getConSQL();
             PreparedStatement pr_Del_Pelanggan = con.prepareStatement("DELETE Barang WHERE ID_Admin=? AND Kode_Barang=?");
             pr_Del_Pelanggan.setString(1, ID_Admin);
             pr_Del_Pelanggan.setString(2, Kode_Barang);

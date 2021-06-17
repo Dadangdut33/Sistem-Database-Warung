@@ -41,10 +41,6 @@ public class Frame_Add_Pelanggan extends JFrame implements ActionListener {
 
     ArrayList<String> data_Yang_Kosong = new ArrayList<>();
 
-    public static void main(String[] args) {
-        new Frame_Add_Pelanggan();
-    }
-
     public Frame_Add_Pelanggan(){
         // Setting frame
         this.setSize(355, 330);

@@ -134,9 +134,9 @@ public class Con_Pelanggan {
 
             int res = pr.executeUpdate();
             if(res == 0){
-                status = "Data gagal diubah!";
+                status = "Data pelanggan gagal diubah!";
             } else {
-                status = "Data berhasil diubah!";
+                status = "Data pelanggan berhasil diubah!";
             }
         } catch (SQLException e) {
             status = e.getMessage();
@@ -151,15 +151,16 @@ public class Con_Pelanggan {
     public String delete_Pelanggan(String Kode_Pelanggan, String ID_Admin){
         String status;
         try {
-            PreparedStatement pr_Del_Pelanggan = con.prepareStatement("DELETE Pelanggan WHERE ID_Admin=? AND Kode_Pesanan=?");
+            con = new SQLConnect().getConSQL();
+            PreparedStatement pr_Del_Pelanggan = con.prepareStatement("DELETE Pelanggan WHERE ID_Admin=? AND Kode_Pelanggan=?");
             pr_Del_Pelanggan.setString(1, ID_Admin);
             pr_Del_Pelanggan.setString(2, Kode_Pelanggan);
             int statusCode = pr_Del_Pelanggan.executeUpdate();
 
             if(statusCode == 0){
-                status = "Laporan gagal dihapus!";
+                status = "Pelanggan gagal dihapus!";
             } else {
-                status = "Laporan Berhasil Dihapus!";
+                status = "Pelanggan Berhasil Dihapus!";
             }
 
         } catch (SQLException e) {

@@ -140,6 +140,7 @@ public class Con_Kategori {
     public String delete_Kategori(String Kode_Kategori, String ID_Admin){
         String status;
         try {
+            con = new SQLConnect().getConSQL();
             PreparedStatement pr_Del_Pelanggan = con.prepareStatement("DELETE Kategori WHERE ID_Admin=? AND Kode_Kategori=?");
             pr_Del_Pelanggan.setString(1, ID_Admin);
             pr_Del_Pelanggan.setString(2, Kode_Kategori);
