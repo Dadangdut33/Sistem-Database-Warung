@@ -96,6 +96,32 @@ public class Con_Laporan {
         return dataList;
     }
 
+    public List<Object> get_LaporanPesananByKode(String ID_Admin, String Kode_Pesanan){
+        List<Object> dataList = new ArrayList<>();
+        try {
+            con = new SQLConnect().getConSQL();
+            PreparedStatement pr = con.prepareStatement("SELECT * FROM Laporan_Pesanan WHERE ID_Admin = ? AND Kode_Pesanan = ?");
+            pr.setString(1, ID_Admin);
+            pr.setString(2, Kode_Pesanan);
+
+            ResultSet rs = pr.executeQuery();
+            rs.next();
+
+            String Kode_Pelanggan = rs.getString("Kode_Pelanggan").trim();
+            String Kode_Barang = rs.getString("Kode_Barang").trim();
+            Date Tanggal_Pesanan = rs.getDate("Tanggal_Pesanan");
+
+            Object[] dataArr = { Kode_Pelanggan, Kode_Barang, Tanggal_Pesanan };
+            Collections.addAll(dataList, dataArr);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try { con.close(); } catch (SQLException e) { /* Ignored */ }
+        }
+
+        return dataList;
+    }
+
     public List<Object> get_All_KodePesanan(String ID_Admin){
         List<Object> dataList = new ArrayList<>();
         try {
@@ -213,6 +239,7 @@ public class Con_Laporan {
     public String delete_Laporan(String Kode_Pesanan, String ID_Admin){
         String status;
         try {
+            con = new SQLConnect().getConSQL();
             PreparedStatement pr_Del_Laporan = con.prepareStatement("DELETE Laporan_Pesanan WHERE ID_Admin=? AND Kode_Pesanan=?");
             pr_Del_Laporan.setString(1, ID_Admin);
             pr_Del_Laporan.setString(2, Kode_Pesanan);

@@ -164,8 +164,8 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
             new Ganti_Password().addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent e) {
-                    refreshAll();
                     Frame_Menu.anotherFrameIsOpen = 0;
+                    refreshAll();
                 }
             });
             Frame_Menu.anotherFrameIsOpen = 1;
@@ -174,8 +174,8 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
             new Ubah_Biodata().addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent e) {
-                    refreshAll();
                     Frame_Menu.anotherFrameIsOpen = 0;
+                    refreshAll();
                 }
             });
             Frame_Menu.anotherFrameIsOpen = 1;

@@ -61,7 +61,7 @@ public class Frame_Add_Transaksi extends JFrame implements ActionListener {
         // Panel Konten
         jPanel_Content.setLayout(null);
         jPanel_Content.setBackground(new Color(24, 40, 44));
-        jPanel_Content.setBounds(10, 70, 320, 255);
+        jPanel_Content.setBounds(10, 70, 320, 180);
         
         // Label Judul
         jLabel_Judul.setForeground(Color.WHITE);
@@ -204,7 +204,7 @@ public class Frame_Add_Transaksi extends JFrame implements ActionListener {
         if(jumlahKosong == 1) {
             JOptionPane.showMessageDialog( 
                 null, 
-                String.join(", ", data_Yang_Kosong) + " harus disi!", 
+                String.join(", ", data_Yang_Kosong) + " harus diisi!", 
                 "Input Error",                
                 JOptionPane.ERROR_MESSAGE);
         } else
