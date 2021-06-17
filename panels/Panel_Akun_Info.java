@@ -9,6 +9,7 @@ package panels;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Random;
 
 import frame.akun.*;
 import frame.authentication.Frame_Login;
@@ -34,6 +35,7 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
     JButton jButton_UbahPass = new JButton();
     JButton jButton_UbahBiodata = new JButton();
     JButton jButton_DeleteAkun = new JButton();
+    JButton jButton_Refresh = new JButton();
 
     // Static for rgb
     public static boolean exitPanelAkun;
@@ -90,7 +92,7 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
         jLabel_PemilikToko.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-account-2-30.png")));
         panel_Depan.add(jLabel_PemilikToko);
 
-        // Button Hapus
+        // Button Edit password
         jButton_UbahPass.setBackground(new Color(40, 40, 44));
         jButton_UbahPass.setOpaque(false);
         jButton_UbahPass.setContentAreaFilled(false);
@@ -101,7 +103,7 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
         jButton_UbahPass.setBounds(300, 500, 50, 50);
         this.add(jButton_UbahPass);
 
-        // Button Hapus
+        // Button Edit biodata
         jButton_UbahBiodata.setBackground(new Color(40, 40, 44));
         jButton_UbahBiodata.setOpaque(false);
         jButton_UbahBiodata.setContentAreaFilled(false);
@@ -111,6 +113,17 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
         jButton_UbahBiodata.setToolTipText("Ubah Biodata");
         jButton_UbahBiodata.setBounds(500, 500, 50, 50);
         this.add(jButton_UbahBiodata);
+
+        // Button refresh
+        jButton_Refresh.setBackground(new Color(40, 40, 44));
+        jButton_Refresh.setOpaque(false);
+        jButton_Refresh.setContentAreaFilled(false);
+        jButton_Refresh.setFocusPainted(false);
+        jButton_Refresh.setBorderPainted(false);
+        jButton_Refresh.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-refresh-40.png")));
+        jButton_Refresh.setToolTipText("Refresh");
+        jButton_Refresh.setBounds(500, 250, 50, 50);
+        this.add(jButton_Refresh);
 
         // Button Hapus
         jButton_DeleteAkun.setBackground(new Color(40, 40, 44));
@@ -127,6 +140,7 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
         jButton_UbahPass.addActionListener(this);
         jButton_UbahBiodata.addActionListener(this);
         jButton_DeleteAkun.addActionListener(this);
+        jButton_Refresh.addActionListener(this);
 
         this.setEnabled(false);
     }
@@ -136,6 +150,7 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
         jLabel_AlamatToko.setText(Akun.Alamat_Toko);
         jLabel_NomorTelepon.setText(Akun.Nomor_Telepon);
         jLabel_PemilikToko.setText(Akun.Nama_Pemilik);
+        repaint(); revalidate();
     }
 
     void rgb_PanelBelakang(){
@@ -160,8 +175,12 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ae){
+        if(ae.getSource().equals(jButton_Refresh)){
+            refreshAll();
+        } else
         if(ae.getSource().equals(jButton_UbahPass)){
-            new Ganti_Password().addWindowListener(new WindowAdapter(){
+            Ganti_Password ganti_Password = new Ganti_Password();
+            ganti_Password.addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent e) {
                     refreshAll();
@@ -171,7 +190,8 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
             Frame_Menu.anotherFrameIsOpen = 1;
         } else 
         if(ae.getSource().equals(jButton_UbahBiodata)){
-            new Ubah_Biodata().addWindowListener(new WindowAdapter(){
+            Ubah_Biodata ubah_Biodata = new Ubah_Biodata();
+            ubah_Biodata.addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent e) {
                     refreshAll();
@@ -179,6 +199,7 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
                 }
             });
             Frame_Menu.anotherFrameIsOpen = 1;
+            ubah_Biodata.setVisible(true);
         } else 
         if(ae.getSource().equals(jButton_DeleteAkun)){
             int confirmed = JOptionPane.showConfirmDialog(null, 

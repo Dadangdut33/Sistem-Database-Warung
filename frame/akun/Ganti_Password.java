@@ -218,6 +218,7 @@ public class Ganti_Password extends JFrame implements ActionListener{
                     if(pass_Sama()){ // Jika pass sama
                         String PasswordBaru = new String(passwordField_PwBaru.getPassword());
 
+                        // Validasi panjang Password
                         if(PasswordBaru.length() < 6 || PasswordBaru.length() > 20) {
                             JOptionPane.showMessageDialog( 
                                 null, 
@@ -227,19 +228,20 @@ public class Ganti_Password extends JFrame implements ActionListener{
     
                             return;
                         }
-    
+
+                        // Ganti Password
                         String gantiPW = new Con_Admin().ganti_Password(PasswordBaru, Akun.ID_Admin, Akun.Password);
                         if(gantiPW.equals("Password berhasil diganti!")){ // Jika berhasil diubah
                             Akun.Password = PasswordBaru;
                             JOptionPane.showMessageDialog( 
                                 null, 
-                                "Password Berhasil Diganti!", 
+                                gantiPW, 
                                 "Ganti Password Berhasil",         
                                 JOptionPane.INFORMATION_MESSAGE);
-                            Frame_Menu.anotherFrameIsOpen = 0;
-                            this.dispose();
+                            
+                            refresh();
                         } else { // Jika gagal diubah
-                            JOptionPane.showMessageDialog(null, "Password Gagal Diganti!", "Error", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, gantiPW, "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     } else { // Jika password baru dan konfirmasinya tidak sama
                         JOptionPane.showMessageDialog( 
