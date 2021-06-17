@@ -67,6 +67,9 @@ public class Con_Admin {
                 status = "ID sudah diambil!";
             } else {
                 status = e.getMessage();
+                if(status.contains("truncated")){
+                    status = "Data Yang Dimasukkan Terlalu Panjang!";
+                }
             }
         } finally {
             try { con.close(); } catch (SQLException e) { /* Ignored */ }
@@ -197,10 +200,6 @@ public class Con_Admin {
         } catch (SQLException e) {
             // Jika error berarti gagal
             status = e.getMessage();
-            if(status.contains("truncated")){
-                status = "Data Yang Dimasukkan Terlalu Panjang!";
-            }
-
         } finally {
             try { con.close(); } catch (SQLException e) { /* Ignored */ }
         }
