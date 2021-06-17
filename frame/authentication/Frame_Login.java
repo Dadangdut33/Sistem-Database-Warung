@@ -96,7 +96,7 @@ public class Frame_Login extends JFrame implements ActionListener{
         // Button login
         button_Login.setBackground(new Color(60, 63, 65));
         button_Login.setForeground(new Color(187, 187, 187));
-        button_Login.setBounds(50, 115, 215, 20);
+        button_Login.setBounds(50, 115, 215, 22);
         button_Login.setFont((new Font("Segoe UI", Font.PLAIN, 12)));
         button_Login.setText("Sign In");
         jPanel_Content.add(button_Login);

@@ -223,6 +223,7 @@ public class Frame_Menu extends JFrame implements ActionListener {
             @Override
             public void run() {
                 try {
+                    // Saat program masih berjalan
                     while(!exit){
                         Calendar cal = new GregorianCalendar();
                         int day = cal.get(Calendar.DAY_OF_MONTH);
@@ -259,11 +260,12 @@ public class Frame_Menu extends JFrame implements ActionListener {
     }
 
     void checkOpenAndExit(){
-        // Buat thread check apakah ada frame yg diopen setiap 0.5 detik
+        // Buat thread check apakah ada frame yg diopen setiap 0.01 detik
         Thread check = new Thread() {
             @Override
             public void run() {
                 try {
+                    // Saat program masih berjalan
                     while(!exit){
                         // Ini untuk cek apakah ada class lain yg trigger dispose main frame
                         switch (closeTheMainFrame) {
@@ -284,13 +286,14 @@ public class Frame_Menu extends JFrame implements ActionListener {
                                 // Agar hanya di enable apabila memang dia di disable
                                 if(!((Component) menuWindow).isEnabled()){
                                     ((Component) menuWindow).setEnabled(true);
+                                    ((JFrame) frameWindow).toFront();
                                 }
                                 break;
                             default:
                                 break;
                         }
 
-                        sleep(500);
+                        sleep(10);
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -351,7 +354,13 @@ public class Frame_Menu extends JFrame implements ActionListener {
             change_Panel(new Panel_LaporanTransaksi());
         } else
         if(ae.getSource().equals(jButton_Credit)){ // button credit
-            new Frame_Credit();
+            new Frame_Credit().addWindowListener(new WindowAdapter(){
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    Frame_Menu.anotherFrameIsOpen = 0;
+                }
+            });
+            anotherFrameIsOpen = 1;
         }
     }
 }

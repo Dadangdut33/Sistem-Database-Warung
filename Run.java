@@ -1,9 +1,13 @@
+/**
+ * Property of KELOMPOK-5 PL Kelas 2A
+ * Author1: Fauzan Farhan Antoro
+ * Author2: Alfanisa Safvira
+ * Author3: Daffa Fawwaz Syadad
+ * Original splashscreen from: https://stackoverflow.com/questions/11399971/make-splash-screen-with-progress-bar-like-eclipse
+ */
 
-
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Font;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.UIManager.*;
 
@@ -16,12 +20,21 @@ public class Run extends JWindow {
     private static Run execute;
     private static int count;
     private static Timer timer1;
+    private static int x = 0;
+    JLabel label = new JLabel();
+    JLabel label_2 = new JLabel();
 
     public Run() {
         Container container = getContentPane();
         container.setLayout(null);
 
+        // Inisiasi nimbus
         initiateNimbus();
+
+        // Set Icon image
+        this.setIconImage(new ImageIcon(getClass().getResource("/assets/icons8-database-50.png")).getImage());
+
+        // Panel
         JPanel panel = new JPanel();
         panel.setBorder(new javax.swing.border.EtchedBorder());
         panel.setBackground(new Color(21, 25, 28));
@@ -29,18 +42,22 @@ public class Run extends JWindow {
         panel.setLayout(null);
         container.add(panel);
 
-        JLabel label = new JLabel("Loading Program");
-        JLabel label_2 = new JLabel("Harap Mengunggu...");
+        // Label
+        label.setText("Loading Program");
         label.setForeground(Color.WHITE);
         label.setFont(new Font("Verdana", Font.BOLD, 18));
         label.setBounds(80, 40, 280, 30);
+        label_2.setText("Harap Menunggu");
         label_2.setForeground(Color.WHITE);
         label_2.setFont(new Font("Verdana", Font.BOLD, 18));
         label_2.setBounds(70, 80, 280, 30);
+        
+        // Tambahkan label ke panel
         panel.add(label);
         panel.add(label_2);
 
-        progressBar.setMaximum(50);
+        // Proggressbar
+        progressBar.setMaximum(60);
         progressBar.setBounds(55, 180, 250, 15);
         container.add(progressBar);
         container.setBackground(new Color(24, 40, 44));
@@ -56,9 +73,34 @@ public class Run extends JWindow {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 count++;
 
+                if(count % 3 == 0){
+                    switch (x) {
+                        case 0:
+                            label_2.setText("Harap Menunggu"); 
+                            x++;
+                            break;
+                        case 1:
+                            label_2.setText("Harap Menunggu."); 
+                            x++;
+                            break;
+                        case 2:
+                            label_2.setText("Harap Menunggu.."); 
+                            x++;
+                            break;
+                        case 3:
+                            label_2.setText("Harap Menunggu..."); 
+                            x++;
+                            break;
+                        default:
+                            x = 0;
+                            break;
+                    }
+                    
+                }
+
                 progressBar.setValue(count);
 
-                if (count == 50) {
+                if (count == 55) {
                     // Loading selesai, panggil frame login
                     new Frame_Login();
 
