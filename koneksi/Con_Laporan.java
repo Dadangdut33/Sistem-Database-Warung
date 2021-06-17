@@ -80,7 +80,7 @@ public class Con_Laporan {
                 String Kode_Pelanggan = rs.getString("Kode_Pelanggan").trim();
                 String Kode_Barang = rs.getString("Kode_Barang").trim();
                 int Harga_Barang = rs.getInt("Harga_Barang_Pesanan");
-                int Jumlah_Pesanan = rs.getInt("Harga_Barang_Pesanan");
+                int Jumlah_Pesanan = rs.getInt("Jumlah_Pesanan");
                 int Total_Harga_Pesanan = rs.getInt("Total_Harga_Pesanan");
                 Date Tanggal_Pesanan = rs.getDate("Tanggal_Pesanan");
 

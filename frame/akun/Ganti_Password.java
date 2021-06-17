@@ -205,7 +205,7 @@ public class Ganti_Password extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent ae){
         if(ae.getSource().equals(button_Refresh)){
-            
+            refresh();
         } else
         if(ae.getSource().equals(button_Ubah)) {
             if(kosong()){
@@ -217,6 +217,16 @@ public class Ganti_Password extends JFrame implements ActionListener{
                 if(loginSukses){
                     if(pass_Sama()){ // Jika pass sama
                         String PasswordBaru = new String(passwordField_PwBaru.getPassword());
+
+                        if(PasswordBaru.length() < 6 || PasswordBaru.length() > 20) {
+                            JOptionPane.showMessageDialog( 
+                                null, 
+                                "Panjang password minimal 6 sampai 20 kata!", 
+                                "Password invalid",                
+                                JOptionPane.WARNING_MESSAGE);
+    
+                            return;
+                        }
     
                         String gantiPW = new Con_Admin().ganti_Password(PasswordBaru, Akun.ID_Admin, Akun.Password);
                         if(gantiPW.equals("Password berhasil diganti!")){ // Jika berhasil diubah

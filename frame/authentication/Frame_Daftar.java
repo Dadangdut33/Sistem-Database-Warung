@@ -349,6 +349,16 @@ public class Frame_Daftar extends JFrame implements ActionListener{
                     String Nama_Toko = textField_Toko.getText().trim();
                     String Alamat_Toko = textArea_Alamat.getText().trim();
                     String Nomor_Telepon = textField_NomorTelepon.getText().trim();
+
+                    if(Password.length() < 6 || Password.length() > 20) {
+                        JOptionPane.showMessageDialog( 
+                            null, 
+                            "Panjang password minimal 6 sampai 20 kata!", 
+                            "Password invalid",                
+                            JOptionPane.WARNING_MESSAGE);
+
+                        return;
+                    }
     
                     String daftar = new Con_Admin().add_Akun(ID_Admin, Password, Nama_Pemilik, Nama_Toko, Alamat_Toko, Nomor_Telepon);
                     if(daftar.equals("Akun berhasil dibuat!")){
