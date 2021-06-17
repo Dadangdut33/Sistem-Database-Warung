@@ -9,8 +9,6 @@ package frame.akun;
 
 import javax.swing.*;
 
-import frame.menu_utama.Frame_Menu;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
