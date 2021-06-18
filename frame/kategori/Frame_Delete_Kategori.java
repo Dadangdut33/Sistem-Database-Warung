@@ -113,6 +113,7 @@ public class Frame_Delete_Kategori extends JFrame implements ActionListener {
         jPanel_Content.add(button_Refresh);
 
         // Action listener button
+        comboBox_KodeKategori.addActionListener(this);
         button_Delete.addActionListener(this);
         button_Refresh.addActionListener(this);
 

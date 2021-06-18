@@ -191,7 +191,7 @@ public class Frame_Add_Kategori extends JFrame implements ActionListener {
                 String StatusAddKategori = new Con_Kategori().add_Kategori(Kode_Kategori, Nama_Kategori, Akun.ID_Admin);
 
                 // Jika berhasil
-               if(StatusAddKategori.equals("Data Pelanggan Berhasil Ditambah!")){
+               if(StatusAddKategori.equals("Data Kategori Berhasil Ditambah!")){
                    JOptionPane.showMessageDialog( 
                     null, 
                     StatusAddKategori, 
