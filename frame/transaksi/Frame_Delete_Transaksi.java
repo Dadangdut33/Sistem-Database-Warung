@@ -42,7 +42,7 @@ public class Frame_Delete_Transaksi extends JFrame implements ActionListener {
     public Frame_Delete_Transaksi(){
         // Setting frame
         this.setSize(355, 300);
-        this.setTitle("Hapus Laporan Transaksi");
+        this.setTitle("Delete Laporan Transaksi");
         this.getContentPane().setBackground(new Color(60, 63, 65));
         this.setLayout(null);
         this.setResizable(false);
@@ -63,7 +63,7 @@ public class Frame_Delete_Transaksi extends JFrame implements ActionListener {
         // Label Judul
         jLabel_Judul.setForeground(Color.WHITE);
         jLabel_Judul.setFont((new Font("Segoe UI", Font.BOLD, 18)));
-        jLabel_Judul.setText("HAPUS LAPORAN TRANSAKSI");
+        jLabel_Judul.setText("DELETE LAPORAN TRANSAKSI");
         jLabel_Judul.setBounds(30, 10, 280, 30);
         jPanel_Header.add(jLabel_Judul);
 
@@ -124,14 +124,14 @@ public class Frame_Delete_Transaksi extends JFrame implements ActionListener {
         jTextField_TanggalPesan.setBackground(new Color(60, 63, 65));
         jTextField_TanggalPesan.setForeground(new Color(187, 187, 187));
         jTextField_TanggalPesan.setBounds(115, 112, 195, 25);
-        jTextField_TanggalPesan.setEnabled(false);
+        jTextField_TanggalPesan.setEditable(false);
         jTextField_TanggalPesan.setText("");
         jPanel_Content.add(jTextField_TanggalPesan);
 
         // Button Add
         button_Delete.setBackground(new Color(60, 63, 65));
         button_Delete.setForeground(new Color(187, 187, 187));
-        button_Delete.setBounds(115, 142, 110, 20);
+        button_Delete.setBounds(115, 142, 95, 20);
         button_Delete.setFont((new Font("Segoe UI", Font.PLAIN, 12)));
         button_Delete.setText("Delete Data");
         jPanel_Content.add(button_Delete);
@@ -169,7 +169,9 @@ public class Frame_Delete_Transaksi extends JFrame implements ActionListener {
     }
 
     void isiData(){
-        if(comboBox_KodePesanan.getSelectedIndex() != 0){
+        if(comboBox_KodePesanan.getSelectedIndex() == 0){
+            refresh();
+        } else {
             List<Object> data = new Con_Laporan().get_LaporanPesananByKode(Akun.ID_Admin, comboBox_KodePesanan.getSelectedItem().toString());
             Object[] parsedData = (Object[]) data.toArray(new Object[0]);
             

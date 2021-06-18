@@ -15,20 +15,20 @@ import java.util.List;
 public class Con_Kategori {
     Connection con = null;
     // CREATE
-    public String add_Kategori(String Kode, String Nama_Kategori, String ID_Admin){
+    public String add_Kategori(String Kode_Kategori, String Nama_Kategori, String ID_Admin){
         String status;
         try {
             con = new SQLConnect().getConSQL();
             PreparedStatement pr = con.prepareStatement("INSERT INTO Kategori (Kode,Nama_Kategori,ID_Admin) values (?,?,?)");
-            pr.setString(1, Kode);
+            pr.setString(1, Kode_Kategori);
             pr.setString(2, Nama_Kategori);
             pr.setString(3, ID_Admin);
 
             int i = pr.executeUpdate();
             if(i == 0){
-                status = "Data Barang Gagal Ditambah!";
+                status = "Data Kategori Gagal Ditambah!";
             } else {
-                status = "Data Barang Berhasil Ditambah!";
+                status = "Data Kategori Berhasil Ditambah!";
             }
         } catch (SQLException e) {
             status = e.getMessage();
@@ -122,9 +122,9 @@ public class Con_Kategori {
 
             int res = pr.executeUpdate();
             if(res == 0){
-                status = "Data gagal diubah!";
+                status = "Kategori gagal diubah!";
             } else {
-                status = "Data berhasil diubah!";
+                status = "Kategori berhasil diubah!";
             }
         } catch (SQLException e) {
             status = e.getMessage();

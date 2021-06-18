@@ -95,7 +95,6 @@ public class Frame_Add_Pelanggan extends JFrame implements ActionListener {
         jTextArea_AlamatPelanggan.setFont((new Font("Segoe UI", Font.PLAIN, 12)));
         jTextArea_AlamatPelanggan.setBackground(new Color(60, 63, 65));
         jTextArea_AlamatPelanggan.setForeground(new Color(187, 187, 187));
-        jTextArea_AlamatPelanggan.setBounds(100, 52, 210, 80);
         jTextArea_AlamatPelanggan.setCaretColor(Color.WHITE);
         jTextArea_AlamatPelanggan.setLineWrap(true);
         jTextArea_AlamatPelanggan.setWrapStyleWord(true);
@@ -131,7 +130,7 @@ public class Frame_Add_Pelanggan extends JFrame implements ActionListener {
         // Button refresh
         button_Refresh.setBackground(new Color(60, 63, 65));
         button_Refresh.setForeground(new Color(187, 187, 187));
-        button_Refresh.setBounds(215, 167, 90, 20);
+        button_Refresh.setBounds(220, 167, 90, 20);
         button_Refresh.setFont((new Font("Segoe UI", Font.PLAIN, 12)));
         button_Refresh.setText("Refresh");
         jPanel_Content.add(button_Refresh);

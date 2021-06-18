@@ -8,6 +8,8 @@
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.concurrent.ThreadLocalRandom;
+
 import javax.swing.*;
 import javax.swing.UIManager.*;
 
@@ -23,6 +25,7 @@ public class Run extends JWindow {
     private static int x = 0;
     JLabel label = new JLabel();
     JLabel label_2 = new JLabel();
+    int randomLoadNum = ThreadLocalRandom.current().nextInt(50, 60 + 1);
 
     public Run() {
         Container container = getContentPane();
@@ -72,7 +75,7 @@ public class Run extends JWindow {
 
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 count++;
-
+                
                 if(count % 3 == 0){
                     switch (x) {
                         case 0:
@@ -100,7 +103,7 @@ public class Run extends JWindow {
 
                 progressBar.setValue(count);
 
-                if (count == 55) {
+                if (count == randomLoadNum) {
                     // Loading selesai, panggil frame login
                     new Frame_Login();
 

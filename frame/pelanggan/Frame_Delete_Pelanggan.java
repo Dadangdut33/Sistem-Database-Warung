@@ -47,7 +47,7 @@ public class Frame_Delete_Pelanggan extends JFrame implements ActionListener {
     public Frame_Delete_Pelanggan(){
         // Setting frame
         this.setSize(355, 350);
-        this.setTitle("Edit Pelanggan");
+        this.setTitle("Delete Pelanggan");
         this.getContentPane().setBackground(new Color(60, 63, 65));
         this.setLayout(null);
         this.setResizable(false);
@@ -101,7 +101,7 @@ public class Frame_Delete_Pelanggan extends JFrame implements ActionListener {
         jTextField_NamaPelanggan.setForeground(new Color(187, 187, 187));
         jTextField_NamaPelanggan.setBounds(100, 52, 210, 25);
         jTextField_NamaPelanggan.setCaretColor(Color.WHITE);
-        jTextField_NamaPelanggan.setEnabled(false);
+        jTextField_NamaPelanggan.setEditable(false);
         jPanel_Content.add(jTextField_NamaPelanggan);
 
         // Label alamat
@@ -118,7 +118,7 @@ public class Frame_Delete_Pelanggan extends JFrame implements ActionListener {
         jTextArea_AlamatPelanggan.setCaretColor(Color.WHITE);
         jTextArea_AlamatPelanggan.setLineWrap(true);
         jTextArea_AlamatPelanggan.setWrapStyleWord(true);
-        jTextArea_AlamatPelanggan.setEnabled(false);
+        jTextArea_AlamatPelanggan.setEditable(false);
 
         spane.getVerticalScrollBar().setBackground(new Color(60, 63, 65));
         spane.getVerticalScrollBar().setForeground(new Color(187, 187, 187));
@@ -138,7 +138,7 @@ public class Frame_Delete_Pelanggan extends JFrame implements ActionListener {
         jTextField_TeleponPelanggan.setForeground(new Color(187, 187, 187));
         jTextField_TeleponPelanggan.setBounds(100, 167, 210, 25);
         jTextField_TeleponPelanggan.setDocument(new OnlyDigit().getOnlyDigit());
-        jTextField_TeleponPelanggan.setEnabled(false);
+        jTextField_TeleponPelanggan.setEditable(false);
         jPanel_Content.add(jTextField_TeleponPelanggan);
 
         // Button Add
@@ -182,11 +182,12 @@ public class Frame_Delete_Pelanggan extends JFrame implements ActionListener {
     }
 
     void isiData(){
-        if(comboBox_KodePelanggan.getSelectedIndex() != 0){
+        if(comboBox_KodePelanggan.getSelectedIndex() == 0) {
+            refresh();
+        } else {
             List<Object> data = new Con_Pelanggan().get_PelangganByKode(comboBox_KodePelanggan.getSelectedItem().toString(), Akun.ID_Admin);
             Object[] parsedData = (Object[]) data.toArray(new Object[0]);
             
-
             jTextField_NamaPelanggan.setText(parsedData[0].toString());
             jTextArea_AlamatPelanggan.setText(parsedData[1].toString());
             jTextField_TeleponPelanggan.setText(parsedData[2].toString());
@@ -212,17 +213,9 @@ public class Frame_Delete_Pelanggan extends JFrame implements ActionListener {
             data_Yang_Kosong.remove(i);
         }
 
-        if(jTextField_NamaPelanggan.getText().equals("")){
+        if(comboBox_KodePelanggan.getSelectedIndex() == 0){
             kosong = true;
-            data_Yang_Kosong.add("Nama Pelanggan");
-        }
-        if(jTextArea_AlamatPelanggan.getText().equals("")){
-            kosong = true;
-            data_Yang_Kosong.add("Alamat Pelanggan");
-        }
-        if(jTextField_TeleponPelanggan.getText().equals("")){
-            kosong = true;
-            data_Yang_Kosong.add("Telepon Pelanggan");
+            data_Yang_Kosong.add("Kode Pelanggan");
         }
         
         return kosong;
@@ -230,33 +223,11 @@ public class Frame_Delete_Pelanggan extends JFrame implements ActionListener {
 
     // Popup untuk yang kosong
     void kosongPopup(){
-        int jumlahKosong = data_Yang_Kosong.size();
-        int last = data_Yang_Kosong.size() - 1;
-
-        if(jumlahKosong == 1) {
-            JOptionPane.showMessageDialog( 
-                null, 
-                String.join(", ", data_Yang_Kosong) + " harus diisi!", 
-                "Input Error",                
-                JOptionPane.ERROR_MESSAGE);
-        } else
-        if(jumlahKosong == 2) {
-            JOptionPane.showMessageDialog( 
-                null, 
-                String.join(" dan ", 
-                String.join(", ", data_Yang_Kosong.subList(0, last)),
-                data_Yang_Kosong.get(last)) + " harus diisi!", 
-                "Input Error",                
-                JOptionPane.ERROR_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog( 
-                null, 
-                String.join(", dan ", 
-                String.join(", ", data_Yang_Kosong.subList(0, last)),
-                data_Yang_Kosong.get(last)) + " harus diisi!", 
-                "Input Error",                
-                JOptionPane.ERROR_MESSAGE);
-        }
+        JOptionPane.showMessageDialog( 
+            null, 
+            String.join(", ", data_Yang_Kosong) + " harus dipilih!", 
+            "Input Error",                
+            JOptionPane.ERROR_MESSAGE);
     }
     
     @Override

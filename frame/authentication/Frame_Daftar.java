@@ -353,7 +353,7 @@ public class Frame_Daftar extends JFrame implements ActionListener{
                     if(ID_Admin.length() < 6 || ID_Admin.length() > 20) {
                         JOptionPane.showMessageDialog( 
                             null, 
-                            "Panjang ID/Username minimal 6 sampai 20 kata!", 
+                            "Panjang ID/Username minimal 6 sampai 20 huruf!", 
                             "ID Invalid",                
                             JOptionPane.WARNING_MESSAGE);
 
@@ -363,7 +363,7 @@ public class Frame_Daftar extends JFrame implements ActionListener{
                     if(Password.length() < 6 || Password.length() > 20) {
                         JOptionPane.showMessageDialog( 
                             null, 
-                            "Panjang password minimal 6 sampai 20 kata!", 
+                            "Panjang password minimal 6 sampai 20 huruf!", 
                             "Password Invalid",                
                             JOptionPane.WARNING_MESSAGE);
 

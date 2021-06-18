@@ -109,8 +109,6 @@ public class Frame_Add_Transaksi extends JFrame implements ActionListener {
     
         // TextArea Alamat
         spinner_JumlahPesanan.setFont((new Font("Segoe UI", Font.PLAIN, 12)));
-        spinner_JumlahPesanan.setBackground(new Color(60, 63, 65));
-        // spinner_JumlahPesanan.setForeground(new Color(187, 187, 187));
         spinner_JumlahPesanan.setBounds(100, 82, 210, 25);
         jPanel_Content.add(spinner_JumlahPesanan);
 
@@ -125,7 +123,7 @@ public class Frame_Add_Transaksi extends JFrame implements ActionListener {
         // Button refresh
         button_Refresh.setBackground(new Color(60, 63, 65));
         button_Refresh.setForeground(new Color(187, 187, 187));
-        button_Refresh.setBounds(215, 112, 90, 20);
+        button_Refresh.setBounds(220, 112, 90, 20);
         button_Refresh.setFont((new Font("Segoe UI", Font.PLAIN, 12)));
         button_Refresh.setText("Refresh");
         jPanel_Content.add(button_Refresh);

@@ -44,6 +44,10 @@ public class Frame_Edit_Pelanggan extends JFrame implements ActionListener {
 
     ArrayList<String> data_Yang_Kosong = new ArrayList<>();
 
+    public static void main(String[] args) {
+        new Frame_Edit_Pelanggan();
+    }
+    
     public Frame_Edit_Pelanggan(){
         // Setting frame
         this.setSize(355, 350);
@@ -149,7 +153,7 @@ public class Frame_Edit_Pelanggan extends JFrame implements ActionListener {
         // Button refresh
         button_Refresh.setBackground(new Color(60, 63, 65));
         button_Refresh.setForeground(new Color(187, 187, 187));
-        button_Refresh.setBounds(215, 197, 90, 20);
+        button_Refresh.setBounds(220, 197, 90, 20);
         button_Refresh.setFont((new Font("Segoe UI", Font.PLAIN, 12)));
         button_Refresh.setText("Refresh");
         jPanel_Content.add(button_Refresh);
@@ -271,19 +275,19 @@ public class Frame_Edit_Pelanggan extends JFrame implements ActionListener {
                 String Telepon_Pelanggan = jTextField_TeleponPelanggan.getText().trim();
                 String Kode_Pelanggan = comboBox_KodePelanggan.getSelectedItem().toString();
 
-                String StatusAddPelanggan = new Con_Pelanggan().edit_Pelanggan(Nama_Pelanggan, Alamat_Pelanggan, Telepon_Pelanggan, Akun.ID_Admin, Kode_Pelanggan);
+                String StatusEditPelanggan = new Con_Pelanggan().edit_Pelanggan(Nama_Pelanggan, Alamat_Pelanggan, Telepon_Pelanggan, Akun.ID_Admin, Kode_Pelanggan);
 
                 // Jika berhasil
-               if(StatusAddPelanggan.equals("Data pelanggan berhasil diubah!")){
+               if(StatusEditPelanggan.equals("Data pelanggan berhasil diubah!")){
                    JOptionPane.showMessageDialog( 
                     null, 
-                    StatusAddPelanggan, 
+                    StatusEditPelanggan, 
                     "Add Pelanggan Berhasil",         
                     JOptionPane.INFORMATION_MESSAGE);
                     
                     refresh();
                } else { // Jika gagal
-                    JOptionPane.showMessageDialog(null, StatusAddPelanggan, "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, StatusEditPelanggan, "Error", JOptionPane.ERROR_MESSAGE);
                }
             }
         } else 
