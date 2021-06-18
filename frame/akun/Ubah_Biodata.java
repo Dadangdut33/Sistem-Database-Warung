@@ -16,8 +16,6 @@ import koneksi.Con_Admin;
 import saved_authentication.Akun;
 import tools.OnlyDigit;
 
-
-// IGNORE MASIH WIP BELUM DIAPA2IN
 public class Ubah_Biodata extends JFrame implements ActionListener {
     JPanel jPanel_Header = new JPanel();
     JPanel jPanel_Content = new JPanel();

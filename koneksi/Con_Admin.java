@@ -173,29 +173,25 @@ public class Con_Admin {
             con = new SQLConnect().getConSQL();
             PreparedStatement pr_Del_Pelanggan = con.prepareStatement("DELETE Pelanggan WHERE ID_Admin=?");
             pr_Del_Pelanggan.setString(1, ID_Admin);
-            int statusCode_1 = pr_Del_Pelanggan.executeUpdate();
+            pr_Del_Pelanggan.executeUpdate();
             
             // Hapus kategori maka barang ikut terhapus
             PreparedStatement pr_Del_Kategori = con.prepareStatement("DELETE Kategori WHERE ID_Admin=?");
             pr_Del_Kategori.setString(1, ID_Admin);
-            int statusCode_2 = pr_Del_Kategori.executeUpdate();
+            pr_Del_Kategori.executeUpdate();
 
             // Hapus laporan
             PreparedStatement pr_Del_Laporan = con.prepareStatement("DELETE Laporan_Pesanan WHERE ID_Admin=?");
             pr_Del_Laporan.setString(1, ID_Admin);
-            int statusCode_3 = pr_Del_Laporan.executeUpdate();
+            pr_Del_Laporan.executeUpdate();
 
             PreparedStatement pr_Del_Admin = con.prepareStatement("DELETE User_Admin WHERE ID_Admin=? and Password=?");
             pr_Del_Admin.setString(1, ID_Admin);
             pr_Del_Admin.setString(2, Password);
-            int statusCode_4 = pr_Del_Admin.executeUpdate();
+            pr_Del_Admin.executeUpdate();
 
             // Returns 0 berarti dah dihapus semua
-            if(statusCode_1 == 0 || statusCode_2 == 0 || statusCode_3 == 0 || statusCode_4 == 0){
-                status = "Akun Berhasil Dihapus!";
-            } else {
-                status = "Akun Gagal Dihapus!";
-            }
+            status = "Akun Berhasil Dihapus!";
 
         } catch (SQLException e) {
             // Jika error berarti gagal

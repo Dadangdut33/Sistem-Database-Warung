@@ -16,8 +16,6 @@ import java.util.List;
 import koneksi.Con_Laporan;
 import saved_authentication.Akun;
 
-
-// IGNORE MASIH WIP BELUM DIAPA2IN
 public class Frame_Delete_Transaksi extends JFrame implements ActionListener {
     JPanel jPanel_Header = new JPanel();
     JPanel jPanel_Content = new JPanel();

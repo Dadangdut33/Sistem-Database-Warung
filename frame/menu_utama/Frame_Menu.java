@@ -20,7 +20,6 @@ import saved_authentication.*;
 import frame.authentication.*;
 import frame.credits.Frame_Credit;
 
-
 public class Frame_Menu extends JFrame implements ActionListener {
     JButton jButton_Akun = new JButton();
     JButton jButton_Logout = new JButton();
@@ -280,15 +279,17 @@ public class Frame_Menu extends JFrame implements ActionListener {
                         // Ini untuk cek apakah ada class lain yg trigger frame terbuka, jd nanti main frame di disable
                         switch (anotherFrameIsOpen) {
                             case 1:
-                                ((Component) menuWindow).setEnabled(false);
+                                ((Component) menuWindow).setEnabled(false); // Disable frame
                                 break;
                             case 0:
-                                // Agar hanya di enable apabila memang dia di disable
+                                // Agar hanya di re-enable apabila memang dia di disable
                                 if(!((Component) menuWindow).isEnabled()){
-                                    ((Component) menuWindow).setEnabled(true);
-                                    ((JFrame) frameWindow).toFront();
+                                    
+                                    ((Component) menuWindow).setEnabled(true); // Enable frame
+                                    ((JFrame) frameWindow).setTitle("Database " + Akun.Nama_Toko); // Cek nama toko apabila di edit
+                                    ((JFrame) frameWindow).toFront(); // Bawa ke depan
 
-                                    // Set -1 agar tidak perlu ke cek kemana2 lagi
+                                    // Set -1 agar tidak perlu ke cek kemana2 lagi (akan langsung ke default statement (kosong))
                                     Frame_Menu.anotherFrameIsOpen = -1;
                                 }
                                 break;

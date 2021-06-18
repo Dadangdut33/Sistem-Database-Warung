@@ -17,8 +17,6 @@ import koneksi.Con_Pelanggan;
 import saved_authentication.Akun;
 import tools.OnlyDigit;
 
-
-// IGNORE MASIH WIP BELUM DIAPA2IN
 public class Frame_Delete_Pelanggan extends JFrame implements ActionListener {
     JPanel jPanel_Header = new JPanel();
     JPanel jPanel_Content = new JPanel();

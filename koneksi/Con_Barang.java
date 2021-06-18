@@ -28,9 +28,9 @@ public class Con_Barang {
 
             int i = pr.executeUpdate();
             if(i == 0){
-                status = "Data Barang Gagal Ditambah!";
+                status = "Barang Gagal Ditambah!";
             } else {
-                status = "Data Barang Berhasil Ditambah!";
+                status = "Barang Berhasil Ditambah!";
             }
         } catch (SQLException e) {
             status = e.getMessage();
@@ -103,7 +103,7 @@ public class Con_Barang {
 
             ResultSet rs = pr.executeQuery();
             rs.next();
-            String Nama_Barang = rs.getString("Kode_Barang").trim();
+            String Nama_Barang = rs.getString("Nama_Barang").trim();
             int Harga_Barang = rs.getInt("Harga_Barang");
             int Stok_Barang = rs.getInt("Stok_Barang");
     
@@ -150,7 +150,7 @@ public class Con_Barang {
                 status = "Stok Tidak Cukup!";
             } else {
                 int Stok_Baru = curr_Stok - Jumlah_Pesanan;
-                status = new Con_Barang().update_Stok(Stok_Baru, ID_Admin, Kode_Barang);
+                status = new Con_Barang().proses_Kurang_Stok(Stok_Baru, ID_Admin, Kode_Barang);
             }
         } catch (Exception e) {
             status = e.getMessage();
@@ -159,7 +159,7 @@ public class Con_Barang {
         return status;
     }
 
-    public String update_Stok(int Stok_Baru, String ID_Admin, String Kode_Barang){
+    public String proses_Kurang_Stok(int Stok_Baru, String ID_Admin, String Kode_Barang){
         String status;
         try {
             con = new SQLConnect().getConSQL();

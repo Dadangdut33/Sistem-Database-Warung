@@ -17,8 +17,6 @@ import koneksi.Con_Pelanggan;
 import saved_authentication.Akun;
 import tools.OnlyDigit;
 
-
-// IGNORE MASIH WIP BELUM DIAPA2IN
 public class Frame_Edit_Pelanggan extends JFrame implements ActionListener {
     JPanel jPanel_Header = new JPanel();
     JPanel jPanel_Content = new JPanel();
@@ -183,7 +181,9 @@ public class Frame_Edit_Pelanggan extends JFrame implements ActionListener {
     }
 
     void isiData(){
-        if(comboBox_KodePelanggan.getSelectedIndex() != 0){
+        if(comboBox_KodePelanggan.getSelectedIndex() == 0) {
+            refresh();
+        } else {
             List<Object> data = new Con_Pelanggan().get_PelangganByKode(comboBox_KodePelanggan.getSelectedItem().toString(), Akun.ID_Admin);
             Object[] parsedData = (Object[]) data.toArray(new Object[0]);
             
