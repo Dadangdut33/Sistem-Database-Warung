@@ -11,6 +11,10 @@ Bentuk workspace folder = VSCODE
 
 Untuk DATABASE menggunakan MSSQL dan koneksi dengan JDBC 4.0\
 Model DATABASE terdapat di folder Database\
+Terdapat 2 versi, yaitu:
+1. Fresh = Masih kosong
+2. Tested = Sudah ada isinya
+
 Untuk menggunakannya harus diletakkan di\
 C:\Program Files\Microsoft SQL Server\MSSQL12.MSSQLSERVER\MSSQL\DATA
 

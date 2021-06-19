@@ -71,7 +71,7 @@ public class Con_Laporan {
         List<Object> dataList = new ArrayList<>();
         try {
             con = new SQLConnect().getConSQL();
-            PreparedStatement pr = con.prepareStatement("SELECT * FROM Laporan_Pesanan WHERE ID_Admin = ?");
+            PreparedStatement pr = con.prepareStatement("SELECT * FROM Laporan_Pesanan WHERE ID_Admin = ? ORDER BY ID_Pesanan");
             pr.setString(1, ID_Admin);
 
             ResultSet rs = pr.executeQuery();
@@ -126,7 +126,7 @@ public class Con_Laporan {
         List<Object> dataList = new ArrayList<>();
         try {
             con = new SQLConnect().getConSQL();
-            PreparedStatement pr = con.prepareStatement("SELECT * FROM Laporan_Pesanan WHERE ID_Admin = ?");
+            PreparedStatement pr = con.prepareStatement("SELECT * FROM Laporan_Pesanan WHERE ID_Admin = ? ORDER BY ID_Pesanan");
             pr.setString(1, ID_Admin);
 
             ResultSet rs = pr.executeQuery();

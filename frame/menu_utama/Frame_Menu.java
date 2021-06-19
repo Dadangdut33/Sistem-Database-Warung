@@ -279,7 +279,11 @@ public class Frame_Menu extends JFrame implements ActionListener {
                         // Ini untuk cek apakah ada class lain yg trigger frame terbuka, jd nanti main frame di disable
                         switch (anotherFrameIsOpen) {
                             case 1:
-                                ((Component) menuWindow).setEnabled(false); // Disable frame
+                                // Agar hanya di disable apabila memang dia di enable
+                                if(((Component) menuWindow).isEnabled()){
+                                    ((Component) menuWindow).setEnabled(false); // Disable frame
+                                    Frame_Menu.anotherFrameIsOpen = -1;
+                                }
                                 break;
                             case 0:
                                 // Agar hanya di re-enable apabila memang dia di disable

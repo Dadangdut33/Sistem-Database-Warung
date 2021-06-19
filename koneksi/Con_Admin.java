@@ -101,7 +101,6 @@ public class Con_Admin {
             String[] dataArr = { Admin_ID, password, Nama_Pemilik, Nama_Toko, Alamat, no_Telp };
             Collections.addAll(dataList, dataArr);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Akun tidak ditemukan!", "Error", JOptionPane.ERROR_MESSAGE);
             String[] dataErr = { e.getMessage(), "Error" };
             Collections.addAll(dataList, dataErr);
         } finally {

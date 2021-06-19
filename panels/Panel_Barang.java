@@ -74,7 +74,7 @@ public class Panel_Barang extends JPanel implements ActionListener {
         jLabel_judul.setFont(new Font("Segoe UI", Font.BOLD, 18));
         jLabel_judul.setForeground(Color.WHITE);
         jLabel_judul.setBounds(20, 20, 270, 25);
-        jLabel_judul.setText("Tabel Pelanggan/Customer");
+        jLabel_judul.setText("Tabel Barang");
         this.add(jLabel_judul);
 
         // Label untuk search tabel atas
