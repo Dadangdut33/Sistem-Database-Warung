@@ -37,7 +37,6 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
 
     // Static for rgb
     public static boolean exitPanelAkun;
-
     Object currentWindow = this;
 
     public Panel_Akun_Info(){
@@ -127,8 +126,6 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
         jButton_UbahPass.addActionListener(this);
         jButton_UbahBiodata.addActionListener(this);
         jButton_DeleteAkun.addActionListener(this);
-
-        this.setEnabled(false);
     }
 
     void refreshAll(){
@@ -161,26 +158,31 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae){
         if(ae.getSource().equals(jButton_UbahPass)){
+            JFrame mainFrame = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this);
             new Ganti_Password().addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent e) {
-                    Frame_Menu.anotherFrameIsOpen = 0;
+                    mainFrame.setEnabled(true);
                     refreshAll();
                 }
             });
-            Frame_Menu.anotherFrameIsOpen = 1;
+            mainFrame.setEnabled(false);
         } else 
         if(ae.getSource().equals(jButton_UbahBiodata)){
+            JFrame mainFrame = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this);
             new Ubah_Biodata().addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent e) {
-                    Frame_Menu.anotherFrameIsOpen = 0;
+                    mainFrame.setEnabled(true);
+                    mainFrame.setTitle("Database " + Akun.Nama_Toko);
                     refreshAll();
                 }
             });
-            Frame_Menu.anotherFrameIsOpen = 1;
+            mainFrame.setEnabled(false);
         } else 
         if(ae.getSource().equals(jButton_DeleteAkun)){
+            JFrame mainFrame = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this);
+
             int confirmed = JOptionPane.showConfirmDialog(null, 
                     "Apakah anda yakin ingin menghapus akun anda?\nWARNING: SEMUA DATA YANG DISIMPAN DI DATABASE JUGA AKAN DIHAPUS APABILA ANDA MENGHAPUS AKUN!", "Delete Confirmation",
                     JOptionPane.YES_NO_OPTION);
@@ -222,8 +224,11 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
                                 // Reset Akun
                                 new Akun().reset();
                                 
+                                // Set exit true untuk stop clock
+                                Frame_Menu.exit = true;
+
                                 // Dispose Main Frame
-                                Frame_Menu.closeTheMainFrame = 1;
+                                mainFrame.dispose();
 
                                 // Call frame login
                                 new Frame_Login();

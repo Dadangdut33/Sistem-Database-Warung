@@ -12,7 +12,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.table.*;
 
-import frame.menu_utama.Frame_Menu;
 import frame.transaksi.*;
 import koneksi.Con_Laporan;
 
@@ -387,6 +386,18 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         }
     }
 
+    void openFrame(JFrame openedFrame){
+        JFrame mainFrame = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this);
+        openedFrame.addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowClosing(WindowEvent e) {
+                refreshAll();
+                mainFrame.setEnabled(true);
+            }
+        });
+        mainFrame.setEnabled(false);
+    }
+
     @Override
     public void actionPerformed(ActionEvent ae){
         if(ae.getSource().equals(jBox_Kolom_TbAtas)){
@@ -399,24 +410,10 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
             changeModeTabelBawah();
         } else 
         if(ae.getSource().equals(jButton_Add)){
-            new Frame_Add_Transaksi().addWindowListener(new WindowAdapter(){
-                @Override
-                public void windowClosing(WindowEvent e) { // Agar auto refresh dan main form dapat dipencet lagi saat ditutup
-                    refreshAll();
-                    Frame_Menu.anotherFrameIsOpen = 0;
-                }
-            });
-            Frame_Menu.anotherFrameIsOpen = 1;
+            openFrame(new Frame_Add_Transaksi());
         } else 
         if(ae.getSource().equals(jButton_Delete)){
-            new Frame_Delete_Transaksi().addWindowListener(new WindowAdapter(){
-                @Override
-                public void windowClosing(WindowEvent e) { // Agar auto refresh dan main form dapat dipencet lagi saat ditutup
-                    refreshAll();
-                    Frame_Menu.anotherFrameIsOpen = 0;
-                }
-            });
-            Frame_Menu.anotherFrameIsOpen = 1;
+            openFrame(new Frame_Delete_Transaksi());
         }
     }
 }

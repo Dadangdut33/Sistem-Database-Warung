@@ -13,7 +13,6 @@ import java.awt.event.*;
 import javax.swing.table.*;
 
 import frame.barang.*;
-import frame.menu_utama.Frame_Menu;
 import koneksi.Con_Barang;
 
 import java.util.List;
@@ -220,40 +219,31 @@ public class Panel_Barang extends JPanel implements ActionListener {
         }
     }
 
+    void openFrame(JFrame openedFrame){
+        JFrame mainFrame = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this);
+        openedFrame.addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowClosing(WindowEvent e) {
+                refreshAll();
+                mainFrame.setEnabled(true);
+            }
+        });
+        mainFrame.setEnabled(false);
+    }
+
     @Override
     public void actionPerformed(ActionEvent ae){
         if(ae.getSource().equals(jBox_Kolom_TbAtas)){
             sorterModeAtas = jBox_Kolom_TbAtas.getSelectedIndex();
         } else 
         if(ae.getSource().equals(jButton_Add)){
-            new Frame_Add_Barang().addWindowListener(new WindowAdapter(){
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    refreshAll();
-                    Frame_Menu.anotherFrameIsOpen = 0;
-                }
-            });
-            Frame_Menu.anotherFrameIsOpen = 1;
+            openFrame(new Frame_Add_Barang());
         } else 
         if(ae.getSource().equals(jButton_Edit)){
-            new Frame_Edit_Barang().addWindowListener(new WindowAdapter(){
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    refreshAll();
-                    Frame_Menu.anotherFrameIsOpen = 0;
-                }
-            });
-            Frame_Menu.anotherFrameIsOpen = 1;
+            openFrame(new Frame_Edit_Barang());
         } else 
         if(ae.getSource().equals(jButton_Delete)){
-            new Frame_Delete_Barang().addWindowListener(new WindowAdapter(){
-                @Override
-                public void windowClosing(WindowEvent e) { 
-                    refreshAll();
-                    Frame_Menu.anotherFrameIsOpen = 0;
-                }
-            });
-            Frame_Menu.anotherFrameIsOpen = 1;
+            openFrame(new Frame_Delete_Barang());
         }
     }
 }

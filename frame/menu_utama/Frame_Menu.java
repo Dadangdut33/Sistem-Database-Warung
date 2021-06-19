@@ -42,9 +42,7 @@ public class Frame_Menu extends JFrame implements ActionListener {
     JFrame frameWindow = this;
 
     // To check exit and frame open
-    Boolean exit;
-    public static int anotherFrameIsOpen;
-    public static int closeTheMainFrame;
+    public static Boolean exit;
 
     public Frame_Menu(){
         // Frame menu settingnya
@@ -58,8 +56,6 @@ public class Frame_Menu extends JFrame implements ActionListener {
         this.setLocationRelativeTo(null);
     
         // Untuk clock
-        anotherFrameIsOpen = 0;
-        closeTheMainFrame = 0;
         exit = false;
 
         // PANEL KIRI
@@ -86,9 +82,6 @@ public class Frame_Menu extends JFrame implements ActionListener {
         
         // Panggil function untuk start thread waktunya
         dateAndTime();
-
-        // Panggil function untuk start thread cek window
-        checkOpenAndExit();
 
         // ID
         jLabel_ID.setFont(new Font("Segoe UI", Font.PLAIN, 11));
@@ -258,61 +251,6 @@ public class Frame_Menu extends JFrame implements ActionListener {
         clock.start();
     }
 
-    void checkOpenAndExit(){
-        // Buat thread check apakah ada frame yg diopen setiap 0.01 detik
-        Thread check = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    // Saat program masih berjalan
-                    while(!exit){
-                        // Ini untuk cek apakah ada class lain yg trigger dispose main frame
-                        switch (closeTheMainFrame) {
-                            case 1:
-                                exit = true;
-                                ((JFrame) frameWindow).dispose();
-                                break;
-                            default:
-                                break;
-                        }
-                        
-                        // Ini untuk cek apakah ada class lain yg trigger frame terbuka, jd nanti main frame di disable
-                        switch (anotherFrameIsOpen) {
-                            case 1:
-                                // Agar hanya di disable apabila memang dia di enable
-                                if(((Component) menuWindow).isEnabled()){
-                                    ((Component) menuWindow).setEnabled(false); // Disable frame
-                                    Frame_Menu.anotherFrameIsOpen = -1;
-                                }
-                                break;
-                            case 0:
-                                // Agar hanya di re-enable apabila memang dia di disable
-                                if(!((Component) menuWindow).isEnabled()){
-                                    
-                                    ((Component) menuWindow).setEnabled(true); // Enable frame
-                                    ((JFrame) frameWindow).setTitle("Database " + Akun.Nama_Toko); // Cek nama toko apabila di edit
-                                    ((JFrame) frameWindow).toFront(); // Bawa ke depan
-
-                                    // Set -1 agar tidak perlu ke cek kemana2 lagi (akan langsung ke default statement (kosong))
-                                    Frame_Menu.anotherFrameIsOpen = -1;
-                                }
-                                break;
-                            default:
-                                break;
-                        }
-
-                        sleep(10);
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        // Start threadnya
-        check.start();
-    }
-
     // Untuk ubah-ubah panel kontennya
     void change_Panel(JPanel newPanel){
         this.getContentPane().remove(jPanel_Curr_Panel);
@@ -365,10 +303,10 @@ public class Frame_Menu extends JFrame implements ActionListener {
             new Frame_Credit().addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent e) {
-                    Frame_Menu.anotherFrameIsOpen = 0;
+                    ((Component) menuWindow).setEnabled(true);
                 }
             });
-            anotherFrameIsOpen = 1;
+            ((Component) menuWindow).setEnabled(false);
         }
     }
 }
