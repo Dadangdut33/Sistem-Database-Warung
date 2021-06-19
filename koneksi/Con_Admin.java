@@ -7,7 +7,6 @@
 package koneksi;
 
 import java.sql.*;
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
