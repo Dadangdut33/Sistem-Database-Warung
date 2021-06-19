@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import koneksi.Con_Admin;
 import saved_authentication.Akun;
 import tools.OnlyDigit;
+import tools.OnlyLetter;
 
 public class Ubah_Biodata extends JFrame implements ActionListener {
     JPanel jPanel_Header = new JPanel();
@@ -82,6 +83,7 @@ public class Ubah_Biodata extends JFrame implements ActionListener {
         textField_Pemilik.setForeground(new Color(187, 187, 187));
         textField_Pemilik.setBounds(100, 22, 210, 25);
         textField_Pemilik.setText(Akun.Nama_Pemilik);
+        textField_Pemilik.setDocument(new OnlyLetter().getOnlyLetter());
         textField_Pemilik.setCaretColor(Color.WHITE);
         jPanel_Content.add(textField_Pemilik);
 

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import koneksi.Con_Admin;
 import tools.OnlyDigit;
+import tools.OnlyLetter;
 
 public class Frame_Daftar extends JFrame implements ActionListener{
     
@@ -149,6 +150,7 @@ public class Frame_Daftar extends JFrame implements ActionListener{
         textField_Pemilik.setForeground(new Color(187, 187, 187));
         textField_Pemilik.setBounds(100, 142, 210, 25);
         textField_Pemilik.setText("");
+        textField_Pemilik.setDocument(new OnlyLetter().getOnlyLetter());
         textField_Pemilik.setCaretColor(Color.WHITE);
         jPanel_Content.add(textField_Pemilik);
 
