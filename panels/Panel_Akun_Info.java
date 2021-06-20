@@ -170,7 +170,7 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
         } else 
         if(ae.getSource().equals(jButton_UbahBiodata)){
             JFrame mainFrame = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this);
-            new Frame_Ubah_Biodata().addWindowListener(new WindowAdapter(){
+            new Frame_Edit_Biodata().addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent e) {
                     mainFrame.setEnabled(true);

@@ -17,7 +17,7 @@ import saved_authentication.Akun;
 import tools.OnlyDigit;
 import tools.OnlyLetter;
 
-public class Frame_Ubah_Biodata extends JFrame implements ActionListener {
+public class Frame_Edit_Biodata extends JFrame implements ActionListener {
     JPanel jPanel_Header = new JPanel();
     JPanel jPanel_Content = new JPanel();
     
@@ -42,7 +42,7 @@ public class Frame_Ubah_Biodata extends JFrame implements ActionListener {
 
     ArrayList<String> data_Yang_Kosong = new ArrayList<>();
 
-    public Frame_Ubah_Biodata(){
+    public Frame_Edit_Biodata(){
         // Setting frame
         this.setSize(355, 350);
         this.setTitle("Edit Biodata");
@@ -66,8 +66,8 @@ public class Frame_Ubah_Biodata extends JFrame implements ActionListener {
         // Label Judul
         jLabel_Judul.setForeground(Color.WHITE);
         jLabel_Judul.setFont((new Font("Segoe UI", Font.BOLD, 18)));
-        jLabel_Judul.setText("UBAH BIODATA");
-        jLabel_Judul.setBounds(90, 10, 200, 30);
+        jLabel_Judul.setText("EDIT BIODATA");
+        jLabel_Judul.setBounds(95, 10, 200, 30);
         jPanel_Header.add(jLabel_Judul);
 
         // Label Pemilik

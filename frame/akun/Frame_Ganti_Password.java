@@ -36,7 +36,7 @@ public class Frame_Ganti_Password extends JFrame implements ActionListener{
     public Frame_Ganti_Password(){
         // Setting frame
         this.setSize(415, 220);
-        this.setTitle("Login");
+        this.setTitle("Ganti Password");
         this.getContentPane().setBackground(new Color(60, 63, 65));
         this.setLayout(null);
         this.setResizable(false);
@@ -51,10 +51,10 @@ public class Frame_Ganti_Password extends JFrame implements ActionListener{
         this.getContentPane().add(jPanel_Content);
 
         // Label Judul
-        jLabel_Judul.setForeground(new Color(187, 187, 187));
+        jLabel_Judul.setForeground(Color.WHITE);
         jLabel_Judul.setFont((new Font("Segoe UI", Font.BOLD, 18)));
-        jLabel_Judul.setText("Ubah Password");
-        jLabel_Judul.setBounds(120, 2, 150, 30);
+        jLabel_Judul.setText("Ganti Password");
+        jLabel_Judul.setBounds(125, 2, 150, 30);
         jPanel_Content.add(jLabel_Judul);
 
         // Lalbel pw lama
