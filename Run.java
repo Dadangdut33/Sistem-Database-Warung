@@ -17,7 +17,6 @@ import frame.authentication.Frame_Login;
 
 public class Run extends JWindow {
 
-    static boolean isRegistered;
     private static JProgressBar progressBar = new JProgressBar();
     private static Run execute;
     private static int count;
