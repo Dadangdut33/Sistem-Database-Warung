@@ -62,13 +62,12 @@ public class Con_Admin {
                 status = "Akun berhasil dibuat!";
             }
         } catch (SQLException e) {
-            if(e.getMessage().contains("duplicate")) {
+            status = e.getMessage();
+            if(status.contains("duplicate")) {
                 status = "ID sudah diambil!";
-            } else {
-                status = e.getMessage();
-                if(status.contains("truncated")){
-                    status = "Data Yang Dimasukkan Terlalu Panjang!";
-                }
+            } else  
+            if(status.contains("truncated")){
+                status = "Data Yang Dimasukkan Terlalu Panjang!";
             }
         } finally {
             try { con.close(); } catch (SQLException e) { /* Ignored */ }
@@ -154,7 +153,10 @@ public class Con_Admin {
                 status = "Data berhasil diubah!";
             }
         } catch (SQLException e) {
-            status = e.getMessage();
+            status = e.getMessage();  
+            if(status.contains("truncated")){
+                status = "Data Yang Dimasukkan Terlalu Panjang!";
+            }
         } finally {
             try { con.close(); } catch (SQLException e) { /* Ignored */ }
         }

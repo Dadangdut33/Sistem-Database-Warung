@@ -261,21 +261,18 @@ public class Frame_Delete_Barang extends JFrame implements ActionListener {
             } else {
                 // Dapatkan datanya
                 String Kode_Barang = comboBox_KodeBarang.getSelectedItem().toString();
-                String Nama_Barang = jTextField_NamaBarang.getText().trim();
-                int Harga_Barang = (Integer) spinner_HargaBarang.getValue();
-                int Stok_Barang = (Integer) spinner_JumlahStok.getValue();
 
-                String StatusEditBarang = new Con_Barang().edit_Barang(Nama_Barang, Harga_Barang, Stok_Barang, Akun.ID_Admin, Kode_Barang);
+                String StatusHapusBarang = new Con_Barang().delete_Barang(Kode_Barang, Akun.ID_Admin);
 
                 // Jika berhasil
-                if(StatusEditBarang.equals("Barang berhasil diubah!")){
+                if(StatusHapusBarang.equals("Barang Berhasil Dihapus!")){
                     JOptionPane.showMessageDialog( 
                         null, 
-                        StatusEditBarang, 
-                        "Edit Barang Berhasil",         
+                        StatusHapusBarang, 
+                        "Delete Barang Berhasil",         
                         JOptionPane.INFORMATION_MESSAGE);
                 } else { // Jika gagal kurangi barang
-                    JOptionPane.showMessageDialog(null, StatusEditBarang, "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, StatusHapusBarang, "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         } else 

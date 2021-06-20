@@ -201,6 +201,7 @@ public class Frame_Edit_Pelanggan extends JFrame implements ActionListener {
         comboBox_KodePelanggan.removeAllItems();
         isiCbKodePelanggan();
         comboBox_KodePelanggan.setSelectedIndex(0);
+        comboBox_KodePelanggan.addActionListener(this);
         jTextField_NamaPelanggan.setText("");
         jTextArea_AlamatPelanggan.setText("");
         jTextField_TeleponPelanggan.setText("");

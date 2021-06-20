@@ -82,8 +82,8 @@ public class Frame_Ubah_Biodata extends JFrame implements ActionListener {
         textField_Pemilik.setBackground(new Color(60, 63, 65));
         textField_Pemilik.setForeground(new Color(187, 187, 187));
         textField_Pemilik.setBounds(100, 22, 210, 25);
-        textField_Pemilik.setText(Akun.Nama_Pemilik);
         textField_Pemilik.setDocument(new OnlyLetter().getOnlyLetter());
+        textField_Pemilik.setText(Akun.Nama_Pemilik);
         textField_Pemilik.setCaretColor(Color.WHITE);
         jPanel_Content.add(textField_Pemilik);
 

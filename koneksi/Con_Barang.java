@@ -34,6 +34,9 @@ public class Con_Barang {
             }
         } catch (SQLException e) {
             status = e.getMessage();
+            if(status.contains("truncated")){
+                status = "Data Yang Dimasukkan Terlalu Panjang!";
+            }
         } finally {
             try { con.close(); } catch (SQLException e) { /* Ignored */ }
         }
@@ -202,6 +205,9 @@ public class Con_Barang {
             }
         } catch (SQLException e) {
             status = e.getMessage();
+            if(status.contains("truncated")){
+                status = "Data Yang Dimasukkan Terlalu Panjang!";
+            }
         } finally {
             try { con.close(); } catch (SQLException e) { /* Ignored */ }
         }
