@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import koneksi.Con_Admin;
 import saved_authentication.Akun;
 
-public class Ganti_Password extends JFrame implements ActionListener{
+public class Frame_Ganti_Password extends JFrame implements ActionListener{
     JPanel jPanel_Content = new JPanel();
 
     JLabel jLabel_Judul = new JLabel();
@@ -33,7 +33,7 @@ public class Ganti_Password extends JFrame implements ActionListener{
 
     ArrayList<String> data_Yang_Kosong = new ArrayList<>();
 
-    public Ganti_Password(){
+    public Frame_Ganti_Password(){
         // Setting frame
         this.setSize(415, 220);
         this.setTitle("Login");

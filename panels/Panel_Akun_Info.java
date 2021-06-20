@@ -159,7 +159,7 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent ae){
         if(ae.getSource().equals(jButton_UbahPass)){
             JFrame mainFrame = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this);
-            new Ganti_Password().addWindowListener(new WindowAdapter(){
+            new Frame_Ganti_Password().addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent e) {
                     mainFrame.setEnabled(true);
@@ -170,7 +170,7 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
         } else 
         if(ae.getSource().equals(jButton_UbahBiodata)){
             JFrame mainFrame = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this);
-            new Ubah_Biodata().addWindowListener(new WindowAdapter(){
+            new Frame_Ubah_Biodata().addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent e) {
                     mainFrame.setEnabled(true);

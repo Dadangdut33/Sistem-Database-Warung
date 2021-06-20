@@ -17,7 +17,7 @@ import saved_authentication.Akun;
 import tools.OnlyDigit;
 import tools.OnlyLetter;
 
-public class Ubah_Biodata extends JFrame implements ActionListener {
+public class Frame_Ubah_Biodata extends JFrame implements ActionListener {
     JPanel jPanel_Header = new JPanel();
     JPanel jPanel_Content = new JPanel();
     
@@ -42,7 +42,7 @@ public class Ubah_Biodata extends JFrame implements ActionListener {
 
     ArrayList<String> data_Yang_Kosong = new ArrayList<>();
 
-    public Ubah_Biodata(){
+    public Frame_Ubah_Biodata(){
         // Setting frame
         this.setSize(355, 350);
         this.setTitle("Edit Biodata");
