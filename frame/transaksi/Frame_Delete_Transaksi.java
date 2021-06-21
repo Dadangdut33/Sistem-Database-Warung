@@ -69,7 +69,7 @@ public class Frame_Delete_Transaksi extends JFrame implements ActionListener {
         jLabel_KodePesanan.setForeground(new Color(187, 187, 187));
         jLabel_KodePesanan.setBounds(10, 20, 150, 30);
         jLabel_KodePesanan.setFont((new Font("Segoe UI", Font.PLAIN, 12)));
-        jLabel_KodePesanan.setText("Pilih Kode Pesanan");
+        jLabel_KodePesanan.setText("Kode Transaksi");
         jPanel_Content.add(jLabel_KodePesanan);
 
         // combobox kode pesanan

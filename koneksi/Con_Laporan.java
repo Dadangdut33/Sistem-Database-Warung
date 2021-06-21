@@ -100,7 +100,7 @@ public class Con_Laporan {
         List<Object> dataList = new ArrayList<>();
         try {
             con = new SQLConnect().getConSQL();
-            PreparedStatement pr = con.prepareStatement("SELECT * FROM Laporan_Pesanan WHERE ID_Admin = ? AND Kode_Pesanan = ?");
+            PreparedStatement pr = con.prepareStatement("SELECT * FROM Laporan_Pesanan WHERE ID_Admin = ? AND Kode_Pesanan = ? ORDER BY ID_Pesanan");
             pr.setString(1, ID_Admin);
             pr.setString(2, Kode_Pesanan);
 
