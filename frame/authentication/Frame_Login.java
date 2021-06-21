@@ -37,7 +37,7 @@ public class Frame_Login extends JFrame implements ActionListener{
 
     public Frame_Login(){
         // Setting frame
-        this.setSize(320, 470);
+        this.setSize(315, 470);
         this.setTitle("Login");
         this.getContentPane().setBackground(new Color(60, 63, 65));
         this.setLayout(null);
