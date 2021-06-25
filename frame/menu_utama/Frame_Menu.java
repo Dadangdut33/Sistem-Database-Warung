@@ -87,6 +87,7 @@ public class Frame_Menu extends JFrame implements ActionListener {
         jLabel_ID.setFont(new Font("Segoe UI", Font.PLAIN, 11));
         jLabel_ID.setBounds(5, 70, 80, 20);
         jLabel_ID.setText(Akun.ID_Admin);
+        jLabel_ID.setToolTipText("ID: " + Akun.ID_Admin);
         jLabel_ID.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel_ID.setVerticalAlignment(SwingConstants.CENTER);
         jLabel_ID.setForeground(Color.WHITE);
