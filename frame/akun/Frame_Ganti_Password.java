@@ -220,7 +220,7 @@ public class Frame_Ganti_Password extends JFrame implements ActionListener{
                         if(PasswordBaru.length() < 6 || PasswordBaru.length() > 20) {
                             JOptionPane.showMessageDialog( 
                                 null, 
-                                "Panjang password minimal 6 sampai 20 kata!", 
+                                "Panjang password minimal 6 sampai 20 huruf!", 
                                 "Password invalid",                
                                 JOptionPane.WARNING_MESSAGE);
     
