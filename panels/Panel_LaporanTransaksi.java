@@ -10,6 +10,9 @@ import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import javax.swing.table.*;
 
 import frame.transaksi.*;
@@ -33,6 +36,9 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
     JComboBox<String> jBox_Kolom_TbAtas = new JComboBox<>();
     JComboBox<String> jBox_Kolom_TbBawah = new JComboBox<>();
     JComboBox<String> jBox_Mode_TbBawah = new JComboBox<>();
+
+    // Formatter waktu
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd - (HH:mm)");
 
     // Kolom tabel
     String kolomTbAtas[] = {"Kode Pesanan", "Kode Pelanggan", "Kode Barang", "Harga Barang", "Jumlah", "Total", "Tanggal"};
@@ -204,7 +210,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         jLabel_mode_TbBawah.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         jLabel_mode_TbBawah.setForeground(Color.WHITE);
         jLabel_mode_TbBawah.setBounds(415, 340, 40, 20);
-        jLabel_mode_TbBawah.setText("Kolom");
+        jLabel_mode_TbBawah.setText("Mode");
         this.add(jLabel_mode_TbBawah);
 
         // Combobox mode bawah
@@ -325,7 +331,8 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         // Diisi dengan semua data di convert jadi string
         for (int i = 0; i < parsedData.length; i = i + 7) {
             String[] isi = { parsedData[i].toString(), parsedData[i+1].toString(), parsedData[i+2].toString(), parsedData[i+3].toString(), 
-                             parsedData[i+4].toString(), parsedData[i+5].toString(), parsedData[i+6].toString() };
+                             parsedData[i+4].toString(), parsedData[i+5].toString(), dateFormat.format(parsedData[i+6]) };
+
             tModelTbAtas.addRow(isi);
         }
     }

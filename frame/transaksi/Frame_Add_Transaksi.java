@@ -10,8 +10,8 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import koneksi.Con_Barang;
@@ -242,8 +242,8 @@ public class Frame_Add_Transaksi extends JFrame implements ActionListener {
 
                 // Jika berhasil
                 if(StatusKurangiBarang.equals("Data berhasil diubah/dikurangi!")){
-                    LocalDate tLocalDate = LocalDate.now();
-                    java.sql.Date sqlDate = java.sql.Date.valueOf(tLocalDate);
+                    Calendar cal = Calendar.getInstance();
+                    java.sql.Timestamp sqlDate = new java.sql.Timestamp(cal.getTimeInMillis());
 
                     String statusAddLaporan = new Con_Laporan().add_Laporan(Kode_Pelanggan, Kode_Barang, Jumlah_Pesanan, sqlDate, Akun.ID_Admin);
                     if(statusAddLaporan.equals("Data berhasil dimasukkan!")){

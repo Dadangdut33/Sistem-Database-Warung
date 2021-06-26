@@ -7,21 +7,21 @@
 package koneksi;
 
 import java.sql.*;
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 public class Con_Laporan {
     Connection con = null;
-
     // CREATE
     /* Disini dicari dulu harganya abis itu diproses langsung didalam totalnya */
-    public String add_Laporan(String Kode_Pelanggan, String Kode_Barang, int Jumlah_Pesanan, java.sql.Date date, String ID_Admin){
+    public String add_Laporan(String Kode_Pelanggan, String Kode_Barang, int Jumlah_Pesanan, java.sql.Timestamp date, String ID_Admin){
         String status;
         try {
             con = new SQLConnect().getConSQL();
-
             // Get harga lalu hitung harga total
             PreparedStatement pr_GetHarga = con.prepareStatement("SELECT Harga_Barang FROM Barang WHERE ID_Admin = ? AND Kode_Barang = ?");
             pr_GetHarga.setString(1, ID_Admin);
@@ -40,7 +40,7 @@ public class Con_Laporan {
             pr_LaporanPesanan.setInt(3, harga_Barang);
             pr_LaporanPesanan.setInt(4, Jumlah_Pesanan);
             pr_LaporanPesanan.setInt(5, hargaTotal);
-            pr_LaporanPesanan.setDate(6, date);
+            pr_LaporanPesanan.setTimestamp(6, date);
             pr_LaporanPesanan.setString(7, ID_Admin);
 
             int statusCode = pr_LaporanPesanan.executeUpdate();
@@ -82,7 +82,7 @@ public class Con_Laporan {
                 int Harga_Barang = rs.getInt("Harga_Barang_Pesanan");
                 int Jumlah_Pesanan = rs.getInt("Jumlah_Pesanan");
                 int Total_Harga_Pesanan = rs.getInt("Total_Harga_Pesanan");
-                Date Tanggal_Pesanan = rs.getDate("Tanggal_Pesanan");
+                Date Tanggal_Pesanan = rs.getTimestamp("Tanggal_Pesanan");
 
                 Object[] dataArr = { Kode_Pesanan, Kode_Pelanggan, Kode_Barang, Harga_Barang, Jumlah_Pesanan, Total_Harga_Pesanan, Tanggal_Pesanan };
                 Collections.addAll(dataList, dataArr);
