@@ -31,7 +31,7 @@ public class Frame_Add_Barang extends JFrame implements ActionListener {
     JComboBox<String> comboBox_KodeKategori = new JComboBox<>();
     JTextField jTextField_NamaBarang = new JTextField();
     
-    SpinnerModel spModel = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1);
+    SpinnerModel spModel = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1000);
     JSpinner spinner_HargaBarang = new JSpinner(spModel);
 
     SpinnerModel spModel_2 = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1);
