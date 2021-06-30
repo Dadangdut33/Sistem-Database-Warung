@@ -10,6 +10,8 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +38,8 @@ public class Frame_Delete_Transaksi extends JFrame implements ActionListener {
     JButton button_Refresh = new JButton();
 
     ArrayList<String> data_Yang_Kosong = new ArrayList<>();
+
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd - (HH:mm)");
 
     public Frame_Delete_Transaksi(){
         // Setting frame
@@ -178,7 +182,7 @@ public class Frame_Delete_Transaksi extends JFrame implements ActionListener {
 
             comboBox_KodePelanggan.addItem(parsedData[0].toString());
             comboBox_KodeBarang.addItem(parsedData[1].toString());
-            jTextField_TanggalPesan.setText(parsedData[2].toString());
+            jTextField_TanggalPesan.setText(dateFormat.format(parsedData[2]));
         }
     }
 

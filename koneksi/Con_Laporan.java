@@ -109,7 +109,7 @@ public class Con_Laporan {
 
             String Kode_Pelanggan = rs.getString("Kode_Pelanggan").trim();
             String Kode_Barang = rs.getString("Kode_Barang").trim();
-            Date Tanggal_Pesanan = rs.getDate("Tanggal_Pesanan");
+            Date Tanggal_Pesanan = rs.getTimestamp("Tanggal_Pesanan");
 
             Object[] dataArr = { Kode_Pelanggan, Kode_Barang, Tanggal_Pesanan };
             Collections.addAll(dataList, dataArr);
