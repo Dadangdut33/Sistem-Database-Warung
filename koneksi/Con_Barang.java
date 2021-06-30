@@ -109,7 +109,7 @@ public class Con_Barang {
             String Nama_Barang = rs.getString("Nama_Barang").trim();
             int Harga_Barang = rs.getInt("Harga_Barang");
             int Stok_Barang = rs.getInt("Stok_Barang");
-    
+            
             Object[] dataArr = { Nama_Barang, Harga_Barang, Stok_Barang };
             Collections.addAll(dataList, dataArr);
         } catch (SQLException e) {

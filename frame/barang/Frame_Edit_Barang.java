@@ -30,7 +30,7 @@ public class Frame_Edit_Barang extends JFrame implements ActionListener {
     JComboBox<String> comboBox_KodeBarang = new JComboBox<>();
     JTextField jTextField_NamaBarang = new JTextField();
     
-    SpinnerModel spModel = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1);
+    SpinnerModel spModel = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1000);
     JSpinner spinner_HargaBarang = new JSpinner(spModel);
 
     SpinnerModel spModel_2 = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1);
@@ -169,11 +169,10 @@ public class Frame_Edit_Barang extends JFrame implements ActionListener {
         } else {
             List<Object> data = new Con_Barang().get_BarangByKode(comboBox_KodeBarang.getSelectedItem().toString(), Akun.ID_Admin);
             Object[] parsedData = (Object[]) data.toArray(new Object[0]);
-            
 
             jTextField_NamaBarang.setText(parsedData[0].toString());
-            spinner_HargaBarang.setValue(parsedData[1]);
-            spinner_JumlahStok.setValue(parsedData[2]);
+            spinner_HargaBarang.setValue((Integer) parsedData[1]);
+            spinner_JumlahStok.setValue((Integer) parsedData[2]);
         }
     }
 
@@ -182,11 +181,12 @@ public class Frame_Edit_Barang extends JFrame implements ActionListener {
             comboBox_KodeBarang.removeActionListener(act);
         }
         comboBox_KodeBarang.removeAllItems();
-        isiCbKodeBarang();
-        comboBox_KodeBarang.setSelectedIndex(0);
         jTextField_NamaBarang.setText("");
+        comboBox_KodeBarang.addActionListener(this);
         spinner_HargaBarang.setValue(0);
         spinner_JumlahStok.setValue(0);
+        isiCbKodeBarang();
+        comboBox_KodeBarang.setSelectedIndex(0);
     }
 
     boolean kosong(){
