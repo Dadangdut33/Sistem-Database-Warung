@@ -61,9 +61,6 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
     JButton jButton_Delete = new JButton();
     JButton jButton_Add = new JButton();
 
-    // Get currentWindow
-    Object currentWindow = this;
-
     // Current sort mode
     int sorterModeAtas = 0;
     int sorterModeBawah = 0;

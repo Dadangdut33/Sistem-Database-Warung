@@ -37,7 +37,6 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
 
     // Static for rgb
     public static boolean exitPanelAkun;
-    Object currentWindow = this;
 
     public Panel_Akun_Info(){
         this.setLayout(null);
@@ -208,8 +207,11 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
 
                     passGet = new String(passKonfirmasi.getPassword());
 
-                    // JIka yg dipilih tombol Hapus
-                    if(option != 1) {
+                    
+                    if (option == -1 ){ // JIka tombol exit
+                        option = 1; // exit
+                    } else
+                    if(option == 0) { // JIka yg dipilih tombol Hapus
                         if(passGet.equals(Akun.Password)){
 
                             // Hapus akun dari database

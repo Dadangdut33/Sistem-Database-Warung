@@ -48,9 +48,6 @@ public class Panel_Pelanggan extends JPanel implements ActionListener {
     JButton jButton_Edit = new JButton();
     JButton jButton_Delete = new JButton();
 
-    // Get currentWindow
-    Object currentWindow = this;
-
     // Current sort mode
     int sorterModeAtas = 0;
 
