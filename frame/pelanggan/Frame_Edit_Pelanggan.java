@@ -283,7 +283,7 @@ public class Frame_Edit_Pelanggan extends JFrame implements ActionListener {
                    JOptionPane.showMessageDialog( 
                     null, 
                     StatusEditPelanggan, 
-                    "Add Pelanggan Berhasil",         
+                    "Edit Pelanggan Berhasil",         
                     JOptionPane.INFORMATION_MESSAGE);
                     
                     refresh();

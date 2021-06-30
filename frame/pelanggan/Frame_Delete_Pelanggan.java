@@ -248,7 +248,7 @@ public class Frame_Delete_Pelanggan extends JFrame implements ActionListener {
                    JOptionPane.showMessageDialog( 
                     null, 
                     StatusDeletePelanggan, 
-                    "Add Pelanggan Berhasil",
+                    "Delete Pelanggan Berhasil",
                     JOptionPane.INFORMATION_MESSAGE);
                     
                     refresh();
