@@ -1,6 +1,8 @@
 {
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "_JDBC/sqljdbc4.jar"
-    ]
+    "java.project.referencedLibraries": {
+        "include": [
+            "lib/**/*.jar",
+            "lib/sqljdbc4.jar"
+        ]
+    }
 }
