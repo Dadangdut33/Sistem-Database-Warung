@@ -239,7 +239,8 @@ public class Frame_Daftar extends JFrame implements ActionListener{
 
     void backToLogin() {
         this.dispose();
-        new Frame_Login();
+        Frame_Login.refresh();
+        Frame_Login.loginForm.setVisible(true);
     }
 
     void refresh(){
@@ -371,13 +372,22 @@ public class Frame_Daftar extends JFrame implements ActionListener{
 
                         return;
                     }
+
+                    if(Nomor_Telepon.length() < 8 || Nomor_Telepon.length() > 15) {
+                        JOptionPane.showMessageDialog( 
+                            null, 
+                            "Nomor Telepon Minimal 8 Digit Angka dan Maksimal 15 Digit Angka!", 
+                            "Nomor Telepon Invalid",                
+                            JOptionPane.WARNING_MESSAGE);
+
+                        return;
+                    }
     
                     String daftar = new Con_Admin().add_Akun(ID_Admin, Password, Nama_Pemilik, Nama_Toko, Alamat_Toko, Nomor_Telepon);
                     if(daftar.equals("Akun berhasil dibuat!")){
                         JOptionPane.showMessageDialog(null, daftar + " Klik ok untuk kembali ke menu login", "Success", JOptionPane.INFORMATION_MESSAGE);
                         refresh();
-                        this.dispose();
-                        new Frame_Login();
+                        backToLogin();
                     } else {
                         JOptionPane.showMessageDialog(null, daftar, "Error", JOptionPane.ERROR_MESSAGE);
                     }

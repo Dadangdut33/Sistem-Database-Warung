@@ -201,9 +201,11 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
                 String currPaswordCache = Akun.Password;
 
                 do {
-                    option = JOptionPane.showOptionDialog(null, panelDel, "Konfirmasi Hapus",
-                    JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
-                    null, options, options[1]);
+                    option = JOptionPane.showOptionDialog
+                    (   null, panelDel, "Konfirmasi Hapus",
+                        JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+                        null, options, options[1]
+                    );
 
                     passGet = new String(passKonfirmasi.getPassword());
 

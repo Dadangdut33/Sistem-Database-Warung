@@ -271,6 +271,8 @@ public class Frame_Edit_Barang extends JFrame implements ActionListener {
                         StatusEditBarang, 
                         "Edit Barang Berhasil",         
                         JOptionPane.INFORMATION_MESSAGE);
+
+                        refresh();
                 } else { // Jika gagal kurangi barang
                     JOptionPane.showMessageDialog(null, StatusEditBarang, "Error", JOptionPane.ERROR_MESSAGE);
                 }

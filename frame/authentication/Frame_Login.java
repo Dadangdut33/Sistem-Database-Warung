@@ -17,6 +17,9 @@ import koneksi.Con_Admin;
 import saved_authentication.Akun;
 import frame.menu_utama.Frame_Menu;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Frame_Login extends JFrame implements ActionListener{
     JPanel jPanel_Header = new JPanel();
     JPanel jPanel_Content = new JPanel();
@@ -25,8 +28,8 @@ public class Frame_Login extends JFrame implements ActionListener{
     JLabel icon_User = new JLabel();
     JLabel icon_Password = new JLabel();
 
-    JTextField textField_User = new JTextField();
-    JPasswordField passwordField = new JPasswordField();
+    static JTextField textField_User = new JTextField();
+    static JPasswordField passwordField = new JPasswordField();
 
     JButton button_Login = new JButton();
 
@@ -34,6 +37,22 @@ public class Frame_Login extends JFrame implements ActionListener{
     JLabel jLabel_Daftar = new JLabel();
 
     ArrayList<String> data_Yang_Kosong = new ArrayList<>();
+
+    // Untuk attempt nya
+    int attempt = 0;
+    boolean attemptOnCooldown = false;
+
+    // Untuk timer nunggu login ulang
+    static int seconds;
+    static int minutes;
+    static Timer timer;
+
+    JPanel jPanel_Cooldown = new JPanel();
+    JLabel jLabel_CooldownJudul = new JLabel();
+    JLabel jLabel_CooldownTimer = new JLabel();
+
+    // Bikin objek frame login yg sifatnya global
+    public static Frame_Login loginForm;
 
     public Frame_Login(){
         // Setting frame
@@ -45,6 +64,11 @@ public class Frame_Login extends JFrame implements ActionListener{
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setIconImage(new ImageIcon(getClass().getResource("/assets/icons8-database-50.png")).getImage());
+
+        // Setting panel cooldown untuk nanti apabila user gagal login 3x
+        jPanel_Cooldown.setLayout(new GridLayout(2,1));
+        jPanel_Cooldown.add(jLabel_CooldownJudul);
+        jPanel_Cooldown.add(jLabel_CooldownTimer);
 
         // Panel Header
         jPanel_Header.setLayout(null);
@@ -132,7 +156,7 @@ public class Frame_Login extends JFrame implements ActionListener{
 
     // Function daftar
     void daftar() {
-        this.dispose();
+        this.setVisible(false);
         new Frame_Daftar();
     }
 
@@ -177,54 +201,156 @@ public class Frame_Login extends JFrame implements ActionListener{
                 JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    public static void refresh(){
+        textField_User.setText("");
+        passwordField.setText("");
+    }
+
+    // Function untuk cooldown
+    void startCD(){
+        // Delay dan period setiap 1 detik
+        int delay = 1000;
+        int period = 1000;
+
+        // Timernya
+        timer = new Timer();
+        
+        // Lamanya cooldown
+        seconds = 0;
+        minutes = 5;
+
+        // Set Label Cooldown
+        jLabel_CooldownJudul.setText("Anda Telah Gagal Login Sebanyak 3 Kali!");
+        jLabel_CooldownTimer.setText("Harap Tunggu Selama " + minutes + ":" + seconds + " menit");
+
+        // Ini start timernya
+        timer.scheduleAtFixedRate(new TimerTask() {
+            // Run Jalan Tiap 1 detik
+            @Override
+            public void run() {
+                setInterval();
+            }
+        }, delay, period);
+    }
+
+    // Untuk timernya
+    void setInterval() {
+        if (seconds == 0 && minutes == 0) {
+            jLabel_CooldownTimer.setText("Harap Tunggu Selama " + minutes + ":" + seconds + " menit");
+            
+            // Cancel Timer
+            timer.cancel();
+
+            // Pause dulu 1 detik
+            try {
+                Thread.sleep(1000);    
+            } catch (Exception e) { /* Ignored */ }
+            
+            // Ganti textnya, kasih tau sudah selesai
+            jLabel_CooldownJudul.setText("5 Menit Sudah Berlalu");
+            jLabel_CooldownTimer.setText("Silahkan Coba Login Kembali!");
+
+            // Reset Attempt
+            attemptOnCooldown = false;
+            attempt = 0;
+        } else {
+            // Kurang terus detiknya selama masih ada menit (0) dan detiknya juga masih ada
+            if(minutes != -1 && seconds != -1){
+                --seconds;
+            }
+
+            // reset detik jadi 59 dan kurangi menit sebanyak 1, apabila detik masih ada dan menit bukan 0
+            if(seconds == -1 && minutes != 0) {
+                seconds = 59;
+                --minutes;
+            }
+
+            // Update text
+            jLabel_CooldownTimer.setText("Harap Tunggu Selama " + minutes + ":" + seconds + " menit");
+        }
+    }
+
+    // Login
+    void loginUser(){
+        String id = textField_User.getText().trim();
+        String pass = new String(passwordField.getPassword());
+        
+        // Cek status login
+        Boolean loginSukses = new Con_Admin().login(id, pass);
+        // Kalau sukses
+        if(loginSukses) {
+            List<Object> data = new Con_Admin().get_Akun(id, pass);
+
+            Object[] parsedData = (Object[]) data.toArray(new Object[0]);
+            
+            // Isi data ke cache lokal
+            Akun.ID_Admin = parsedData[0].toString();
+            Akun.Password = parsedData[1].toString();
+            Akun.Nama_Pemilik = parsedData[2].toString();
+            Akun.Nama_Toko = parsedData[3].toString();
+            Akun.Alamat_Toko = parsedData[4].toString();
+            Akun.Nomor_Telepon = parsedData[5].toString();
+
+            // Reset Attempt
+            attempt = 0;
+            attemptOnCooldown = false;
+
+            // Muncul dialog login berhasil
+            JOptionPane.showMessageDialog( 
+                null, 
+                "Login Sukses! Selamat Datang " + Akun.Nama_Pemilik, 
+                "Login Berhasil",                
+                JOptionPane.INFORMATION_MESSAGE);
+
+            // Dispose frame login
+            this.dispose();
+
+            // Panggil frame menu
+            new Frame_Menu();
+        
+        // Kalau gagal login
+        } else {
+            // Naikin attemptnya
+            attempt++;
+
+            // Set Cooldown jika gagal login > 3x
+            if (attempt > 3){
+                attemptOnCooldown = true;
+                startCD();
+
+                JOptionPane.showMessageDialog( 
+                    null, 
+                    jPanel_Cooldown, 
+                    "Login Gagal",                
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Dialog Login Gagal
+            JOptionPane.showMessageDialog( 
+                null, 
+                "Login gagal! ID atau Password salah!", 
+                "Login Gagal",                
+                JOptionPane.WARNING_MESSAGE);
+        }
+    }
     
     @Override
     public void actionPerformed(ActionEvent ae){
         if(ae.getSource().equals(button_Login)){
-            if(kosong()){
+            if(kosong() && !attemptOnCooldown){ // Jika kosong aja
                 kosongPopup();
-            } else {
-                String id = textField_User.getText().trim();
-                String pass = new String(passwordField.getPassword());
-                
-                // Cek status login
-                Boolean loginSukses = new Con_Admin().login(id, pass);
-                // Kalau sukses
-                if(loginSukses) {
-                    List<Object> data = new Con_Admin().get_Akun(id, pass);
-
-                    Object[] parsedData = (Object[]) data.toArray(new Object[0]);
-                    
-                    // Isi data ke cache lokal
-                    Akun.ID_Admin = parsedData[0].toString();
-                    Akun.Password = parsedData[1].toString();
-                    Akun.Nama_Pemilik = parsedData[2].toString();
-                    Akun.Nama_Toko = parsedData[3].toString();
-                    Akun.Alamat_Toko = parsedData[4].toString();
-                    Akun.Nomor_Telepon = parsedData[5].toString();
-
-                    // Muncul dialog login berhasil
-                    JOptionPane.showMessageDialog( 
-                        null, 
-                        "Login Sukses! Selamat Datang " + Akun.Nama_Pemilik, 
-                        "Login Berhasil",                
-                        JOptionPane.INFORMATION_MESSAGE);
-
-                    // Dispose frame login
-                    this.dispose();
-
-                    // Panggil frame menu
-                    new Frame_Menu();
-                
-                // Kalau gagal munculin dialog gagal
-                } else {
-                    JOptionPane.showMessageDialog( 
-                        null, 
-                        "Login gagal! ID atau Password salah!", 
-                        "Login Gagal",                
-                        JOptionPane.WARNING_MESSAGE);
-                }
-            }
+            } else
+            if(attemptOnCooldown){ // Jika cooldown
+                JOptionPane.showMessageDialog( 
+                    null, 
+                    jPanel_Cooldown, 
+                    "Cooldown",                
+                    JOptionPane.WARNING_MESSAGE);
+            } else { // Jika dah ga Cooldown
+                loginUser();
+            }                
         }
     }
 }

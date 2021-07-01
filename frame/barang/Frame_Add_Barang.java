@@ -254,6 +254,8 @@ public class Frame_Add_Barang extends JFrame implements ActionListener {
                         StatusAddBarang, 
                         "Add Barang Berhasil",         
                         JOptionPane.INFORMATION_MESSAGE);
+
+                        refresh();
                 } else { // Jika gagal kurangi barang
                     JOptionPane.showMessageDialog(null, StatusAddBarang, "Error", JOptionPane.ERROR_MESSAGE);
                 }

@@ -157,7 +157,7 @@ public class Panel_Barang extends JPanel implements ActionListener {
         jButton_Add.setFocusPainted(false);
         jButton_Add.setBorderPainted(false);
         jButton_Add.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-add-row-30.png")));
-        jButton_Add.setToolTipText("Add Kategori");
+        jButton_Add.setToolTipText("Add Barang");
         jButton_Add.setBounds(915, 40, 50, 50);
         this.add(jButton_Add);
 
@@ -168,7 +168,7 @@ public class Panel_Barang extends JPanel implements ActionListener {
         jButton_Edit.setFocusPainted(false);
         jButton_Edit.setBorderPainted(false);
         jButton_Edit.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-edit-row-30.png")));
-        jButton_Edit.setToolTipText("Edit Kategori");
+        jButton_Edit.setToolTipText("Edit Barang");
         jButton_Edit.setBounds(975, 40, 50, 50);
         this.add(jButton_Edit);
 
@@ -179,7 +179,7 @@ public class Panel_Barang extends JPanel implements ActionListener {
         jButton_Delete.setFocusPainted(false);
         jButton_Delete.setBorderPainted(false);
         jButton_Delete.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-delete-row-30.png")));
-        jButton_Delete.setToolTipText("Delete Kategori");
+        jButton_Delete.setToolTipText("Delete Barang");
         jButton_Delete.setBounds(1035, 40, 50, 50);
         this.add(jButton_Delete);
 

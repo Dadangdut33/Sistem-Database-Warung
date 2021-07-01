@@ -271,6 +271,8 @@ public class Frame_Delete_Barang extends JFrame implements ActionListener {
                         StatusHapusBarang, 
                         "Delete Barang Berhasil",         
                         JOptionPane.INFORMATION_MESSAGE);
+
+                    refresh();
                 } else { // Jika gagal kurangi barang
                     JOptionPane.showMessageDialog(null, StatusHapusBarang, "Error", JOptionPane.ERROR_MESSAGE);
                 }

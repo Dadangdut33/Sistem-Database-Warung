@@ -104,7 +104,7 @@ public class Run extends JWindow {
 
                 if (count == randomLoadNum) {
                     // Loading selesai, panggil frame login
-                    new Frame_Login();
+                    Frame_Login.loginForm = new Frame_Login();
 
                     // Stop timer
                     timer1.stop();
