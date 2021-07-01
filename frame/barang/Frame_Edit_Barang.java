@@ -262,6 +262,16 @@ public class Frame_Edit_Barang extends JFrame implements ActionListener {
                 int Harga_Barang = (Integer) spinner_HargaBarang.getValue();
                 int Stok_Barang = (Integer) spinner_JumlahStok.getValue();
 
+                if(new Con_Barang().dupeCheck(Nama_Barang, Akun.ID_Admin)){
+                    JOptionPane.showMessageDialog( 
+                        null,
+                        "Nama Barang Yang Dimasukkan Tidak Boleh Sama Dengan Yang Sudah Ada!", 
+                        "Data Duplikat",
+                        JOptionPane.WARNING_MESSAGE);
+
+                    return;
+                }
+
                 String StatusEditBarang = new Con_Barang().edit_Barang(Nama_Barang, Harga_Barang, Stok_Barang, Akun.ID_Admin, Kode_Barang);
 
                 // Jika berhasil

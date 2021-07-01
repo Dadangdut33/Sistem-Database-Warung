@@ -194,6 +194,16 @@ public class Frame_Edit_Kategori extends JFrame implements ActionListener {
                 String Kode_Kategori = comboBox_KodeKategori.getSelectedItem().toString();
                 String Nama_Kategori = jTextField_NamaKategori.getText().trim();
 
+                if(new Con_Kategori().dupeCheck(Nama_Kategori, Akun.ID_Admin)){
+                    JOptionPane.showMessageDialog( 
+                        null,
+                        "Nama Kategori Yang Dimasukkan Tidak Boleh Sama Dengan Yang Sudah Ada!", 
+                        "Data Duplikat",
+                        JOptionPane.WARNING_MESSAGE);
+
+                    return;
+                }
+
                 String statusEdit = new Con_Kategori().edit_Kategori(Nama_Kategori, Akun.ID_Admin, Kode_Kategori);
 
                 if(statusEdit.equals("Kategori berhasil diubah!")){

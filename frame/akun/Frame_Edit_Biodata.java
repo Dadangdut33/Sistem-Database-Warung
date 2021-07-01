@@ -250,6 +250,16 @@ public class Frame_Edit_Biodata extends JFrame implements ActionListener {
                 String Alamat_Toko = textArea_Alamat.getText().trim();
                 String Nomor_Telepon = textField_NomorTelepon.getText().trim();
 
+                if(Nomor_Telepon.length() < 8 || Nomor_Telepon.length() > 16) {
+                    JOptionPane.showMessageDialog( 
+                        null, 
+                        "Nomor Telepon Minimal 8 Digit Angka dan Maksimal 16 Digit Angka!", 
+                        "Nomor Telepon Invalid",                
+                        JOptionPane.WARNING_MESSAGE);
+
+                    return;
+                }
+
                 String updateStatus = new Con_Admin().edit_Biodata(Akun.ID_Admin, Akun.Password, Nama_Pemilik, Nama_Toko, Alamat_Toko, Nomor_Telepon);
                 // Jika berhasil
                 if(updateStatus.equals("Data berhasil diubah!")){

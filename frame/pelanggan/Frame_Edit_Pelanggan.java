@@ -186,7 +186,7 @@ public class Frame_Edit_Pelanggan extends JFrame implements ActionListener {
         } else {
             List<Object> data = new Con_Pelanggan().get_PelangganByKode(comboBox_KodePelanggan.getSelectedItem().toString(), Akun.ID_Admin);
             Object[] parsedData = (Object[]) data.toArray(new Object[0]);
-            
+
 
             jTextField_NamaPelanggan.setText(parsedData[0].toString());
             jTextArea_AlamatPelanggan.setText(parsedData[1].toString());
@@ -275,6 +275,26 @@ public class Frame_Edit_Pelanggan extends JFrame implements ActionListener {
                 String Alamat_Pelanggan = jTextArea_AlamatPelanggan.getText().trim();
                 String Telepon_Pelanggan = jTextField_TeleponPelanggan.getText().trim();
                 String Kode_Pelanggan = comboBox_KodePelanggan.getSelectedItem().toString();
+
+                if(Telepon_Pelanggan.length() < 8 || Telepon_Pelanggan.length() > 16) {
+                    JOptionPane.showMessageDialog( 
+                        null, 
+                        "Nomor Telepon Minimal 8 Digit Angka dan Maksimal 16 Digit Angka!", 
+                        "Nomor Telepon Invalid",                
+                        JOptionPane.WARNING_MESSAGE);
+
+                    return;
+                }
+
+                if(new Con_Pelanggan().dupeCheck(Nama_Pelanggan, Alamat_Pelanggan, Telepon_Pelanggan, Akun.ID_Admin)){
+                    JOptionPane.showMessageDialog( 
+                        null,
+                        "Data Pelanggan Yang Dimasukkan Tidak Boleh Sama Dengan Yang Sudah Ada!", 
+                        "Data Duplikat",
+                        JOptionPane.WARNING_MESSAGE);
+
+                    return;
+                }
 
                 String StatusEditPelanggan = new Con_Pelanggan().edit_Pelanggan(Nama_Pelanggan, Alamat_Pelanggan, Telepon_Pelanggan, Akun.ID_Admin, Kode_Pelanggan);
 

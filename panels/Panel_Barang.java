@@ -31,7 +31,7 @@ public class Panel_Barang extends JPanel implements ActionListener {
     JComboBox<String> jBox_Kolom_TbAtas = new JComboBox<>();
 
     // Kolom tabel
-    String kolomTbAtas[] = {"Kode Kategori", "Kode Barang", "Nama Barang", "Harga Barang", "Stok Barang"};
+    String kolomTbAtas[] = {"Kode Barang", "Kategori", "Nama Barang", "Harga Barang", "Stok Barang"};
 
     // Table
     DefaultTableModel tModelTbAtas;

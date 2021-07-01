@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import koneksi.Con_Kategori;
 import saved_authentication.Akun;
 
+import tools.OnlyLetter;
+
 public class Frame_Add_Kategori extends JFrame implements ActionListener {
     JPanel jPanel_Header = new JPanel();
     JPanel jPanel_Content = new JPanel();
@@ -73,6 +75,7 @@ public class Frame_Add_Kategori extends JFrame implements ActionListener {
         jTextField_KodeKategori.setForeground(new Color(187, 187, 187));
         jTextField_KodeKategori.setBounds(100, 22, 210, 25);
         jTextField_KodeKategori.setCaretColor(Color.WHITE);
+        jTextField_KodeKategori.setDocument(new OnlyLetter().getOnlyLetter());
         jPanel_Content.add(jTextField_KodeKategori);
 
         // Label nama kategori
@@ -187,6 +190,16 @@ public class Frame_Add_Kategori extends JFrame implements ActionListener {
                 // Dapatkan datanya
                 String Kode_Kategori = jTextField_KodeKategori.getText().trim();
                 String Nama_Kategori = jTextField_NamaKategori.getText().trim();
+
+                if(new Con_Kategori().dupeCheck(Nama_Kategori, Akun.ID_Admin)){
+                    JOptionPane.showMessageDialog( 
+                        null,
+                        "Nama Kategori Yang Dimasukkan Tidak Boleh Sama Dengan Yang Sudah Ada!", 
+                        "Data Duplikat",
+                        JOptionPane.WARNING_MESSAGE);
+
+                    return;
+                }
 
                 String StatusAddKategori = new Con_Kategori().add_Kategori(Kode_Kategori, Nama_Kategori, Akun.ID_Admin);
 

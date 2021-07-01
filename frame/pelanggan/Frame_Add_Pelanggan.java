@@ -219,6 +219,26 @@ public class Frame_Add_Pelanggan extends JFrame implements ActionListener {
                 String Alamat_Pelanggan = jTextArea_AlamatPelanggan.getText().trim();
                 String Telepon_Pelanggan = jTextField_TeleponPelanggan.getText().trim();
 
+                if(Telepon_Pelanggan.length() < 8 || Telepon_Pelanggan.length() > 16) {
+                    JOptionPane.showMessageDialog( 
+                        null, 
+                        "Nomor Telepon Minimal 8 Digit Angka dan Maksimal 16 Digit Angka!", 
+                        "Nomor Telepon Invalid",                
+                        JOptionPane.WARNING_MESSAGE);
+
+                    return;
+                }
+
+                if(new Con_Pelanggan().dupeCheck(Nama_Pelanggan, Alamat_Pelanggan, Telepon_Pelanggan, Akun.ID_Admin)){
+                    JOptionPane.showMessageDialog( 
+                        null,
+                        "Data Pelanggan Yang Dimasukkan Tidak Boleh Sama Dengan Yang Sudah Ada!", 
+                        "Data Duplikat",
+                        JOptionPane.WARNING_MESSAGE);
+
+                    return;
+                }
+
                 String StatusAddPelanggan = new Con_Pelanggan().add_Pelanggan(Nama_Pelanggan, Alamat_Pelanggan, Telepon_Pelanggan, Akun.ID_Admin);
 
                 // Jika berhasil

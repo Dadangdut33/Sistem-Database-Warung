@@ -16,6 +16,25 @@ import java.util.List;
 
 public class Con_Laporan {
     Connection con = null;
+
+    public static ArrayList<String> StoredKodePSN = new ArrayList<String>();
+
+    public static String searchPsnArr(String kode){
+        String kodeGet = "";
+        for(int i = 0; i < StoredKodePSN.size(); i++) {
+            // Cek kode lokal
+            // Kode lokal ada dari yg paling awal, jd dia genap
+            // Selang seling, kode lokal, kode di sql
+            if(i % 2 == 0){
+                if(kode.equals(StoredKodePSN.get(i))){
+                    kodeGet = StoredKodePSN.get(i+1);
+                    break;
+                }
+            }
+        }
+        return kodeGet;
+    }
+
     // CREATE
     /* Disini dicari dulu harganya abis itu diproses langsung didalam totalnya */
     public String add_Laporan(String Kode_Pelanggan, String Kode_Barang, int Jumlah_Pesanan, java.sql.Timestamp date, String ID_Admin){
@@ -25,7 +44,7 @@ public class Con_Laporan {
             // Get harga lalu hitung harga total
             PreparedStatement pr_GetHarga = con.prepareStatement("SELECT Harga_Barang FROM Barang WHERE ID_Admin = ? AND Kode_Barang = ?");
             pr_GetHarga.setString(1, ID_Admin);
-            pr_GetHarga.setString(2, Kode_Barang);
+            pr_GetHarga.setString(2, Con_Barang.searchBrgArr(Kode_Barang));
 
             ResultSet rs_GetHarga = pr_GetHarga.executeQuery();
             rs_GetHarga.next();
@@ -33,10 +52,17 @@ public class Con_Laporan {
             int hargaTotal = harga_Barang * Jumlah_Pesanan;
 
             // Masukkan data
-            String args = "INSERT INTO Laporan_Pesanan(Kode_Pelanggan,Kode_Barang,Harga_Barang_Pesanan,Jumlah_Pesanan,Total_Harga_Pesanan,Tanggal_Pesanan,ID_Admin) values(?,?,?,?,?,?,?)";
+            String args = "INSERT INTO Laporan_Pesanan(Nama_Pelanggan,Nama_Barang,Harga_Barang_Pesanan,Jumlah_Pesanan,Total_Harga_Pesanan,Tanggal_Pesanan,ID_Admin) values(?,?,?,?,?,?,?)";
             PreparedStatement pr_LaporanPesanan = con.prepareStatement(args);
-            pr_LaporanPesanan.setString(1, Kode_Pelanggan);
-            pr_LaporanPesanan.setString(2, Kode_Barang);
+
+            List<Object> data_NamaPlg = new Con_Pelanggan().get_PelangganByKode(Kode_Pelanggan, ID_Admin);
+            Object[] parsedData_NamaPlg = (Object[]) data_NamaPlg.toArray(new Object[0]);
+            pr_LaporanPesanan.setString(1, parsedData_NamaPlg[0].toString());
+            
+            List<Object> data_NamaBrg = new Con_Barang().get_BarangByKode(Kode_Barang, ID_Admin);
+            Object[] parsedData_NamaBrg = (Object[]) data_NamaBrg.toArray(new Object[0]);
+            pr_LaporanPesanan.setString(2, parsedData_NamaBrg[0].toString());
+            
             pr_LaporanPesanan.setInt(3, harga_Barang);
             pr_LaporanPesanan.setInt(4, Jumlah_Pesanan);
             pr_LaporanPesanan.setInt(5, hargaTotal);
@@ -50,14 +76,7 @@ public class Con_Laporan {
                 status = "Data berhasil dimasukkan!";
             }
         } catch (SQLException e) {
-            if(e.getMessage().contains("INSERT statement conflicted with the FOREIGN KEY") && e.getMessage().contains("Kode_Pelanggan")){
-                status = "Kode Yang Dimasukkan Tidak Ada di Kode Pelanggan!";
-            } else
-            if(e.getMessage().contains("INSERT statement conflicted with the FOREIGN KEY") && e.getMessage().contains("Kode_Barang")){
-                status = "Kode Yang Dimasukkan Tidak Ada di Kode Barang!";
-            } else {
-                status = e.getMessage();
-            }
+            status = e.getMessage();
         } finally {
             try { con.close(); } catch (SQLException e) { /* Ignored */ }
         }
@@ -66,26 +85,61 @@ public class Con_Laporan {
     }
 
     // READ
-    /* Untuk dapat laporanPesanaan yaitu kode pesanan, kode_pelanggan, kode_barang, harga barang, jumlah pesaanan, total harga, tgl pesanan */ 
     public List<Object> get_LaporanPesanan(String ID_Admin){
         List<Object> dataList = new ArrayList<>();
         try {
+            int x = 1;
+            StoredKodePSN.clear();
             con = new SQLConnect().getConSQL();
             PreparedStatement pr = con.prepareStatement("SELECT * FROM Laporan_Pesanan WHERE ID_Admin = ? ORDER BY ID_Pesanan");
             pr.setString(1, ID_Admin);
 
             ResultSet rs = pr.executeQuery();
             while (rs.next()) {
-                String Kode_Pesanan = rs.getString("Kode_Pesanan").trim();
-                String Kode_Pelanggan = rs.getString("Kode_Pelanggan").trim();
-                String Kode_Barang = rs.getString("Kode_Barang").trim();
+                String Kode_Pesanan = "PSN-" + x;
+
+                StoredKodePSN.add(Kode_Pesanan);
+                StoredKodePSN.add(rs.getString("Kode_Pesanan").trim());
+
+                String Nama_Pelanggan = rs.getString("Nama_Pelanggan").trim();
+                String Nama_Barang = rs.getString("Nama_Barang").trim();
                 int Harga_Barang = rs.getInt("Harga_Barang_Pesanan");
                 int Jumlah_Pesanan = rs.getInt("Jumlah_Pesanan");
                 int Total_Harga_Pesanan = rs.getInt("Total_Harga_Pesanan");
                 Date Tanggal_Pesanan = rs.getTimestamp("Tanggal_Pesanan");
 
-                Object[] dataArr = { Kode_Pesanan, Kode_Pelanggan, Kode_Barang, Harga_Barang, Jumlah_Pesanan, Total_Harga_Pesanan, Tanggal_Pesanan };
+                Object[] dataArr = { Kode_Pesanan, Nama_Pelanggan, Nama_Barang, Harga_Barang, Jumlah_Pesanan, Total_Harga_Pesanan, Tanggal_Pesanan };
                 Collections.addAll(dataList, dataArr);
+                x++;
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try { con.close(); } catch (SQLException e) { /* Ignored */ }
+        }
+
+        return dataList;
+    }
+
+    public List<Object> get_All_KodePesanan(String ID_Admin){
+        List<Object> dataList = new ArrayList<>();
+        try {
+            int x = 1;
+            StoredKodePSN.clear();
+            con = new SQLConnect().getConSQL();
+            PreparedStatement pr = con.prepareStatement("SELECT * FROM Laporan_Pesanan WHERE ID_Admin = ? ORDER BY ID_Pesanan");
+            pr.setString(1, ID_Admin);
+
+            ResultSet rs = pr.executeQuery();
+            while (rs.next()) {
+                String Kode_Pesanan = "PSN-" + x;
+
+                StoredKodePSN.add(Kode_Pesanan);
+                StoredKodePSN.add(rs.getString("Kode_Pesanan").trim());
+
+                Object[] dataArr = { Kode_Pesanan };
+                Collections.addAll(dataList, dataArr);
+                x++;
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -102,40 +156,17 @@ public class Con_Laporan {
             con = new SQLConnect().getConSQL();
             PreparedStatement pr = con.prepareStatement("SELECT * FROM Laporan_Pesanan WHERE ID_Admin = ? AND Kode_Pesanan = ? ORDER BY ID_Pesanan");
             pr.setString(1, ID_Admin);
-            pr.setString(2, Kode_Pesanan);
+            pr.setString(2, searchPsnArr(Kode_Pesanan));
 
             ResultSet rs = pr.executeQuery();
             rs.next();
 
-            String Kode_Pelanggan = rs.getString("Kode_Pelanggan").trim();
-            String Kode_Barang = rs.getString("Kode_Barang").trim();
+            String Nama_Pelanggan = rs.getString("Nama_Pelanggan").trim();
+            String Nama_Barang = rs.getString("Nama_Barang").trim();
             Date Tanggal_Pesanan = rs.getTimestamp("Tanggal_Pesanan");
 
-            Object[] dataArr = { Kode_Pelanggan, Kode_Barang, Tanggal_Pesanan };
+            Object[] dataArr = { Nama_Pelanggan, Nama_Barang, Tanggal_Pesanan };
             Collections.addAll(dataList, dataArr);
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            try { con.close(); } catch (SQLException e) { /* Ignored */ }
-        }
-
-        return dataList;
-    }
-
-    public List<Object> get_All_KodePesanan(String ID_Admin){
-        List<Object> dataList = new ArrayList<>();
-        try {
-            con = new SQLConnect().getConSQL();
-            PreparedStatement pr = con.prepareStatement("SELECT * FROM Laporan_Pesanan WHERE ID_Admin = ? ORDER BY ID_Pesanan");
-            pr.setString(1, ID_Admin);
-
-            ResultSet rs = pr.executeQuery();
-            while (rs.next()) {
-                String Kode_Pesanan = rs.getString("Kode_Pesanan").trim();
-
-                Object[] dataArr = { Kode_Pesanan };
-                Collections.addAll(dataList, dataArr);
-            }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
@@ -242,7 +273,7 @@ public class Con_Laporan {
             con = new SQLConnect().getConSQL();
             PreparedStatement pr_Del_Laporan = con.prepareStatement("DELETE Laporan_Pesanan WHERE ID_Admin=? AND Kode_Pesanan=?");
             pr_Del_Laporan.setString(1, ID_Admin);
-            pr_Del_Laporan.setString(2, Kode_Pesanan);
+            pr_Del_Laporan.setString(2, searchPsnArr(Kode_Pesanan));
             int statusCode = pr_Del_Laporan.executeUpdate();
 
             if(statusCode == 0){

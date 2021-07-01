@@ -14,6 +14,25 @@ import java.util.List;
 
 public class Con_Kategori {
     Connection con = null;
+
+    public static ArrayList<String> StoredKodeKAT = new ArrayList<String>();
+
+    public static String searchKatArr(String kode){
+        String kodeGet = "";
+        for(int i = 0; i < StoredKodeKAT.size(); i++) {
+            // Cek kode lokal
+            // Kode lokal ada dari yg paling awal, jd dia genap
+            // Selang seling, kode lokal, kode di sql
+            if(i % 2 == 0){
+                if(kode.equals(StoredKodeKAT.get(i))){
+                    kodeGet = StoredKodeKAT.get(i+1);
+                    break;
+                }
+            }
+        }
+        return kodeGet;
+    }
+
     // CREATE
     public String add_Kategori(String Kode_Kategori, String Nama_Kategori, String ID_Admin){
         String status;
@@ -46,17 +65,25 @@ public class Con_Kategori {
     public List<Object> get_KategoriTable(String ID_Admin){
         List<Object> dataList = new ArrayList<>();
         try {
+            int x = 1;
+            StoredKodeKAT.clear();
             con = new SQLConnect().getConSQL();
             PreparedStatement pr = con.prepareStatement("SELECT * FROM Kategori WHERE ID_Admin = ? ORDER BY ID_Kategori");
             pr.setString(1, ID_Admin);
 
             ResultSet rs = pr.executeQuery();
             while (rs.next()) {
-                String Kode_Kategori = rs.getString("Kode_Kategori").trim();
+                String Kode_Kategori = rs.getString("Kode_Kategori").trim().replaceAll("[0-9]", "");
+                Kode_Kategori = Kode_Kategori + x;
+
+                StoredKodeKAT.add(Kode_Kategori);
+                StoredKodeKAT.add(rs.getString("Kode_Kategori").trim());
+
                 String Nama_Kategori = rs.getString("Nama_Kategori").trim();
 
                 Object[] dataArr = { Kode_Kategori, Nama_Kategori };
                 Collections.addAll(dataList, dataArr);
+                x++;
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -67,8 +94,9 @@ public class Con_Kategori {
         return dataList;
     }
 
-    public List<Object> get_All_KodeKategori(String ID_Admin){
-        List<Object> dataList = new ArrayList<>();
+    public boolean dupeCheck(String namaDiCek, String ID_Admin){
+        boolean isDupe = false;
+
         try {
             con = new SQLConnect().getConSQL();
             PreparedStatement pr = con.prepareStatement("SELECT * FROM Kategori WHERE ID_Admin = ? ORDER BY ID_Kategori");
@@ -76,10 +104,44 @@ public class Con_Kategori {
 
             ResultSet rs = pr.executeQuery();
             while (rs.next()) {
-                String Kode_Kategori = rs.getString("Kode_Kategori").trim();
+
+                String Nama_Kategori = rs.getString("Nama_Kategori").trim();
+
+                if(namaDiCek.equals(Nama_Kategori)){
+                    isDupe = true;
+                    break;
+                }
+
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try { con.close(); } catch (SQLException e) { /* Ignored */ }
+        }
+
+        return isDupe;
+    }
+
+    public List<Object> get_All_KodeKategori(String ID_Admin){
+        List<Object> dataList = new ArrayList<>();
+        try {
+            int x = 1;
+            StoredKodeKAT.clear();
+            con = new SQLConnect().getConSQL();
+            PreparedStatement pr = con.prepareStatement("SELECT * FROM Kategori WHERE ID_Admin = ? ORDER BY ID_Kategori");
+            pr.setString(1, ID_Admin);
+
+            ResultSet rs = pr.executeQuery();
+            while (rs.next()) {
+                String Kode_Kategori = rs.getString("Kode_Kategori").trim().replaceAll("[0-9]", "");
+                Kode_Kategori = Kode_Kategori + x;
+
+                StoredKodeKAT.add(Kode_Kategori);
+                StoredKodeKAT.add(rs.getString("Kode_Kategori").trim());
 
                 Object[] dataArr = { Kode_Kategori };
                 Collections.addAll(dataList, dataArr);
+                x++;
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -96,7 +158,7 @@ public class Con_Kategori {
             con = new SQLConnect().getConSQL();
             PreparedStatement pr = con.prepareStatement("SELECT * FROM Kategori WHERE ID_Admin = ? and Kode_Kategori = ?");
             pr.setString(1, ID_Admin);
-            pr.setString(2, Kode_Kategori);
+            pr.setString(2, searchKatArr(Kode_Kategori));
 
             ResultSet rs = pr.executeQuery();
             rs.next();
@@ -121,8 +183,14 @@ public class Con_Kategori {
             PreparedStatement pr = con.prepareStatement("UPDATE Kategori SET Nama_Kategori=? WHERE ID_Admin=? and Kode_Kategori=?");
             pr.setString(1, Nama_Kategori);
             pr.setString(2, ID_Admin);
-            pr.setString(3, Kode_Kategori);
+            pr.setString(3, searchKatArr(Kode_Kategori));
 
+            PreparedStatement pr_2 = con.prepareStatement("UPDATE Barang SET Nama_Kategori=? WHERE ID_Admin=? and Kode_Kategori=?");
+            pr_2.setString(1, Nama_Kategori);
+            pr_2.setString(2, ID_Admin);
+            pr_2.setString(3, searchKatArr(Kode_Kategori));
+
+            pr_2.executeUpdate();
             int res = pr.executeUpdate();
             if(res == 0){
                 status = "Kategori gagal diubah!";
@@ -149,7 +217,7 @@ public class Con_Kategori {
             con = new SQLConnect().getConSQL();
             PreparedStatement pr_Del_Pelanggan = con.prepareStatement("DELETE Kategori WHERE ID_Admin=? AND Kode_Kategori=?");
             pr_Del_Pelanggan.setString(1, ID_Admin);
-            pr_Del_Pelanggan.setString(2, Kode_Kategori);
+            pr_Del_Pelanggan.setString(2, searchKatArr(Kode_Kategori));
             int statusCode = pr_Del_Pelanggan.executeUpdate();
 
             if(statusCode == 0){

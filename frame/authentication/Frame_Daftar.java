@@ -373,10 +373,10 @@ public class Frame_Daftar extends JFrame implements ActionListener{
                         return;
                     }
 
-                    if(Nomor_Telepon.length() < 8 || Nomor_Telepon.length() > 15) {
+                    if(Nomor_Telepon.length() < 8 || Nomor_Telepon.length() > 16) {
                         JOptionPane.showMessageDialog( 
                             null, 
-                            "Nomor Telepon Minimal 8 Digit Angka dan Maksimal 15 Digit Angka!", 
+                            "Nomor Telepon Minimal 8 Digit Angka dan Maksimal 16 Digit Angka!", 
                             "Nomor Telepon Invalid",                
                             JOptionPane.WARNING_MESSAGE);
 
