@@ -41,7 +41,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
     static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd - (HH:mm)");
 
     // Kolom tabel
-    String kolomTbAtas[] = {"Kode Pesanan", "Kode Pelanggan", "Kode Barang", "Harga Barang", "Jumlah", "Total", "Tanggal"};
+    String kolomTbAtas[] = {"Kode Pesanan", "Nama Pelanggan", "Nama Barang", "Harga Barang", "Jumlah", "Total", "Tanggal"};
     String kolomTbBawah[] = {"Tanggal", "Total Pendapatan", "Total Pesanan"};
     String modeTbBawah[] = {"Group by Day", "Group by Month", "Group by Year"};
 
@@ -58,9 +58,11 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
     TableRowSorter<DefaultTableModel> sorterTbAtas;
     TableRowSorter<DefaultTableModel> sorterTbBawah;
 
-    // Button Hapus
-    JButton jButton_Delete = new JButton();
+    // Button 
     JButton jButton_Add = new JButton();
+    JButton jButton_Delete = new JButton();
+    JButton jButton_ExportToPdf = new JButton();
+    
 
     // Current sort mode
     int sorterModeAtas = 0;
@@ -272,7 +274,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         jButton_Add.setBorderPainted(false);
         jButton_Add.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-add-row-30.png")));
         jButton_Add.setToolTipText("Add Laporan");
-        jButton_Add.setBounds(975, 40, 50, 50);
+        jButton_Add.setBounds(915, 40, 50, 50);
         this.add(jButton_Add);
         
         // Button Hapus
@@ -283,12 +285,24 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         jButton_Delete.setBorderPainted(false);
         jButton_Delete.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-delete-row-30.png")));
         jButton_Delete.setToolTipText("Hapus Laporan");
-        jButton_Delete.setBounds(1035, 40, 50, 50);
+        jButton_Delete.setBounds(975, 40, 50, 50);
         this.add(jButton_Delete);
+
+        // Button export
+        jButton_ExportToPdf.setBackground(new Color(40, 40, 44));
+        jButton_ExportToPdf.setOpaque(false);
+        jButton_ExportToPdf.setContentAreaFilled(false);
+        jButton_ExportToPdf.setFocusPainted(false);
+        jButton_ExportToPdf.setBorderPainted(false);
+        jButton_ExportToPdf.setIcon(new ImageIcon(getClass().getResource("/assets/icons8-export-pdf-30.png")));
+        jButton_ExportToPdf.setToolTipText("Export To PDF");
+        jButton_ExportToPdf.setBounds(1032, 40, 50, 50);
+        this.add(jButton_ExportToPdf);
 
         // Add Action Listener
         jButton_Add.addActionListener(this);
         jButton_Delete.addActionListener(this);
+        jButton_ExportToPdf.addActionListener(this);
         jBox_Kolom_TbAtas.addActionListener(this);
         jBox_Kolom_TbBawah.addActionListener(this);
         jBox_Mode_TbBawah.addActionListener(this);
@@ -417,6 +431,9 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         } else 
         if(ae.getSource().equals(jButton_Delete)){
             openFrame(new Frame_Delete_Transaksi());
+        } else 
+        if(ae.getSource().equals(jButton_ExportToPdf)){
+            openFrame(new Frame_Export_Transaksi());
         }
     }
 }

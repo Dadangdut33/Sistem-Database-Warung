@@ -7,6 +7,9 @@
 package koneksi;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -121,6 +124,98 @@ public class Con_Laporan {
         return dataList;
     }
 
+    public List<Object> get_LaporanPesananExport(String ID_Admin){
+        List<Object> dataList = new ArrayList<>();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd - (HH:mm)");
+        try {
+            int x = 1;
+            StoredKodePSN.clear();
+            con = new SQLConnect().getConSQL();
+            PreparedStatement pr = con.prepareStatement("SELECT * FROM Laporan_Pesanan WHERE ID_Admin = ? ORDER BY ID_Pesanan");
+            pr.setString(1, ID_Admin);
+
+            ResultSet rs = pr.executeQuery();
+            while (rs.next()) {
+                String Kode_Pesanan = "PSN-" + x;
+
+                StoredKodePSN.add(Kode_Pesanan);
+                StoredKodePSN.add(rs.getString("Kode_Pesanan").trim());
+
+                String Nama_Pelanggan = rs.getString("Nama_Pelanggan").trim();
+                String Nama_Barang = rs.getString("Nama_Barang").trim();
+                int Harga_Barang = rs.getInt("Harga_Barang_Pesanan");
+                int Jumlah_Pesanan = rs.getInt("Jumlah_Pesanan");
+                int Total_Harga_Pesanan = rs.getInt("Total_Harga_Pesanan");
+                Date Tanggal = rs.getTimestamp("Tanggal_Pesanan");
+
+                String Tanggal_Pesanan = dateFormat.format(Tanggal) + "\n  ";
+
+                Object[] dataArr = { Kode_Pesanan, Nama_Pelanggan, Nama_Barang, Harga_Barang, Jumlah_Pesanan, Total_Harga_Pesanan, Tanggal_Pesanan };
+                Collections.addAll(dataList, dataArr);
+                x++;
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try { con.close(); } catch (SQLException e) { /* Ignored */ }
+        }
+
+        return dataList;
+    }
+
+    public List<Object> get_LaporanPesananPeriodExport(String ID_Admin, String startDate, String endDate){
+        List<Object> dataList = new ArrayList<>();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd - (HH:mm)");
+        try {
+            int x = 1;
+            // boolean tanggalnya = false;
+            StoredKodePSN.clear();
+            Date d_start = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(startDate + " 00:00:00.000");
+            Date d_end = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(endDate + " 23:59:59.999");
+
+            con = new SQLConnect().getConSQL();
+            PreparedStatement pr = con.prepareStatement("SELECT * FROM Laporan_Pesanan WHERE ID_Admin = ? ORDER BY ID_Pesanan");
+            pr.setString(1, ID_Admin);
+
+            ResultSet rs = pr.executeQuery();
+            while (rs.next()) {
+                
+                String Kode_Pesanan = "PSN-" + x;
+
+                StoredKodePSN.add(Kode_Pesanan);
+                StoredKodePSN.add(rs.getString("Kode_Pesanan").trim());
+
+                String Nama_Pelanggan = rs.getString("Nama_Pelanggan").trim();
+                String Nama_Barang = rs.getString("Nama_Barang").trim();
+                int Harga_Barang = rs.getInt("Harga_Barang_Pesanan");
+                int Jumlah_Pesanan = rs.getInt("Jumlah_Pesanan");
+                int Total_Harga_Pesanan = rs.getInt("Total_Harga_Pesanan");
+                Date Tanggal = rs.getTimestamp("Tanggal_Pesanan");
+
+                String Tanggal_Pesanan = dateFormat.format(Tanggal) + "\n  ";
+
+                if(Tanggal.compareTo(d_start) >= 0 && Tanggal.compareTo(d_end) <= 0){
+                    Object[] dataArr = { Kode_Pesanan, Nama_Pelanggan, Nama_Barang, Harga_Barang, Jumlah_Pesanan, Total_Harga_Pesanan, Tanggal_Pesanan };
+                    Collections.addAll(dataList, dataArr);
+                }
+                
+                x++;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } 
+        catch(ParseException e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } 
+        finally {
+            try { con.close(); } catch (SQLException e) { /* Ignored */ }
+        }
+
+        return dataList;
+    }
+
     public List<Object> get_All_KodePesanan(String ID_Admin){
         List<Object> dataList = new ArrayList<>();
         try {
@@ -206,6 +301,79 @@ public class Con_Laporan {
         return dataList;
     }
 
+    public List<Object> get_LaporanPendapatan_ByDateExport(String ID_Admin){
+        List<Object> dataList = new ArrayList<>();
+        try {
+            con = new SQLConnect().getConSQL();
+            String str = "SELECT datepart(yyyy, Tanggal_Pesanan) as [tahun],  datepart(m, Tanggal_Pesanan) as [bulan], datepart(dd, Tanggal_Pesanan) as [tgl], SUM(Total_Harga_Pesanan) as Total, COUNT(*) as banyak_Pesanan";
+            String str2  = "FROM Laporan_Pesanan WHERE ID_Admin = ? GROUP BY datepart(dd, Tanggal_Pesanan), datepart(m, Tanggal_Pesanan), datepart(yyyy, Tanggal_Pesanan) ORDER BY [tgl]";
+            PreparedStatement pr = con.prepareStatement(str + " " + str2);
+            pr.setString(1, ID_Admin);
+
+            ResultSet rs = pr.executeQuery();
+            while (rs.next()) {
+                int tahun = rs.getInt("tahun");
+                int bulan = rs.getInt("bulan");
+                int tgl = rs.getInt("tgl");
+                int Total = rs.getInt("Total");
+                int banyak_pesanan = rs.getInt("banyak_pesanan");
+
+                String tanggal = tahun + "-" + bulan + "-" + tgl ;
+
+                Object[] dataArr = { tanggal, Total, banyak_pesanan };
+                Collections.addAll(dataList, dataArr);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try { con.close(); } catch (SQLException e) { /* Ignored */ }
+        }
+
+        return dataList;
+    }
+
+    public List<Object> get_LaporanPendapatan_ByDatePeriodExport(String ID_Admin, String startDate, String endDate){
+        List<Object> dataList = new ArrayList<>();
+        try {
+            Date d_1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(startDate + " 00:00:00.000");
+            Date d_2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(endDate + " 23:59:59.999");
+            java.sql.Timestamp dateStart = new java.sql.Timestamp(d_1.getTime());
+            java.sql.Timestamp dateEnd = new java.sql.Timestamp(d_2.getTime());
+
+            con = new SQLConnect().getConSQL();
+            String str = "SELECT datepart(yyyy, Tanggal_Pesanan) as [tahun],  datepart(m, Tanggal_Pesanan) as [bulan], datepart(dd, Tanggal_Pesanan) as [tgl], SUM(Total_Harga_Pesanan) as Total, COUNT(*) as banyak_Pesanan";
+            String str2  = "FROM Laporan_Pesanan WHERE ID_Admin = ? AND Tanggal_Pesanan BETWEEN ? AND ? GROUP BY datepart(dd, Tanggal_Pesanan), datepart(m, Tanggal_Pesanan), datepart(yyyy, Tanggal_Pesanan) ORDER BY [tgl]";
+            PreparedStatement pr = con.prepareStatement(str + " " + str2);
+            pr.setString(1, ID_Admin);
+            pr.setTimestamp(2, dateStart);
+            pr.setTimestamp(3, dateEnd);
+
+            ResultSet rs = pr.executeQuery();
+            while (rs.next()) {
+                int tahun = rs.getInt("tahun");
+                int bulan = rs.getInt("bulan");
+                int tgl = rs.getInt("tgl");
+                int Total = rs.getInt("Total");
+                int banyak_pesanan = rs.getInt("banyak_pesanan");
+
+                String tanggal = tahun + "-" + bulan + "-" + tgl ;
+
+                Object[] dataArr = { tanggal, Total, banyak_pesanan };
+                Collections.addAll(dataList, dataArr);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ParseException e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try { con.close(); } catch (SQLException e) { /* Ignored */ }
+        }
+
+        return dataList;
+    }
+
     public List<Object> get_LaporanPendapatan_ByMonth(String ID_Admin){
         List<Object> dataList = new ArrayList<>();
         try {
@@ -226,6 +394,77 @@ public class Con_Laporan {
                 Collections.addAll(dataList, dataArr);
             }
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try { con.close(); } catch (SQLException e) { /* Ignored */ }
+        }
+
+        return dataList;
+    }
+
+    public List<Object> get_LaporanPendapatan_ByMonthExport(String ID_Admin){
+        List<Object> dataList = new ArrayList<>();
+        try {
+            con = new SQLConnect().getConSQL();
+            String str = "SELECT datepart(yyyy, Tanggal_Pesanan) as [tahun], datepart(m, Tanggal_Pesanan) as [bulan], SUM(Total_Harga_Pesanan) as Total, COUNT(*) as banyak_Pesanan";
+            String str2  = "FROM Laporan_Pesanan WHERE ID_Admin = ? GROUP BY datepart(mm, Tanggal_Pesanan), datepart(yyyy, Tanggal_Pesanan) ORDER BY [bulan];";
+            PreparedStatement pr = con.prepareStatement(str + " " + str2);
+            pr.setString(1, ID_Admin);
+
+            ResultSet rs = pr.executeQuery();
+            while (rs.next()) {
+                int tahun = rs.getInt("tahun");
+                int bulan = rs.getInt("bulan");
+                int Total = rs.getInt("Total");
+                int banyak_pesanan = rs.getInt("banyak_pesanan");
+
+                String tanggal = tahun + "-" + bulan;
+
+                Object[] dataArr = { tanggal, Total, banyak_pesanan };
+                Collections.addAll(dataList, dataArr);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try { con.close(); } catch (SQLException e) { /* Ignored */ }
+        }
+
+        return dataList;
+    }
+
+    public List<Object> get_LaporanPendapatan_ByMonthPeriodExport(String ID_Admin, String startDate, String endDate){
+        List<Object> dataList = new ArrayList<>();
+        try {
+            Date d_1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(startDate + " 00:00:00.000");
+            Date d_2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(endDate + " 23:59:59.999");
+            java.sql.Timestamp dateStart = new java.sql.Timestamp(d_1.getTime());
+            java.sql.Timestamp dateEnd = new java.sql.Timestamp(d_2.getTime());
+
+            con = new SQLConnect().getConSQL();
+            String str = "SELECT datepart(yyyy, Tanggal_Pesanan) as [tahun], datepart(m, Tanggal_Pesanan) as [bulan], SUM(Total_Harga_Pesanan) as Total, COUNT(*) as banyak_Pesanan";
+            String str2  = "FROM Laporan_Pesanan WHERE ID_Admin = ? AND Tanggal_Pesanan BETWEEN ? AND ? GROUP BY datepart(mm, Tanggal_Pesanan), datepart(yyyy, Tanggal_Pesanan) ORDER BY [bulan];";
+            PreparedStatement pr = con.prepareStatement(str + " " + str2);
+            pr.setString(1, ID_Admin);
+            pr.setTimestamp(2, dateStart);
+            pr.setTimestamp(3, dateEnd);
+
+            ResultSet rs = pr.executeQuery();
+            while (rs.next()) {
+                int tahun = rs.getInt("tahun");
+                int bulan = rs.getInt("bulan");
+                int Total = rs.getInt("Total");
+                int banyak_pesanan = rs.getInt("banyak_pesanan");
+
+                String tanggal = tahun + "-" + bulan;
+
+                Object[] dataArr = { tanggal, Total, banyak_pesanan };
+                Collections.addAll(dataList, dataArr);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ParseException e) {
+            System.out.println(e);
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             try { con.close(); } catch (SQLException e) { /* Ignored */ }
@@ -260,6 +499,44 @@ public class Con_Laporan {
 
         return dataList;
     }
+
+    public List<Object> get_LaporanPendapatan_ByYearPeriodExport(String ID_Admin, String startDate, String endDate){
+        List<Object> dataList = new ArrayList<>();
+        try {
+            Date d_1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(startDate + " 00:00:00.000");
+            Date d_2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(endDate + " 23:59:59.999");
+            java.sql.Timestamp dateStart = new java.sql.Timestamp(d_1.getTime());
+            java.sql.Timestamp dateEnd = new java.sql.Timestamp(d_2.getTime());
+
+            con = new SQLConnect().getConSQL();
+            String str = "SELECT datepart(yyyy, Tanggal_Pesanan) as [tahun], SUM(Total_Harga_Pesanan) as Total, count(*) as banyak_Pesanan";
+            String str2  = "FROM Laporan_Pesanan WHERE ID_Admin = ? AND Tanggal_Pesanan BETWEEN ? AND ? GROUP BY datepart(yyyy, Tanggal_Pesanan) ORDER BY [tahun];";
+            PreparedStatement pr = con.prepareStatement(str + " " + str2);
+            pr.setString(1, ID_Admin);
+            pr.setTimestamp(2, dateStart);
+            pr.setTimestamp(3, dateEnd);
+
+            ResultSet rs = pr.executeQuery();
+            while (rs.next()) {
+                int tahun = rs.getInt("tahun");
+                int Total = rs.getInt("Total");
+                int banyak_pesanan = rs.getInt("banyak_pesanan");
+
+                Object[] dataArr = { tahun, Total, banyak_pesanan };
+                Collections.addAll(dataList, dataArr);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ParseException e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try { con.close(); } catch (SQLException e) { /* Ignored */ }
+        }
+
+        return dataList;
+    }
+
 
     // UPDATE
     /* TIDAK ADA UPDATE UNTUK TRANSAKSI */
