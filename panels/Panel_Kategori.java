@@ -26,16 +26,15 @@ public class Panel_Kategori extends JPanel implements ActionListener {
     JLabel jLabel_kolom_TbAtas = new JLabel();
 
     // Textfield
-    JTextField jField_SearchTbAtas = new JTextField();
+    static JTextField jField_SearchTbAtas = new JTextField();
 
-    JComboBox<String> jBox_Kolom_TbAtas = new JComboBox<>();
+    static JComboBox<String> jBox_Kolom_TbAtas = new JComboBox<>();
 
     // Kolom tabel
     String kolomTbAtas[] = {"Kode Kategori", "Nama Kategori"};
 
     // Table
-    DefaultTableModel tModelTbAtas;
-    DefaultTableModel tModelTbBawah;
+    static DefaultTableModel tModelTbAtas;
 
     JTable tbAtas = new JTable();
 
@@ -190,21 +189,21 @@ public class Panel_Kategori extends JPanel implements ActionListener {
         jBox_Kolom_TbAtas.addActionListener(this);
     }
 
-    void refreshAll(){
+    public static void refreshAll(){
         clearTabelAtas();
         isiTabelAtas();
         jField_SearchTbAtas.setText("");
         jBox_Kolom_TbAtas.setSelectedIndex(0);
     }
 
-    void clearTabelAtas(){
+    static void clearTabelAtas(){
         int barisTbAtas = tModelTbAtas.getRowCount();
         for(int i = 0; i < barisTbAtas; i++){
             tModelTbAtas.removeRow(0);
         }
     }
 
-    void isiTabelAtas(){
+    static void isiTabelAtas(){
         List<Object> data = new Con_Kategori().get_KategoriTable(Akun.ID_Admin);
         Object[] parsedData = (Object[]) data.toArray(new Object[0]);
         

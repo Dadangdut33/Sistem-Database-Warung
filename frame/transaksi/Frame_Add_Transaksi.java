@@ -17,6 +17,7 @@ import java.util.List;
 import koneksi.Con_Barang;
 import koneksi.Con_Laporan;
 import koneksi.Con_Pelanggan;
+import panels.Panel_LaporanTransaksi;
 import saved_authentication.Akun;
 
 public class Frame_Add_Transaksi extends JFrame implements ActionListener {
@@ -254,6 +255,7 @@ public class Frame_Add_Transaksi extends JFrame implements ActionListener {
                             JOptionPane.INFORMATION_MESSAGE);
 
                         refresh();
+                        Panel_LaporanTransaksi.refreshAll();
                     } else { // Gagal add laporan
                         JOptionPane.showMessageDialog(null, statusAddLaporan, "Error", JOptionPane.ERROR_MESSAGE);
                     }

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import koneksi.Con_Kategori;
+import panels.Panel_Kategori;
 import saved_authentication.Akun;
 
 public class Frame_Delete_Kategori extends JFrame implements ActionListener {
@@ -32,10 +33,6 @@ public class Frame_Delete_Kategori extends JFrame implements ActionListener {
     JButton button_Refresh = new JButton();
 
     ArrayList<String> data_Yang_Kosong = new ArrayList<>();
-
-    public static void main(String[] args) {
-        new Frame_Delete_Kategori();
-    }
 
     public Frame_Delete_Kategori(){
         // Setting frame
@@ -204,6 +201,7 @@ public class Frame_Delete_Kategori extends JFrame implements ActionListener {
                         JOptionPane.INFORMATION_MESSAGE);
                     
                     refresh();
+                    Panel_Kategori.refreshAll();
                 } else {
                     JOptionPane.showMessageDialog(null, statusHapus, "Error", JOptionPane.ERROR_MESSAGE);
                 }

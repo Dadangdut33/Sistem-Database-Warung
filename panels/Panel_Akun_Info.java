@@ -222,7 +222,7 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
                             if(deleteStatus.equals("Akun Berhasil Dihapus!")){
                                 JOptionPane.showMessageDialog( 
                                     null, 
-                                    "Akun Berhasil Dihapus! Program akan keluar!",
+                                    "Akun Berhasil Dihapus! Program Akan Kembali Ke Menu Login!",
                                     "Hapus Akun Berhasil",
                                     JOptionPane.INFORMATION_MESSAGE);
                                 // Reset Akun
@@ -235,7 +235,8 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
                                 mainFrame.dispose();
 
                                 // Call frame login
-                                new Frame_Login();
+                                Frame_Login.refresh();
+                                Frame_Login.loginForm.setVisible(true);
                             } else {
                                 option = 1;
                                 JOptionPane.showMessageDialog( 

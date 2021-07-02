@@ -15,6 +15,7 @@ import java.util.List;
 
 import koneksi.Con_Barang;
 import koneksi.Con_Kategori;
+import panels.Panel_Barang;
 import saved_authentication.Akun;
 
 public class Frame_Add_Barang extends JFrame implements ActionListener {
@@ -190,10 +191,9 @@ public class Frame_Add_Barang extends JFrame implements ActionListener {
             kosong = true;
             data_Yang_Kosong.add("Harga Barang");
         }
-        if((Integer) spinner_JumlahStok.getValue() == 0){
-            kosong = true;
-            data_Yang_Kosong.add("Jumlah Stok");
-        }
+
+        // Stok tidak di cek karena mungkin saja user hanya memasukan barang ke katalog
+        // Namun stoknya kosong
         
         return kosong;
     }
@@ -266,6 +266,7 @@ public class Frame_Add_Barang extends JFrame implements ActionListener {
                         JOptionPane.INFORMATION_MESSAGE);
 
                         refresh();
+                        Panel_Barang.refreshAll();
                 } else { // Jika gagal kurangi barang
                     JOptionPane.showMessageDialog(null, StatusAddBarang, "Error", JOptionPane.ERROR_MESSAGE);
                 }

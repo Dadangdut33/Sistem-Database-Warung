@@ -239,8 +239,8 @@ public class Frame_Daftar extends JFrame implements ActionListener{
 
     void backToLogin() {
         this.dispose();
-        Frame_Login.refresh();
         Frame_Login.loginForm.setVisible(true);
+        Frame_Login.refresh();
     }
 
     void refresh(){
@@ -385,9 +385,14 @@ public class Frame_Daftar extends JFrame implements ActionListener{
     
                     String daftar = new Con_Admin().add_Akun(ID_Admin, Password, Nama_Pemilik, Nama_Toko, Alamat_Toko, Nomor_Telepon);
                     if(daftar.equals("Akun berhasil dibuat!")){
-                        JOptionPane.showMessageDialog(null, daftar + " Klik ok untuk kembali ke menu login", "Success", JOptionPane.INFORMATION_MESSAGE);
-                        refresh();
-                        backToLogin();
+                        int opts = JOptionPane.showConfirmDialog(null, daftar + " Klik ok untuk kembali ke menu login", "Success", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                        
+                        if(opts == JOptionPane.OK_OPTION){
+                            refresh();
+                            backToLogin();
+                        } else {
+                            refresh();
+                        }    
                     } else {
                         JOptionPane.showMessageDialog(null, daftar, "Error", JOptionPane.ERROR_MESSAGE);
                     }

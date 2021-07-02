@@ -13,6 +13,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 import koneksi.Con_Kategori;
+import panels.Panel_Kategori;
 import saved_authentication.Akun;
 
 import tools.OnlyLetter;
@@ -212,6 +213,7 @@ public class Frame_Add_Kategori extends JFrame implements ActionListener {
                     JOptionPane.INFORMATION_MESSAGE);
                     
                     refresh();
+                    Panel_Kategori.refreshAll();
                } else { // Jika gagal
                     JOptionPane.showMessageDialog(null, StatusAddKategori, "Error", JOptionPane.ERROR_MESSAGE);
                }

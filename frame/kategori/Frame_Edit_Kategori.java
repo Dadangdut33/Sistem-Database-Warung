@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import koneksi.Con_Kategori;
+import panels.Panel_Kategori;
 import saved_authentication.Akun;
 
 public class Frame_Edit_Kategori extends JFrame implements ActionListener {
@@ -33,9 +34,7 @@ public class Frame_Edit_Kategori extends JFrame implements ActionListener {
 
     ArrayList<String> data_Yang_Kosong = new ArrayList<>();
 
-    public static void main(String[] args) {
-        new Frame_Delete_Kategori();
-    }
+    String namaAwal;
 
     public Frame_Edit_Kategori(){
         // Setting frame
@@ -142,6 +141,7 @@ public class Frame_Edit_Kategori extends JFrame implements ActionListener {
             List<Object> data = new Con_Kategori().get_NamaKategoriByKode(comboBox_KodeKategori.getSelectedItem().toString(), Akun.ID_Admin);
             Object[] parsedData = (Object[]) data.toArray(new Object[0]);
             
+            namaAwal = parsedData[0].toString();
             jTextField_NamaKategori.setText(parsedData[0].toString());
         }
     }
@@ -194,7 +194,7 @@ public class Frame_Edit_Kategori extends JFrame implements ActionListener {
                 String Kode_Kategori = comboBox_KodeKategori.getSelectedItem().toString();
                 String Nama_Kategori = jTextField_NamaKategori.getText().trim();
 
-                if(new Con_Kategori().dupeCheck(Nama_Kategori, Akun.ID_Admin)){
+                if(new Con_Kategori().dupeCheck(Nama_Kategori, Akun.ID_Admin) && !namaAwal.equals(Nama_Kategori)){
                     JOptionPane.showMessageDialog( 
                         null,
                         "Nama Kategori Yang Dimasukkan Tidak Boleh Sama Dengan Yang Sudah Ada!", 
@@ -214,6 +214,7 @@ public class Frame_Edit_Kategori extends JFrame implements ActionListener {
                         JOptionPane.INFORMATION_MESSAGE);
                     
                     refresh();
+                    Panel_Kategori.refreshAll();
                 } else {
                     JOptionPane.showMessageDialog(null, statusEdit, "Error", JOptionPane.ERROR_MESSAGE);
                 }

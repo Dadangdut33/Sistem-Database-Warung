@@ -281,7 +281,8 @@ public class Frame_Menu extends JFrame implements ActionListener {
                 new Akun().reset();
 
                 // Panggil frame login
-                new Frame_Login();
+                Frame_Login.refresh();
+                Frame_Login.loginForm.setVisible(true);
             }
         // Mengubah panel ke setiap bentuknya
         } else

@@ -205,6 +205,8 @@ public class Frame_Login extends JFrame implements ActionListener{
     public static void refresh(){
         textField_User.setText("");
         passwordField.setText("");
+        loginForm.repaint();
+        loginForm.revalidate();
     }
 
     // Function untuk cooldown
@@ -222,7 +224,7 @@ public class Frame_Login extends JFrame implements ActionListener{
 
         // Set Label Cooldown
         jLabel_CooldownJudul.setText("Anda Telah Gagal Login Sebanyak 3 Kali!");
-        jLabel_CooldownTimer.setText("Harap Tunggu Selama " + minutes + ":" + seconds + " menit");
+        jLabel_CooldownTimer.setText("Harap Tunggu Selama " + minutes + ":" + seconds + " Menit");
 
         // Ini start timernya
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -237,7 +239,7 @@ public class Frame_Login extends JFrame implements ActionListener{
     // Untuk timernya
     void setInterval() {
         if (seconds == 0 && minutes == 0) {
-            jLabel_CooldownTimer.setText("Harap Tunggu Selama " + minutes + ":" + seconds + " menit");
+            jLabel_CooldownTimer.setText("Harap Tunggu Selama " + minutes + ":" + seconds + " Menit");
             
             // Cancel Timer
             timer.cancel();
@@ -267,7 +269,7 @@ public class Frame_Login extends JFrame implements ActionListener{
             }
 
             // Update text
-            jLabel_CooldownTimer.setText("Harap Tunggu Selama " + minutes + ":" + seconds + " menit");
+            jLabel_CooldownTimer.setText("Harap Tunggu Selama " + minutes + ":" + seconds + " Menit");
         }
     }
 

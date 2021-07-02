@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import koneksi.Con_Barang;
+import panels.Panel_Barang;
 import saved_authentication.Akun;
 
 public class Frame_Delete_Barang extends JFrame implements ActionListener {
@@ -273,6 +274,7 @@ public class Frame_Delete_Barang extends JFrame implements ActionListener {
                         JOptionPane.INFORMATION_MESSAGE);
 
                     refresh();
+                    Panel_Barang.refreshAll();
                 } else { // Jika gagal kurangi barang
                     JOptionPane.showMessageDialog(null, StatusHapusBarang, "Error", JOptionPane.ERROR_MESSAGE);
                 }

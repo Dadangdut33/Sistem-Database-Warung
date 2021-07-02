@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import koneksi.Con_Laporan;
+import panels.Panel_LaporanTransaksi;
 import saved_authentication.Akun;
 
 public class Frame_Delete_Transaksi extends JFrame implements ActionListener {
@@ -245,6 +246,7 @@ public class Frame_Delete_Transaksi extends JFrame implements ActionListener {
                         JOptionPane.INFORMATION_MESSAGE);
                     
                     refresh();
+                    Panel_LaporanTransaksi.refreshAll();
                 } else {
                     JOptionPane.showMessageDialog(null, statusHapus, "Error", JOptionPane.ERROR_MESSAGE);
                 }

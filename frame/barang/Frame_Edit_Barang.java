@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import koneksi.Con_Barang;
+import panels.Panel_Barang;
 import saved_authentication.Akun;
 
 public class Frame_Edit_Barang extends JFrame implements ActionListener {
@@ -40,6 +41,8 @@ public class Frame_Edit_Barang extends JFrame implements ActionListener {
     JButton button_Refresh = new JButton();
 
     ArrayList<String> data_Yang_Kosong = new ArrayList<>();
+
+    String namaAwal;
 
     public Frame_Edit_Barang(){
         // Setting frame
@@ -170,6 +173,8 @@ public class Frame_Edit_Barang extends JFrame implements ActionListener {
             List<Object> data = new Con_Barang().get_BarangByKode(comboBox_KodeBarang.getSelectedItem().toString(), Akun.ID_Admin);
             Object[] parsedData = (Object[]) data.toArray(new Object[0]);
 
+            namaAwal = parsedData[0].toString();
+
             jTextField_NamaBarang.setText(parsedData[0].toString());
             spinner_HargaBarang.setValue((Integer) parsedData[1]);
             spinner_JumlahStok.setValue((Integer) parsedData[2]);
@@ -207,10 +212,9 @@ public class Frame_Edit_Barang extends JFrame implements ActionListener {
             kosong = true;
             data_Yang_Kosong.add("Harga Barang");
         }
-        if((Integer) spinner_JumlahStok.getValue() == 0){
-            kosong = true;
-            data_Yang_Kosong.add("Jumlah Stok");
-        }
+
+        // Stok tidak di cek karena mungkin saja user hanya memasukan barang ke katalog
+        // Namun stoknya kosong
         
         return kosong;
     }
@@ -262,7 +266,10 @@ public class Frame_Edit_Barang extends JFrame implements ActionListener {
                 int Harga_Barang = (Integer) spinner_HargaBarang.getValue();
                 int Stok_Barang = (Integer) spinner_JumlahStok.getValue();
 
-                if(new Con_Barang().dupeCheck(Nama_Barang, Akun.ID_Admin)){
+                // Disini pertama di cek ada yg sama apa ga
+                // setelah itu di cek nama barang yg diinput sama atau ga kaya nama awalnya, jd misalkan
+                // dia ga ngedit nama jd gpp
+                if(new Con_Barang().dupeCheck(Nama_Barang, Akun.ID_Admin) && !Nama_Barang.equals(namaAwal)){
                     JOptionPane.showMessageDialog( 
                         null,
                         "Nama Barang Yang Dimasukkan Tidak Boleh Sama Dengan Yang Sudah Ada!", 
@@ -283,6 +290,7 @@ public class Frame_Edit_Barang extends JFrame implements ActionListener {
                         JOptionPane.INFORMATION_MESSAGE);
 
                         refresh();
+                        Panel_Barang.refreshAll();
                 } else { // Jika gagal kurangi barang
                     JOptionPane.showMessageDialog(null, StatusEditBarang, "Error", JOptionPane.ERROR_MESSAGE);
                 }

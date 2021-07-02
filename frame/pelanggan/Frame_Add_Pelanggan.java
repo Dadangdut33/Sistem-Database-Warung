@@ -13,6 +13,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 import koneksi.Con_Pelanggan;
+import panels.Panel_Pelanggan;
 import saved_authentication.Akun;
 import tools.OnlyDigit;
 
@@ -250,6 +251,7 @@ public class Frame_Add_Pelanggan extends JFrame implements ActionListener {
                     JOptionPane.INFORMATION_MESSAGE);
                     
                     refresh();
+                    Panel_Pelanggan.refreshAll();
                } else { // Jika gagal
                     JOptionPane.showMessageDialog(null, StatusAddPelanggan, "Error", JOptionPane.ERROR_MESSAGE);
                }

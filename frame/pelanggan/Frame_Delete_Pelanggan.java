@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import koneksi.Con_Pelanggan;
+import panels.Panel_Pelanggan;
 import saved_authentication.Akun;
 import tools.OnlyDigit;
 
@@ -252,6 +253,7 @@ public class Frame_Delete_Pelanggan extends JFrame implements ActionListener {
                     JOptionPane.INFORMATION_MESSAGE);
                     
                     refresh();
+                    Panel_Pelanggan.refreshAll();
                } else { // Jika gagal
                     JOptionPane.showMessageDialog(null, StatusDeletePelanggan, "Error", JOptionPane.ERROR_MESSAGE);
                }

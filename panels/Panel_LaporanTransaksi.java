@@ -30,23 +30,24 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
     JLabel jLabel_kolom_TbBawah = new JLabel();
     JLabel jLabel_mode_TbBawah = new JLabel();
 
-    JTextField jField_SearchTbAtas = new JTextField();
-    JTextField jField_SearchTbBawah = new JTextField();
+    static JTextField jField_SearchTbAtas = new JTextField();
+    static JTextField jField_SearchTbBawah = new JTextField();
 
-    JComboBox<String> jBox_Kolom_TbAtas = new JComboBox<>();
-    JComboBox<String> jBox_Kolom_TbBawah = new JComboBox<>();
-    JComboBox<String> jBox_Mode_TbBawah = new JComboBox<>();
+    static JComboBox<String> jBox_Kolom_TbAtas = new JComboBox<>();
+    static JComboBox<String> jBox_Kolom_TbBawah = new JComboBox<>();
+    static JComboBox<String> jBox_Mode_TbBawah = new JComboBox<>();
 
     // Formatter waktu
-    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd - (HH:mm)");
+    static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd - (HH:mm)");
 
     // Kolom tabel
     String kolomTbAtas[] = {"Kode Pesanan", "Kode Pelanggan", "Kode Barang", "Harga Barang", "Jumlah", "Total", "Tanggal"};
     String kolomTbBawah[] = {"Tanggal", "Total Pendapatan", "Total Pesanan"};
+    String modeTbBawah[] = {"Group by Day", "Group by Month", "Group by Year"};
 
     // Table
-    DefaultTableModel tModelTbAtas;
-    DefaultTableModel tModelTbBawah;
+    static DefaultTableModel tModelTbAtas;
+    static DefaultTableModel tModelTbBawah;
 
     JTable tbAtas = new JTable();
     JTable tbBawah = new JTable();
@@ -215,9 +216,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         jBox_Mode_TbBawah.setBackground(new Color(69, 73, 74));
         jBox_Mode_TbBawah.setForeground(Color.WHITE);
         jBox_Mode_TbBawah.setBounds(460, 340, 120, 22);
-        jBox_Mode_TbBawah.addItem("Group by Date");
-        jBox_Mode_TbBawah.addItem("Group by Month");
-        jBox_Mode_TbBawah.addItem("Group by Year");
+        jBox_Mode_TbBawah.setModel(new DefaultComboBoxModel<String>(modeTbBawah));
         this.add(jBox_Mode_TbBawah);
 
         // Tabel bawah
@@ -295,7 +294,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         jBox_Mode_TbBawah.addActionListener(this);
     }
 
-    void refreshAll(){
+    public static void refreshAll(){
         clearTabelAtas();
         clearTabelBawah();
         isiTabelAtas();
@@ -307,21 +306,21 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         jBox_Mode_TbBawah.setSelectedIndex(0);
     }
 
-    void clearTabelAtas(){
+    static void clearTabelAtas(){
         int barisTbAtas = tModelTbAtas.getRowCount();
         for(int i = 0; i < barisTbAtas; i++){
             tModelTbAtas.removeRow(0);
         }
     }
 
-    void clearTabelBawah(){
+    static void clearTabelBawah(){
         int barisTbBawah = tModelTbBawah.getRowCount();
         for(int i = 0; i < barisTbBawah; i++){
             tModelTbBawah.removeRow(0);
         }
     }
 
-    void isiTabelAtas(){
+    static void isiTabelAtas(){
         List<Object> data = new Con_Laporan().get_LaporanPesanan(Akun.ID_Admin);
         Object[] parsedData = (Object[]) data.toArray(new Object[0]);
         
@@ -334,7 +333,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         }
     }
 
-    void isiTabelBawahByDate(){
+    static void isiTabelBawahByDate(){
         List<Object> data = new Con_Laporan().get_LaporanPendapatan_ByDate(Akun.ID_Admin);
         Object[] parsedData = (Object[]) data.toArray(new Object[0]);
         

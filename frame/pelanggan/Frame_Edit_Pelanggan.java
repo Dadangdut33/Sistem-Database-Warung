@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import koneksi.Con_Pelanggan;
+import panels.Panel_Pelanggan;
 import saved_authentication.Akun;
 import tools.OnlyDigit;
 
@@ -42,10 +43,8 @@ public class Frame_Edit_Pelanggan extends JFrame implements ActionListener {
 
     ArrayList<String> data_Yang_Kosong = new ArrayList<>();
 
-    public static void main(String[] args) {
-        new Frame_Edit_Pelanggan();
-    }
-    
+    String namaAwal, alamatAwal, NoTelponAwal;
+
     public Frame_Edit_Pelanggan(){
         // Setting frame
         this.setSize(355, 350);
@@ -187,6 +186,9 @@ public class Frame_Edit_Pelanggan extends JFrame implements ActionListener {
             List<Object> data = new Con_Pelanggan().get_PelangganByKode(comboBox_KodePelanggan.getSelectedItem().toString(), Akun.ID_Admin);
             Object[] parsedData = (Object[]) data.toArray(new Object[0]);
 
+            namaAwal = parsedData[0].toString();
+            alamatAwal = parsedData[1].toString();
+            NoTelponAwal = parsedData[2].toString();
 
             jTextField_NamaPelanggan.setText(parsedData[0].toString());
             jTextArea_AlamatPelanggan.setText(parsedData[1].toString());
@@ -286,7 +288,8 @@ public class Frame_Edit_Pelanggan extends JFrame implements ActionListener {
                     return;
                 }
 
-                if(new Con_Pelanggan().dupeCheck(Nama_Pelanggan, Alamat_Pelanggan, Telepon_Pelanggan, Akun.ID_Admin)){
+                if(new Con_Pelanggan().dupeCheck(Nama_Pelanggan, Alamat_Pelanggan, Telepon_Pelanggan, Akun.ID_Admin) &&
+                   !namaAwal.equals(Nama_Pelanggan) && !alamatAwal.equals(Alamat_Pelanggan) && !NoTelponAwal.equals(Telepon_Pelanggan)){
                     JOptionPane.showMessageDialog( 
                         null,
                         "Data Pelanggan Yang Dimasukkan Tidak Boleh Sama Dengan Yang Sudah Ada!", 
@@ -307,6 +310,7 @@ public class Frame_Edit_Pelanggan extends JFrame implements ActionListener {
                     JOptionPane.INFORMATION_MESSAGE);
                     
                     refresh();
+                    Panel_Pelanggan.refreshAll();
                } else { // Jika gagal
                     JOptionPane.showMessageDialog(null, StatusEditPelanggan, "Error", JOptionPane.ERROR_MESSAGE);
                }
