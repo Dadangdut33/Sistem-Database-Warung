@@ -236,7 +236,7 @@ public class Panel_Akun_Info extends JPanel implements ActionListener {
 
                                 // Call frame login
                                 Frame_Login.refresh();
-                                Frame_Login.loginForm.setVisible(true);
+                                Frame_Login.loginForm = new Frame_Login();
                             } else {
                                 option = 1;
                                 JOptionPane.showMessageDialog( 
