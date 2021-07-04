@@ -24,7 +24,8 @@ OpenJDK Runtime Environment Corretto-11.0.10.9.1 (build 11.0.10+9-LTS)\
 OpenJDK 64-Bit Server VM Corretto-11.0.10.9.1 (build 11.0.10+9-LTS, mixed mode)
 
 # Cara Run
-Untuk run program terdapat di Run.java
+Sesuaikan password di [koneksi](https://github.com/Dadangdut33/Sistem-Database-Warung/blob/main/koneksi/SQLConnect.java) dengan password sql di pc
+Lalu untuk run program terdapat di Run.java
 
 # Credits
 ALL ICONS ARE TAKEN FROM [icons8.com](https://icons8.com/)
