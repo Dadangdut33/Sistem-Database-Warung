@@ -216,7 +216,7 @@ public class Frame_Export_Transaksi extends JFrame implements ActionListener {
             } else {
                 // Listnya dari yg paling kecil tanggal ke paling besar, jadi ceknya gini
                 if(comboBox_StartDate.getSelectedIndex() > comboBox_EndDate.getSelectedIndex()){
-                    JOptionPane.showMessageDialog(null, "Tanggal Awal Tidak Bisa Lebih Kecil Dari Tanggal Akhir!", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Tanggal Awal Tidak Bisa Lebih Besar Dari Tanggal Akhir!", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
