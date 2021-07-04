@@ -236,6 +236,11 @@ public class Frame_Menu extends JFrame implements ActionListener {
                         int second = cal.get(Calendar.SECOND);
                         int minute = cal.get(Calendar.MINUTE);
                         int hour = cal.get(Calendar.HOUR);
+
+                        // 0 = 12 untuk am pm
+                        if(hour == 0){
+                            hour = 12;
+                        }
                 
                         jLabel_Date.setText("Tanggal " + year + "/" + month + "/" + day);
                         jLabel_Time.setText(hour + ":" + minute + ":" + second + " " + Am_Pm);
