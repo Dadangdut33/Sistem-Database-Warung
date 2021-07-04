@@ -208,6 +208,9 @@ public class CreatePdf {
         // 2 = periode
         PdfPTable table = new PdfPTable(7);
 
+        // Cek kepotong atau tidak
+        checkPageForTable(table);
+
         String[] headerKolom = {"Kode Pesanan", "Nama Pelanggan", "Nama Barang", "Harga Barang", "Jumlah", "Total", "Tanggal"};
         
         PdfPCell c1;
@@ -269,9 +272,7 @@ public class CreatePdf {
         PdfPTable table = new PdfPTable(3);
 
         // Cek tabel kepotong atau tidak
-        if (writer.getVerticalPosition(true) - table.getRowHeight(0) - table.getRowHeight(1) < doc.bottom()) {
-            doc.newPage();
-        }
+        checkPageForTable(table);
 
         String[] headerKolom = {"Tanggal", "Total Pendapatan", "Total Pesanan"};
         
@@ -335,9 +336,7 @@ public class CreatePdf {
         PdfPTable table = new PdfPTable(3);
 
         // Cek tabel kepotong atau tidak
-        if (writer.getVerticalPosition(true) - table.getRowHeight(0) - table.getRowHeight(1) < doc.bottom()) {
-            doc.newPage();
-        }
+        checkPageForTable(table);
 
         String[] headerKolom = {"Tanggal", "Total Pendapatan", "Total Pesanan"};
         
@@ -399,9 +398,7 @@ public class CreatePdf {
         PdfPTable table = new PdfPTable(3);
 
         // Cek tabel kepotong atau tidak
-        if (writer.getVerticalPosition(true) - table.getRowHeight(0) - table.getRowHeight(1) < doc.bottom()) {
-            doc.newPage();
-        }
+        checkPageForTable(table);
 
         String[] headerKolom = {"Tanggal", "Total Pendapatan", "Total Pesanan"};
         
@@ -460,6 +457,13 @@ public class CreatePdf {
     void addEmptyLine(Paragraph paragraph, int number) {
         for (int i = 0; i < number; i++) {
             paragraph.add(new Paragraph(" "));
+        }
+    }
+
+    void checkPageForTable(PdfPTable table){
+        // Cek tabel kepotong atau tidak
+        if (writer.getVerticalPosition(true) - table.getRowHeight(0) - table.getRowHeight(1) < doc.bottom()) {
+            doc.newPage();
         }
     }
 
