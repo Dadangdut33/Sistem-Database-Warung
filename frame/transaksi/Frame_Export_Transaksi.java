@@ -197,7 +197,7 @@ public class Frame_Export_Transaksi extends JFrame implements ActionListener {
         comboBox_StartDate.addItem("Pilih Tanggal Awal");
         comboBox_EndDate.addItem("Pilih Tanggal Akhir");
         
-        for (int i = 0; i < parsedData.length; i = i + 3) {
+        for (int i = 0; i < parsedData.length; i = i + 4) {
             // Tanggal doang ini
             comboBox_StartDate.addItem(parsedData[i].toString());
             comboBox_EndDate.addItem(parsedData[i].toString());

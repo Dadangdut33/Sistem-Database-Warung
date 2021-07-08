@@ -320,7 +320,7 @@ public class Con_Laporan {
 
                 String tanggal = tahun + "-" + bulan + "-" + tgl ;
 
-                Object[] dataArr = { tanggal, Total, banyak_pesanan };
+                Object[] dataArr = { tanggal, Total, banyak_pesanan, hitungRatarata(Total, banyak_pesanan) };
                 Collections.addAll(dataList, dataArr);
             }
         } catch (SQLException e) {
@@ -330,6 +330,16 @@ public class Con_Laporan {
         }
 
         return dataList;
+    }
+
+    static String hitungRatarata(int total, int jumlah){
+        double rata = 0;
+        
+        rata = total / jumlah;
+
+        String formatedRata = String.format("%.2f", rata);
+
+        return formatedRata;
     }
 
     public List<Object> get_LaporanPendapatan_ByDatePeriodExport(String ID_Admin, String startDate, String endDate){
@@ -358,7 +368,7 @@ public class Con_Laporan {
 
                 String tanggal = tahun + "-" + bulan + "-" + tgl ;
 
-                Object[] dataArr = { tanggal, Total, banyak_pesanan };
+                Object[] dataArr = { tanggal, Total, banyak_pesanan, hitungRatarata(Total, banyak_pesanan)};
                 Collections.addAll(dataList, dataArr);
             }
         } catch (SQLException e) {
@@ -420,7 +430,7 @@ public class Con_Laporan {
 
                 String tanggal = tahun + "-" + bulan;
 
-                Object[] dataArr = { tanggal, Total, banyak_pesanan };
+                Object[] dataArr = { tanggal, Total, banyak_pesanan, hitungRatarata(Total, banyak_pesanan) };
                 Collections.addAll(dataList, dataArr);
             }
         } catch (SQLException e) {
@@ -457,7 +467,7 @@ public class Con_Laporan {
 
                 String tanggal = tahun + "-" + bulan;
 
-                Object[] dataArr = { tanggal, Total, banyak_pesanan };
+                Object[] dataArr = { tanggal, Total, banyak_pesanan, hitungRatarata(Total, banyak_pesanan) };
                 Collections.addAll(dataList, dataArr);
             }
         } catch (SQLException e) {
@@ -500,6 +510,33 @@ public class Con_Laporan {
         return dataList;
     }
 
+    public List<Object> get_LaporanPendapatan_ByYearExport(String ID_Admin){
+        List<Object> dataList = new ArrayList<>();
+        try {
+            con = new SQLConnect().getConSQL();
+            String str = "SELECT datepart(yyyy, Tanggal_Pesanan) as [tahun], SUM(Total_Harga_Pesanan) as Total, count(*) as banyak_Pesanan";
+            String str2  = "FROM Laporan_Pesanan WHERE ID_Admin = ? GROUP BY datepart(yyyy, Tanggal_Pesanan) ORDER BY [tahun];";
+            PreparedStatement pr = con.prepareStatement(str + " " + str2);
+            pr.setString(1, ID_Admin);
+
+            ResultSet rs = pr.executeQuery();
+            while (rs.next()) {
+                int tahun = rs.getInt("tahun");
+                int Total = rs.getInt("Total");
+                int banyak_pesanan = rs.getInt("banyak_pesanan");
+
+                Object[] dataArr = { tahun, Total, banyak_pesanan, hitungRatarata(Total, banyak_pesanan) };
+                Collections.addAll(dataList, dataArr);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try { con.close(); } catch (SQLException e) { /* Ignored */ }
+        }
+
+        return dataList;
+    }
+
     public List<Object> get_LaporanPendapatan_ByYearPeriodExport(String ID_Admin, String startDate, String endDate){
         List<Object> dataList = new ArrayList<>();
         try {
@@ -522,7 +559,7 @@ public class Con_Laporan {
                 int Total = rs.getInt("Total");
                 int banyak_pesanan = rs.getInt("banyak_pesanan");
 
-                Object[] dataArr = { tahun, Total, banyak_pesanan };
+                Object[] dataArr = { tahun, Total, banyak_pesanan, hitungRatarata(Total, banyak_pesanan) };
                 Collections.addAll(dataList, dataArr);
             }
         } catch (SQLException e) {

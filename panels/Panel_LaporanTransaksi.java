@@ -42,7 +42,9 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
 
     // Kolom tabel
     String kolomTbAtas[] = {"Kode Pesanan", "Nama Pelanggan", "Nama Barang", "Harga Barang", "Jumlah", "Total", "Tanggal"};
-    String kolomTbBawah[] = {"Tanggal", "Total Pendapatan", "Total Pesanan"};
+    String kolomTbBawahDay[] = {"Tanggal", "Total Pendapatan", "Total Pesanan", "Rata-rata Pendapatan Per Hari"};
+    String kolomTbBawahMonth[] = {"Tanggal", "Total Pendapatan", "Total Pesanan", "Rata-rata Pendapatan Per Bulan"};
+    String kolomTbBawahYear[] = {"Tanggal", "Total Pendapatan", "Total Pesanan", "Rata-rata Pendapatan Per Tahun"};
     String modeTbBawah[] = {"Group by Day", "Group by Month", "Group by Year"};
 
     // Table
@@ -81,7 +83,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
             }
         };
     
-        tModelTbBawah = new DefaultTableModel(null, kolomTbBawah) {
+        tModelTbBawah = new DefaultTableModel(null, kolomTbBawahDay) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -203,7 +205,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         jBox_Kolom_TbBawah.setBackground(new Color(69, 73, 74));
         jBox_Kolom_TbBawah.setForeground(Color.WHITE);
         jBox_Kolom_TbBawah.setBounds(285, 340, 120, 22);
-        jBox_Kolom_TbBawah.setModel(new DefaultComboBoxModel<String>(kolomTbBawah));
+        jBox_Kolom_TbBawah.setModel(new DefaultComboBoxModel<String>(kolomTbBawahDay));
         this.add(jBox_Kolom_TbBawah);
 
         // Label mode bawah
@@ -334,6 +336,14 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         }
     }
 
+    static double hitungRatarata(int total, int jumlah){
+        double rata = 0;
+        
+        rata = total / jumlah;
+
+        return rata;
+    }
+
     static void isiTabelAtas(){
         List<Object> data = new Con_Laporan().get_LaporanPesanan(Akun.ID_Admin);
         Object[] parsedData = (Object[]) data.toArray(new Object[0]);
@@ -354,7 +364,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         for (int i = 0; i < parsedData.length; i = i + 5) {
             // Tanggal isinya tahun-bulan-tanggal
             String[] isi = { parsedData[i].toString() + "-" + parsedData[i+1].toString() + "-" + parsedData[i+2].toString(),
-                             parsedData[i+3].toString(), parsedData[i+4].toString()};
+                             parsedData[i+3].toString(), parsedData[i+4].toString(), String.format("%.2f", hitungRatarata((int) parsedData[i+3], (int) parsedData[i+4]))};
             tModelTbBawah.addRow(isi);
         }
     }
@@ -366,7 +376,7 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         for (int i = 0; i < parsedData.length; i = i + 4) {
             // Tgl isinya tahun-bulan
             String[] isi = { parsedData[i].toString() + "-" + parsedData[i+1].toString(), parsedData[i+2].toString(),
-                             parsedData[i+3].toString()};
+                             parsedData[i+3].toString(), String.format("%.2f", hitungRatarata((int) parsedData[i+2], (int) parsedData[i+3]))};
             tModelTbBawah.addRow(isi);
         }
     }
@@ -377,7 +387,8 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
         
         for (int i = 0; i < parsedData.length; i = i + 3) {
             // Tgl isinya tahun
-            String[] isi = { parsedData[i].toString(), parsedData[i+1].toString(), parsedData[i+2].toString()};
+            String[] isi = { parsedData[i].toString(), parsedData[i+1].toString(), parsedData[i+2].toString(), 
+                            String.format("%.2f", hitungRatarata((int) parsedData[i+1], (int) parsedData[i+2]))};
             tModelTbBawah.addRow(isi);
         }
     }
@@ -387,14 +398,20 @@ public class Panel_LaporanTransaksi extends JPanel implements ActionListener {
 
         switch (mode) {
             case 0:
+                jBox_Kolom_TbBawah.setModel(new DefaultComboBoxModel<String>(kolomTbBawahDay));
+                tbBawah.getColumnModel().getColumn(3).setHeaderValue("Rata-rata Pendapatan Per Hari");
                 clearTabelBawah();
                 isiTabelBawahByDate();
                 break;
             case 1:
+                jBox_Kolom_TbBawah.setModel(new DefaultComboBoxModel<String>(kolomTbBawahMonth));
+                tbBawah.getColumnModel().getColumn(3).setHeaderValue("Rata-rata Pendapatan Per Bulan");
                 clearTabelBawah();
                 isiTabelBawahByMonth();
                 break;
             case 2:
+                jBox_Kolom_TbBawah.setModel(new DefaultComboBoxModel<String>(kolomTbBawahYear));
+                tbBawah.getColumnModel().getColumn(3).setHeaderValue("Rata-rata Pendapatan Per Tahun");
                 clearTabelBawah();
                 isiTabelBawahByYear();
                 break;

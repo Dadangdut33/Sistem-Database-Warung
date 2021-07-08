@@ -269,12 +269,12 @@ public class CreatePdf {
     void tableLaporanPendapatanByDate(int mode, String startDate, String endDate, Paragraph paragraph) throws DocumentException {
         // 1 = all
         // 2 = periode
-        PdfPTable table = new PdfPTable(3);
+        PdfPTable table = new PdfPTable(4);
 
         // Cek tabel kepotong atau tidak
         checkPageForTable(table);
 
-        String[] headerKolom = {"Tanggal", "Total Pendapatan", "Total Pesanan"};
+        String[] headerKolom = {"Tanggal", "Total Pendapatan", "Total Pesanan", "Rata-rata Pendapatan Per Hari"};
         
         PdfPCell c1;
 
@@ -302,7 +302,7 @@ public class CreatePdf {
             for (int i = 0; i < parsedData.length; i++) {
                 Phrase isiTabel = new Phrase();
                 isiTabel.setFont(smallerNormal);
-                isiTabel.add(parsedData[i].toString() + "\n \u00a0"); // Whitespace diakhir
+                isiTabel.add(parsedData[i] + "\n \u00a0"); // Whitespace diakhir
                 
                 c1 = new PdfPCell(isiTabel);
                 c1.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -315,11 +315,9 @@ public class CreatePdf {
             
             // Diisi dengan semua data di convert jadi string
             for (int i = 0; i < parsedData.length; i++) {
-                parsedData[i].toString();
-
                 Phrase isiTabel = new Phrase();
                 isiTabel.setFont(smallerNormal);
-                isiTabel.add(parsedData[i].toString() + "\n \u00a0"); // Whitespace diakhir
+                isiTabel.add(parsedData[i] + "\n \u00a0"); // Whitespace diakhir
                 
                 c1 = new PdfPCell(isiTabel);
                 c1.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -333,12 +331,12 @@ public class CreatePdf {
     void tableLaporanPendapatanByMonth(int mode, String startDate, String endDate, Paragraph paragraph) throws DocumentException {
         // 1 = all
         // 2 = periode
-        PdfPTable table = new PdfPTable(3);
+        PdfPTable table = new PdfPTable(4);
 
         // Cek tabel kepotong atau tidak
         checkPageForTable(table);
 
-        String[] headerKolom = {"Tanggal", "Total Pendapatan", "Total Pesanan"};
+        String[] headerKolom = {"Tanggal", "Total Pendapatan", "Total Pesanan", "Rata-rata Pendapatan Per Bulan"};
         
         PdfPCell c1;
 
@@ -366,7 +364,7 @@ public class CreatePdf {
             for (int i = 0; i < parsedData.length; i++) {
                 Phrase isiTabel = new Phrase();
                 isiTabel.setFont(smallerNormal);
-                isiTabel.add(parsedData[i].toString() + "\n \u00a0"); // Whitespace diakhir
+                isiTabel.add(parsedData[i] + "\n \u00a0"); // Whitespace diakhir
 
                 c1 = new PdfPCell(isiTabel);
                 c1.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -381,7 +379,7 @@ public class CreatePdf {
             for (int i = 0; i < parsedData.length; i++) {
                 Phrase isiTabel = new Phrase();
                 isiTabel.setFont(smallerNormal);
-                isiTabel.add(parsedData[i].toString() + "\n \u00a0"); // Whitespace diakhir
+                isiTabel.add(parsedData[i] + "\n \u00a0"); // Whitespace diakhir
                 
                 c1 = new PdfPCell(isiTabel);
                 c1.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -395,12 +393,12 @@ public class CreatePdf {
     void tableLaporanPendapatanByYear(int mode, String startDate, String endDate, Paragraph paragraph) throws DocumentException {
         // 1 = all
         // 2 = periode
-        PdfPTable table = new PdfPTable(3);
+        PdfPTable table = new PdfPTable(4);
 
         // Cek tabel kepotong atau tidak
         checkPageForTable(table);
 
-        String[] headerKolom = {"Tanggal", "Total Pendapatan", "Total Pesanan"};
+        String[] headerKolom = {"Tanggal", "Total Pendapatan", "Total Pesanan", "Rata-rata Pendapatan Per Tahun"};
         
         PdfPCell c1;
 
@@ -421,14 +419,14 @@ public class CreatePdf {
         // table.setWidths(new int[] {3, 7, 7, 5, 3, 5, 8});
 
         if (mode == 1) {
-            List<Object> data = new Con_Laporan().get_LaporanPendapatan_ByYear(Akun.ID_Admin);
+            List<Object> data = new Con_Laporan().get_LaporanPendapatan_ByYearExport(Akun.ID_Admin);
             Object[] parsedData = (Object[]) data.toArray(new Object[0]);
             
             // Diisi dengan semua data di convert jadi string
             for (int i = 0; i < parsedData.length; i++) {
                 Phrase isiTabel = new Phrase();
                 isiTabel.setFont(smallerNormal);
-                isiTabel.add(parsedData[i].toString() + "\n \u00a0"); // Whitespace diakhir
+                isiTabel.add(parsedData[i] + "\n \u00a0"); // Whitespace diakhir
                 
                 c1 = new PdfPCell(isiTabel);
                 c1.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -443,7 +441,7 @@ public class CreatePdf {
             for (int i = 0; i < parsedData.length; i++) {
                 Phrase isiTabel = new Phrase();
                 isiTabel.setFont(smallerNormal);
-                isiTabel.add(parsedData[i].toString() + "\n \u00a0"); // Whitespace diakhir
+                isiTabel.add(parsedData[i] + "\n \u00a0"); // Whitespace diakhir
                 
                 c1 = new PdfPCell(isiTabel);
                 c1.setHorizontalAlignment(Element.ALIGN_LEFT);
