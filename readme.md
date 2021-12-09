@@ -29,3 +29,16 @@ Lalu untuk run program terdapat di Run.java
 
 # Credits
 ALL ICONS ARE TAKEN FROM [icons8.com](https://icons8.com/)
+
+# Preview
+<p align="center">
+    <img src="https://github.com/Dadangdut33/Sistem-Database-Warung/blob/main/Screenshots/SS_1_SplashScreen.png?raw=true" style="width: 500px;">
+    <img src="https://github.com/Dadangdut33/Sistem-Database-Warung/blob/main/Screenshots/SS_2_Login.jpg?raw=true" style="width: 500px;">
+    <img src="https://github.com/Dadangdut33/Sistem-Database-Warung/blob/main/Screenshots/SS_3_Daftar.jpg?raw=true" style="width: 500px;">
+    <img src="https://github.com/Dadangdut33/Sistem-Database-Warung/blob/main/Screenshots/SS_4_Menu%20dan%20panel%20akun.jpg?raw=true" style="width: 500px;">
+    <img src="https://github.com/Dadangdut33/Sistem-Database-Warung/blob/main/Screenshots/SS_5_Panel%20Kategori.jpg?raw=true" style="width: 500px;">
+    <img src="https://github.com/Dadangdut33/Sistem-Database-Warung/blob/main/Screenshots/SS_6_Panel%20Barang.jpg?raw=true" style="width: 500px;">
+    <img src="https://github.com/Dadangdut33/Sistem-Database-Warung/blob/main/Screenshots/SS_7_Panel%20Pelanggan.jpg?raw=true" style="width: 500px;">
+    <img src="https://github.com/Dadangdut33/Sistem-Database-Warung/blob/main/Screenshots/SS_8_Panel%20Transaksi.jpg?raw=true" style="width: 500px;">
+    <img src="https://github.com/Dadangdut33/Sistem-Database-Warung/blob/main/Screenshots/SS_9_Frame%20Credit.jpg?raw=true" style="width: 500px;">
+</p>

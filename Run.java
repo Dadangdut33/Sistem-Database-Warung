@@ -1,8 +1,4 @@
 /**
- * Property of KELOMPOK-5 PL Kelas 2A
- * Author1: Fauzan Farhan Antoro
- * Author2: Alfanisa Safvira
- * Author3: Daffa Fawwaz Syadad
  * Original splashscreen from: https://stackoverflow.com/questions/11399971/make-splash-screen-with-progress-bar-like-eclipse
  */
 
